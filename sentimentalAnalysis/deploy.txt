@@ -1,0 +1,4 @@
+1. Include stand_alone directory in PYTHONPATH
+2. Replace the URL of API inside ui/index.html
+3. python manage.py runserver 0.0.0.0:88 
+

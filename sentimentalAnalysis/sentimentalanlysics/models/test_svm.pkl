@@ -1,0 +1,1 @@
+../../stand_alone/trained_models/linearsvm/test_svm.pkl
