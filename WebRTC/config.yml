@@ -1,0 +1,12 @@
+development:
+  google_client_id: 883555799966.apps.googleusercontent.com
+  google_redirect_uri: http://localhost:85/http/authenticate/pre_login
+
+test:
+  google_client_id: 883555799966.apps.googleusercontent.com
+  google_redirect_uri: http://localhost:85/http/authenticate/pre_login
+  
+production:
+  google_client_id: 883555799966.apps.googleusercontent.com
+  google_redirect_uri: http://localhost:85/http/authenticate/pre_login
+

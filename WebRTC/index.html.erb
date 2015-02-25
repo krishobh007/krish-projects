@@ -1,0 +1,31 @@
+<% content_for :title, "Login | Webrtc" %>
+
+<div id="login-container">
+	<div>
+		<h3>Login using your Qburst Google account.</h3>
+	</div>
+	<span class="left"> Click on the icon to login</span>
+	<a class="left" href="https://accounts.google.com/o/oauth2/auth?
+scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&
+state=%2Fprofile&
+redirect_uri=http%3A%2F%2Flocalhost:85/http/authenticate/pre_login&
+response_type=token&
+client_id=883555799966.apps.googleusercontent.com"> Login </a>
+	
+	<div id="login-noqb" style="display: none">
+		The qburst chat engine is stricted to use with qburst email account.
+	</div>
+	<div id="login-error" style="display: none">
+		An unexpected error has been occured.
+	</div>
+</div>
+<script>
+	window.onload = function(){
+		var not_qb = location.hash.substring(1);
+		if (not_qb === 'noqb') {
+			document.getElementById('login-noqb').style.display = '';
+		} else if (not_qb === 'error') {
+			document.getElementById('login-error').style.display = '';
+		};
+	}
+</script>

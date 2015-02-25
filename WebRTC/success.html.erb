@@ -1,0 +1,66 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "jquery-ui.js" %>
+  <%= javascript_include_tag "Main" %>
+  <%= javascript_include_tag "slider" %>
+  <%= javascript_include_tag "VideoControls" %>
+  <%= javascript_include_tag "Adapter" %>
+  <%= javascript_include_tag "CreateSocket" %>
+  <%= javascript_include_tag "Util" %>
+  
+<% end %>
+<div class="user-name">
+	Hello <%= session[:name] %>
+</div>
+
+<div class="ste-wrapper">
+			<div class="chat-box">
+				<div class="chat-video-container">
+					<div class="video-bg">
+						<video id="vid2" autoplay></video>
+						<div class="active-user" id="selfVideo">
+							<video id="vid1" autoplay></video>
+							<div class="minimise-btn" onclick="minimize();" id="min_btn"></div>
+						</div>
+					</div>
+					<div class="menu-container">
+					<div class="menu-buttons">
+						<div class="video-enable" id="videoControl"><button onclick="videoControl()"></button></div>
+						<div class="mic-enable" id="micControl"><button onclick="micControl()"></button></div>
+						<div class="full-screen"><button onclick="goFullscreen('vid2')"></button></div>
+						<div class="call-btn"><button onclick="hangup()"></button></div>
+						<span class="volume" onclick="muteUnmute('vid2');"></span>
+						<!-- Volume -->
+						<div id="slider" class="slider"></div>
+					</div>	
+					</div>
+					<br clear="all">
+				</div>
+				<div class="chat-list-container">
+					
+					<div class="chat-list-header">
+						<div class="top-bar">
+							<a href="#"><img src="/assets/close-btn.png"/></a>
+							<a href="#"><img src="/assets/full-screen-bg.png"/></a>
+							<a href="#"><img src="/assets/minimise-btn.png"/></a>
+						</div>
+						<h1>QBVideochat</h1>
+					</div>
+					<div class="chat-list-search"><input type="text"/></div>
+					<div id="userDetails" class="user-dtls">
+						
+					</div>
+					<div class="chat-list">
+						<p class="online-frnds" id="chatList">Online(5)</p>
+					</div>
+					<div class="chat-list-bottom"></div>
+				</div>
+				<br clear="all">
+			</div>
+		</div>
+	
+<script>
+	window.onload = function(){
+		USER_ID = '<%= session[:email] %>';
+		createSocket();
+	}
+</script>

@@ -1,0 +1,38 @@
+// Place all the styles related to the authenticate controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#login-container {
+  width:400px;
+  margin: 170px auto;
+}
+
+body {
+  height: 100%;
+}
+#login-container a {
+  background-image: image-url('google.png');
+  display: block;
+  background-repeat: no-repeat;
+  height: 60px;
+  width: 60px;
+  background-size: 60px;
+  margin: 0 auto;
+  text-indent: -1000px;
+
+}
+#login-noqb {
+  color: red;
+  clear: both;
+}
+.left {
+  float: left;
+}
+.user-name {
+  margin: 0 auto;
+  color: green;
+  width:250px;
+}
+#login-error {
+  color: red;
+  clear: both;
+}

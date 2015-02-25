@@ -1,0 +1,24 @@
+<div class="left-panel">
+	<span class="video-panel-left">
+		<video id="vid1" autoplay></video>
+	</span>
+	<span class="video-panel-right">
+		<video id="vid2" autoplay ></video>
+	</span>
+</div>
+<div class="right-panel">
+	<h6>ONLINE USERS</h6>
+	<ul id="chatList">
+	</ul>
+</div>
+<div class="clear"></div>
+<div class="left-panel">
+	<span class="bottom-left-panel">
+		<button onclick="muteUnmute('vid1');">Mute/Unmute</button>
+	</span>
+	<span class="bottom-right-panel">
+		<button onclick="goFullscreen('vid2'); return false">Go Fullscreen!</button>
+		<input id="volume" type="range" min="0" max="10" step="1" onchange="volumeControl(this.value)"/>
+		<button onclick="muteUnmute('vid2');">Mute/Unmute</button>
+	</span>
+</div>
