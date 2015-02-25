@@ -1,0 +1,80 @@
+
+body {
+    padding-top: 100px;
+    padding-bottom: 40px;
+}
+.navbar .btn-navbar {
+	float:left;
+}
+.navbar .brand{
+	float:none;
+	text-align: center;
+}
+#employee_list{
+	font-family:Arial, Sans-Serif;
+	font-size:12px;
+	text-align:right;
+}
+#employee_list th	{
+	padding:3px 6px;
+}
+#employee_list td	{
+	padding:3px 6px;
+}
+@media only screen and (max-width: 768px) {
+	tr td:nth-child(9),tr th:nth-child(9){
+		display:none; visibility:hidden;
+	}
+}
+@media only screen and (max-width: 590px) {
+	#phone_no,#office_address,#last_name,#sal{
+		display:none; visibility:hidden;
+	}
+	tr th:nth-child(3), tr th:nth-child(5),tr th:nth-child(7),tr th:nth-child(8) {
+		display:none; visibility:hidden; 
+	}
+	tr td:nth-child(3),tr td:nth-child(5), tr td:nth-child(7), tr td:nth-child(8){
+		display:none; visibility:hidden; 
+	}
+}
+@media only screen and (max-width: 480px) {
+	#phone_no,#office_address,#last_name,#sal{
+	 	display:none; visibility:hidden;
+	}
+	tr th:nth-child(3),tr th:nth-child(4), tr th:nth-child(5),tr th:nth-child(7),tr th:nth-child(8)	{
+	 	display:none; visibility:hidden; 
+	}
+	tr td:nth-child(3),tr td:nth-child(4),tr td:nth-child(5), tr td:nth-child(7), tr td:nth-child(8){
+	 	display:none; visibility:hidden; 
+	}
+}
+@media only screen and (max-width: 360px) {
+	#phone_no,#office_address,#last_name ,#sal{
+		display:none; visibility:hidden; 
+	}
+	tr th:nth-child(3),tr th:nth-child(4), tr th:nth-child(5),tr th:nth-child(7),tr th:nth-child(8)	{
+		display:none; visibility:hidden; 
+	}
+	tr td:nth-child(3),tr td:nth-child(4),tr td:nth-child(5), tr td:nth-child(7), tr td:nth-child(8){
+		display:none; visibility:hidden;
+	}
+}
+@media only screen and (max-width: 320px) {
+	#phone_no,#office_address,#last_name ,#sal{
+		display:none; visibility:hidden; 
+	}
+	tr th:nth-child(3),tr th:nth-child(4), tr th:nth-child(5),tr th:nth-child(7),tr th:nth-child(8)	{
+		display:none; visibility:hidden; 
+	}
+	tr td:nth-child(3),tr td:nth-child(4),tr td:nth-child(5), tr td:nth-child(7), tr td:nth-child(8){
+		display:none; visibility:hidden; 
+	}
+}
+
+.left-align{
+	float:left;
+}
+
+.small-font{
+	font-size:12px;	
+}

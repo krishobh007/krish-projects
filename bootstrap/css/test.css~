@@ -1,0 +1,13 @@
+.mobile-view{
+
+	
+}
+
+
+
+@media only screen and (max-width: 320px) {
+		#phone_no,#office_address,#last_name ,#designation,#sal{ display:none; visibility:hidden; }
+		tr th:nth-child(4),tr th:nth-child(5), tr th:nth-child(6),tr th:nth-child(8),tr th:nth-child(9)	{ display:none; visibility:hidden; }
+		tr td:nth-child(4),tr td:nth-child(5),tr td:nth-child(6), tr td:nth-child(8), tr td:nth-child(9){ display:none; visibility:hidden; }
+.mobile-view;		
+}

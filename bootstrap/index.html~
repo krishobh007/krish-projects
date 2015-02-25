@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Employee Table</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Project name</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a data-toggle="modal" href="#" >About</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li class="nav-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+	<form class="navbar-form pull-right form-search" >
+              	<div class="input-append">
+    				<input type="text" id="inputSearch" class="span2 search-query search-terms">
+    				<button type="button" class="btn" id="searchBtn"> Search </button>
+  		</div>
+          </form>
+    </div>
+  </div>
+ </div>
+ <div class="container">
+    <a data-toggle="modal" href="#addDetails"  class="btn btn-primary" type="button" id="add-btn">Add</a>
+    <a  class="btn btn-primary" type="button" onclick="fetchDetails();" style="display: none;" id="edit-btn">Edit</a>
+    <a data-toggle="modal" href="#deleteDetails"  class="btn btn-primary" type="button" style="display: none;" id="delete-btn">Delete</a>
+    <div class="row-fluid">
+      	<div id="notFound" class="alert alert-block" style="display: none;">
+  			<h4>SEARCH!</h4>
+  			NOT FOUND
+		</div>
+        <table class="table table-hover" id="employee_list">
+              <thead>
+                <tr><th></th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Designation</th>
+                  <th>Salary</th>
+                  <th>Email Id</th>
+                  <th>Office Address</th>
+                  <th>Phone NUmber</th>
+                </tr>
+              </thead>
+              <tbody id="viewDetails">
+              </tbody>
+            </table>
+    </div>
+    <div class="row-fluid" id="pageDetails">
+      		<div id="resultPage" class="span6 small-font"></div>
+		    	<div class="pagination pagination-small span6">
+			  	<ul id="pageList">
+			    	<li><a href='#' onclick='renderPage(0);'>&laquo;</a></li>
+			  	</ul>
+			</div>
+		</div>
+    <hr>
+    </div>
+		<div id="addDetails" class="modal hide fade in" style="display: none;">
+		<div class="modal-header"><a class="close" data-dismiss="modal">×</a>
+			<h3>Add Employee Details</h3>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal" method="post" action="">
+			  <div class="control-group">
+			    <label class="control-label" for="inputFname">First Name</label>
+			    <div class="controls">
+			      <input type="text" id="fname" placeholder="First Name">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="inputLname">Last Name</label>
+			    <div class="controls">
+			      <input type="text" id="lname" placeholder="Last Name">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="desg" >Designation</label>
+			    <div class="controls">
+			      <input type="text" id="inputDesig" placeholder="desg">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="salary">Salary</label>
+			    <div class="controls">
+			      <input type="number" id="salary" placeholder="Salary">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="inputEmail">Email</label>
+			    <div class="controls">
+			      <input type="email" id="email" placeholder="Email">
+			    </div>
+			  </div>
+			   <div class="control-group">
+			    <label class="control-label" for="inputAddress">Address</label>
+			    <div class="controls">
+			      <textarea rows="1" id="address" placeholder=" Address"></textarea>		
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="inputMobile">Mobile Number</label>
+			    <div class="controls">
+			      <input type="number" id="mobile" placeholder="Mobile Number">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <div class="controls">
+			      	<a class="btn btn-success" onclick="addDetails();">Submit</a> 
+					<a href="#" class="btn" data-dismiss="modal">Clear</a>
+			    </div>
+			  </div>
+			</form>
+		</div>
+		</div>
+		<!-- edit  -->
+		
+		<div id="editDetails" class="modal hide fade in" style="display: none;">
+		<div class="modal-header"><a class="close" data-dismiss="modal">×</a>
+			<h3>Edit Employee Details</h3>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal" method="post" action="">
+			  <div class="control-group">
+			    <label class="control-label" for="editFname">First Name</label>
+			    <div class="controls">
+			      <input type="text" id="editFname" placeholder="First Name">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="editLname">Last Name</label>
+			    <div class="controls">
+			      <input type="text" id="editLname" placeholder="Last Name">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="editdesg" >Designation</label>
+			    <div class="controls">
+			      <input type="text" id="editDesig" placeholder="desg">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="editSalary">Salary</label>
+			    <div class="controls">
+			      <input type="number" id="editSalary" placeholder="Salary">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="editEmail">Email</label>
+			    <div class="controls">
+			      <input type="email" id="editEmail" placeholder="Email">
+			    </div>
+			  </div>
+			   <div class="control-group">
+			    <label class="control-label" for="editAddress">Address</label>
+			    <div class="controls">
+			      <textarea rows="1" id="editAddress" placeholder=" Address"></textarea>		
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="editMobile">Mobile Number</label>
+			    <div class="controls">
+			      <input type="number" id="editMobile" placeholder="Mobile Number">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <div class="controls">
+			      	<a class="btn btn-success" onclick="updateDetails();">Submit</a> 
+					<a href="#" class="btn" data-dismiss="modal">Clear</a>
+			    </div>
+			  </div>
+			</form>
+		</div>
+		</div>
+	<!-- delete details -->	
+	
+	<!-- view employee in mobile view  -->
+		<div id="viewDetailsMob" class="modal hide fade in" style="display: none;">
+		<div class="modal-header"><a class="close" data-dismiss="modal">×</a>
+			<h3>View Employee Details</h3>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal" method="post" action="">
+			  <div class="control-group">
+			    <label class="control-label" for="viewFname">First Name</label>
+			    <div class="controls" id="viewFname">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="editLname">Last Name</label>
+			    <div class="controls" id="viewLname">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="editdesg" >Designation</label>
+			    <div class="controls" id="viewDesig">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="editSalary">Salary</label>
+			    <div class="controls" id="viewSalary">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="editEmail">Email</label>
+			    <div class="controls" id="viewEmail">
+			    </div>
+			  </div>
+			   <div class="control-group">
+			    <label class="control-label" for="editAddress">Address</label>
+			    <div class="controls" id="viewAddress">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="editMobile">Mobile Number</label>
+			    <div class="controls" id="viewMobile">
+			    </div>
+			  </div>
+			</form>
+		</div>
+		</div>
+	<!-- delete details -->	
+	<div id="deleteDetails" class="modal hide fade in" style="display: none; ">
+		<div class="modal-header">
+			<a class="close" data-dismiss="modal">×</a>
+			<h3>Alert</h3>
+		</div>
+		<div class="modal-body">
+			<div class="alert alert-block">
+	 	 		<p>Do you surely want to delete?</p>
+			</div>
+		</div>
+		<div class="modal-footer"><a href="#" class="btn btn-success" onclick="deleteDetails();">Yes</a> 
+				<a href="#" class="btn" data-dismiss="modal">No</a>
+		</div>	
+	</div>
+	<!-- scripts -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  	<script src="lib/bootstrap.min.js"></script> 
+  	<script src="js/Main.js"></script>
+  	<script src="js/AddDetails.js"></script>
+  	<script src="js/EditDetails.js"></script>
+  	<script src="js/DeleteDetails.js"></script>
+  	<script src="js/SearchDetails.js"></script>
+  	<script src="js/GetEmployee.js"></script>
+  	
+  </body>
+</html>
+
+

@@ -1,0 +1,27 @@
+function getEmployee(){
+
+	var that=this;
+	var value = jQuery(that).attr("id");
+	console.log("clicked...hai.."+value);
+	//getEmployee(id);
+	
+	$.ajax({
+			url: baseURL+"editDetails/",
+			method:"POST",
+			data :{'id': value },
+			async:true,
+			success: function(object){
+				object = JSON.parse(object);
+				console.log(object);
+				/*
+				$("#editFname").val(object.first_name);
+				$("#editLname").val(object.last_name);
+				$("#editDesig").val(object.designation);
+				$("#editSalary").val(object.sal);
+				$("#editEmail").val(object.email_id);
+				$("#editAddress").val(object.office_address);
+				$("#editMobile").val(object.phone_no);*/
+				$('#viewDetailsMob').modal('show');
+			}
+		});
+}
