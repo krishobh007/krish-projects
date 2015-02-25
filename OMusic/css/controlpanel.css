@@ -1,0 +1,70 @@
+.save-icon-standard,.switch-icon-standard,.load-icon-standard,.volume-icon-standard,.bars-icon-standard,.tempo-icon-standard{
+		display: block;
+	    height: 30px;
+	    width: 60px;
+}
+.save-icon-selected,.switch-icon-selected,.load-icon-selected,.volume-icon-selected,.bars-icon-selected,.tempo-icon-selected{
+		display: block;
+	    height: 30px;
+	    width: 60px;
+}
+.save-icon-standard	{
+		background: url("../assets/Images/menu_save_button_standard.png") no-repeat scroll ;
+}
+.save-icon-standard:hover {
+   		background-image: url('../assets/Images/menu_save_button_highlighted.png');
+}
+.save-icon-selected	{
+		background: url("../assets/Images/menu_save_button_selected.png") no-repeat scroll ;
+		background-position: -4px -4px;
+}
+.switch-icon-standard	{
+		background: url("../assets/Images/menu_switch_button_standard.png") no-repeat scroll ;
+}
+.switch-icon-standard:hover {
+   		background-image: url('../assets/Images/menu_switch_button_highlighted.png');
+}
+.switch-icon-selected	{
+		background: url("../assets/Images/menu_switch_button_selected.png") no-repeat scroll ;
+		background-position: -4px -4px;
+}
+.load-icon-standard	{
+		background: url("../assets/Images/menu_load_button_standard.png") no-repeat scroll ;
+}
+.load-icon-standard:hover {
+   		background-image: url('../assets/Images/menu_load_button_highlighted.png');
+}
+.load-icon-selected	{
+		background: url("../assets/Images/menu_load_button_selected.png") no-repeat scroll ;
+		background-position: -4px -4px;
+}
+.volume-icon-standard	{
+		background: url("../assets/Images/menu_volume_button_standard.png") no-repeat scroll ;
+}
+.volume-icon-standard:hover {
+   		background-image: url('../assets/Images/menu_volume_button_highlighted.png');
+}
+.volume-icon-selected	{
+		background: url("../assets/Images/menu_volume_button_selected.png") no-repeat scroll ;
+		background-position: -4px -4px;
+}
+.bars-icon-standard	{
+		background: url("../assets/Images/menu_bars_button_standard.png") no-repeat scroll ;
+}
+.bars-icon-standard:hover {
+   		background-image: url('../assets/Images/menu_bars_button_highlighted.png');
+}
+.bars-icon-selected	{
+		background: url("../assets/Images/menu_bars_button_selected.png") no-repeat scroll ;
+		background-position: -4px -4px;
+}
+.tempo-icon-standard	{
+		background: url("../assets/Images/menu_tempo_button_standard.png") no-repeat scroll ;
+}
+.tempo-icon-standard:hover {
+   		background-image: url('../assets/Images/menu_tempo_button_highlighted.png');
+}
+.tempo-icon-selected	{
+		background: url("../assets/Images/menu_tempo_button_selected.png") no-repeat scroll ;
+		background-position: -4px -4px;
+}

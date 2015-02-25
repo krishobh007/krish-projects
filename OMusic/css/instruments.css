@@ -1,0 +1,169 @@
+.instrument-title{
+	  padding: 0px 0px;
+}
+.instrument-left{
+		width: 30px;
+		border:0px solid blue;
+		float:left;
+		
+}
+.instrument-body{
+		width: 60px;
+		border:0px solid red;
+		
+}
+.instrument-right{
+		width: 30px;
+		border:0px solid yellow;
+	
+}
+.instrument-reset{
+		background-image:  url("../assets/Images/select_instrument_icon");
+		background-position:4px 3px;
+		background-repeat:no-repeat no-repeat;
+		float: right;
+    	height: 60%;
+    	width: 30px;
+		border:0px solid red;
+}
+.instrument-include-on {
+		background-image:url("../assets/Images/instrument_included_icon.png");
+		background-position:6px -2px;
+		background-repeat:no-repeat;
+		height:82%;
+		width:30px;
+}
+
+.instrument-include-off {
+		background-image:url("../assets/Images/instrument_not_included_icon.png");
+		background-position:6px -2px;
+		background-repeat:no-repeat;
+		height:82%;
+		width:30px;
+}
+
+.instrument-icon-red,.instrument-icon-yellow,.instrument-icon-green,.instrument-icon-skyblue,
+.instrument-icon-blue,.instrument-icon-red-selected,.instrument-icon-yellow-selected,
+.instrument-icon-green-selected,.instrument-icon-skyblue-selected,.instrument-icon-blue-selected,
+.instrument-icon-red:hover,.instrument-icon-yellow:hover,.instrument-icon-green:hover,
+.instrument-icon-skyblue:hover,.instrument-icon-blue:hover{
+
+		height:35px;
+		float:right;
+		padding-right:0;
+		width:160px;
+		
+}
+.instrument-icon-red {
+	
+		background-image: url("../assets/Images/instrument_1_background_off.png");
+		background-origin:initial;
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		background-size:initial;
+}
+ 
+.instrument-icon-red:hover{
+	
+       background: url("../assets/Images/instrument_1_background_on.png") no-repeat scroll;
+}
+
+.instrument-icon-red-selected	{
+		
+		background: url("../assets/Images/instrument_1_background_on.png") ;
+		background-origin:initial;
+		background-repeat: no-repeat;
+		background-size:initial;
+}
+
+.instrument-icon-yellow {
+	
+		background-image: url("../assets/Images/instrument_2_background_off.png");
+		background-origin:initial;
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		background-size:initial;
+}
+
+.instrument-icon-yellow:hover{
+	
+		background: url("../assets/Images/instrument_2_background_on.png") no-repeat scroll;
+}
+
+.instrument-icon-yellow-selected	{
+		
+		background-image: url("../assets/Images/instrument_2_background_on.png") ;
+		background-origin:initial;
+		background-repeat: no-repeat;
+		background-size:initial;
+}
+
+.instrument-icon-green {
+	
+		background-image: url("../assets/Images/instrument_3_background_off.png");
+		background-origin:initial;
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		background-size:initial;
+}
+
+.instrument-icon-green:hover{
+	
+		background: url("../assets/Images/instrument_3_background_on.png") no-repeat scroll;
+}
+
+.instrument-icon-green-selected	{
+		
+		background: url("../assets/Images/instrument_3_background_on.png") ;
+		background-origin: initial;
+		background-repeat: no-repeat;
+		background-size: initial;
+}
+
+.instrument-icon-skyblue {
+	
+		background-image: url("../assets/Images/instrument_4_background_off.png");
+		background-origin: initial;
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		background-size: initial;
+}
+
+.instrument-icon-skyblue:hover{
+	
+		background: url("../assets/Images/instrument_4_background_on.png") no-repeat scroll;
+}
+
+.instrument-icon-skyblue-selected{
+		
+		background: url("../assets/Images/instrument_4_background_on.png") ;
+		background-origin:initial;
+		background-repeat: no-repeat;
+		background-size:initial;
+		
+}
+
+.instrument-icon-blue {
+	
+		background-image: url("../assets/Images/instrument_5_background_off.png");
+		background-origin:initial;
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		background-size:initial;
+}
+
+.instrument-icon-blue:hover{
+	
+		background: url("../assets/Images/instrument_5_background_on.png") no-repeat scroll;
+}
+
+.instrument-icon-blue-selected{
+		
+		background: url("../assets/Images/instrument_5_background_on.png") ;
+		background-origin:initial;
+		background-repeat: no-repeat;
+		background-size:initial;
+}
+
+
+

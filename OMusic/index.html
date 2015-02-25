@@ -1,0 +1,453 @@
+<!DOCTYPE html> 
+<html> 
+<head>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<script src="lib/jquery-1.8.2.min.js"></script>
+	
+	<script src="js/modernizr.min.js"></script>
+	<script src="js/CheckBroswerForHTML5.js"></script>
+	
+	<script src="js/Main.js"></script>
+	<script src="js/AppendSongs.js"></script>
+	
+	<script src="js/DrawCircle.js"></script>
+	<script src="js/Constants.js"></script> 
+	<script src="js/LoadJson.js"></script>
+	<script src="js/ProcessJson.js"></script>
+	
+	<script src="js/SetPlayerCss.js"></script>
+	<script src="js/CheckInstrumentStatus.js"></script>
+	
+	<script src="js/SelectorClick.js"></script>
+	<script src="js/SelectorRedClick.js"></script>
+	<script src="js/SelectorYellowClick.js"></script>
+	<script src="js/SelectorGreenClick.js"></script>
+	<script src="js/SelectorSkyblueClick.js"></script>
+	<script src="js/SelectorBlueClick.js"></script>
+	
+	<script src="js/PlaySource.js"></script> 
+	
+	<script src="js/AppendAudio.js"></script>
+		
+	<script src="js/PlayButtonClick.js"></script>
+	<script src="js/PauseButtonClick.js"></script>
+	
+	<script src="js/PlayNext.js"></script>
+	<script src="js/ResetPlayer.js"></script>
+	<script src="js/BeatIndicatorFlow.js"></script>
+	<script src="js/DisableInstrumentsNotActive.js"></script>
+	
+	<script src="js/InstrumentsClick.js"></script>
+	<script src="js/InstrumentResetClick.js"></script>
+	
+	<script src="js/InstrumentRedActive.js"></script>
+	<script src="js/InstrumentYellowActive.js"></script>
+	<script src="js/InstrumentGreenActive.js"></script>
+	<script src="js/InstrumentSkyblueActive.js"></script>
+	<script src="js/InstrumentBlueActive.js"></script>
+	
+	<script src="js/DisableControlBtnNotActive.js"></script>
+	
+	<script src="js/SwitchButtonClick.js"></script>
+	<script src="js/SaveButtonClick.js"></script>
+	<script src="js/LoadButtonClick.js"></script>
+	<script src="js/VolumeButtonClick.js"></script>
+	<script src="js/BarsButtonClick.js"></script>
+	<script src="js/TempoButtonClick.js"></script>
+	
+	<link rel="stylesheet" href="css/instruments.css"/>
+	<link rel="stylesheet" href="css/selectorlist.css"/>
+	<link rel="stylesheet" href="css/beatindicator.css"/>
+	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/controlpanel.css"/>
+	<link rel="stylesheet" href="css/musicList.css"/>
+	<link rel="stylesheet" href="css/styleCircle.css"/>
+	
+</head>
+<body>
+
+	<div id="backgroundSongs"></div>
+	<div id="audioList">
+		<div id="redList"></div>
+		<div id="yellowList"></div>
+		<div id="greenList"></div>
+		<div id="skyblueList"></div>
+		<div id="blueList"></div>
+	</div>
+	
+	<div id="audio" class="main">			
+		<div class="left-block">
+			
+			<!-- SELECTOR LIST STARTS HERE -->
+			
+				<div class="selector-list ">
+					<div class="selector-list-red" id="selectorListRed">
+						<div id="iconContainerSelector">
+							<div class="icon-red box-red-selector" id="node-0"><span id="0" class="selector-list-red-bg-off " name="0" ></span></div>
+							<div class="icon-red box-red-selector" id="node-1"><span id="1" class="selector-list-red-bg-off" name="0" ></span></div>
+							<div class="icon-red box-red-selector" id="node-2"><span id="2" class="selector-list-red-bg-off" name="0" ></span></div>
+							<div class="icon-red box-red-selector" id="node-3"><span id="3" class="selector-list-red-bg-off" name="0" ></span></div>
+							<div class="icon-red box-red-selector" id="node-4"><span id="4" class="selector-list-red-bg-off" name="0" ></span></div>
+							<div class="icon-red box-red-selector" id="node-5"><span id="5" class="selector-list-red-bg-off" name="0" ></span></div>
+							<div class="icon-red box-red-selector" id="node-6"><span id="6" class="selector-list-red-bg-off" name="0" ></span></div>
+							<div class="icon-red box-red-selector" id="node-7"><span id="7" class="selector-list-red-bg-off" name="0" ></span></div>
+							<div class="icon-red box-red-selector" id="node-8"><span id="8" class="selector-list-red-bg-off" name="0" ></span></div>
+							<div class="icon-red box-red-selector" id="node-9"><span id="9" class="selector-list-red-bg-off" name="0" ></span></div>
+							<div class="icon-red box-red-selector" id="node-10"><span id="10" class="selector-list-red-bg-off" name="0" ></span></div>
+							<div class="icon-red box-red-selector" id="node-11"><span id="11" class="selector-list-red-bg-off" name="0" ></span></div>
+							<div class="icon-red box-red-selector" id="node-12"><span id="12" class="selector-list-red-bg-off" name="0" ></span></div>
+							<div class="icon-red box-red-selector" id="node-13"><span id="13" class="selector-list-red-bg-off" name="0" ></span></div>
+							<div class="icon-red box-red-selector" id="node-14"><span id="14" class="selector-list-red-bg-off" name="0" ></span></div>
+							<div class="icon-red box-red-selector" id="node-15"><span id="15" class="selector-list-red-bg-off" name="0" ></span></div>
+						</div>
+					</div>
+					<div class="selector-list-yellow" id="selectorListYellow">
+						<div id="iconContainerSelector">
+							<div class="icon-yellow box-yellow-selector" id="node-0"><span id="0" class="selector-list-yellow-bg-off" name="0" ></span></div>
+							<div class="icon-yellow box-yellow-selector" id="node-1"><span id="1" class="selector-list-yellow-bg-off" name="0" ></span></div>
+							<div class="icon-yellow box-yellow-selector" id="node-2"><span id="2" class="selector-list-yellow-bg-off" name="0" ></span></div>
+							<div class="icon-yellow box-yellow-selector" id="node-3"><span id="3" class="selector-list-yellow-bg-off" name="0" ></span></div>
+							<div class="icon-yellow box-yellow-selector" id="node-4"><span id="4" class="selector-list-yellow-bg-off" name="0" ></span></div>
+							<div class="icon-yellow box-yellow-selector" id="node-5"><span id="5" class="selector-list-yellow-bg-off" name="0" ></span></div>
+							<div class="icon-yellow box-yellow-selector" id="node-6"><span id="6" class="selector-list-yellow-bg-off" name="0" ></span></div>
+							<div class="icon-yellow box-yellow-selector" id="node-7"><span id="7" class="selector-list-yellow-bg-off" name="0" ></span></div>
+							<div class="icon-yellow box-yellow-selector" id="node-8"><span id="8" class="selector-list-yellow-bg-off" name="0" ></span></div>
+							<div class="icon-yellow box-yellow-selector" id="node-9"><span id="9" class="selector-list-yellow-bg-off" name="0" ></span></div>
+							<div class="icon-yellow box-yellow-selector" id="node-10"><span id="10" class="selector-list-yellow-bg-off" name="0" ></span></div>
+							<div class="icon-yellow box-yellow-selector" id="node-11"><span id="11" class="selector-list-yellow-bg-off" name="0" ></span></div>
+							<div class="icon-yellow box-yellow-selector" id="node-12"><span id="12" class="selector-list-yellow-bg-off" name="0" ></span></div>
+							<div class="icon-yellow box-yellow-selector" id="node-13"><span id="13" class="selector-list-yellow-bg-off" name="0" ></span></div>
+							<div class="icon-yellow box-yellow-selector" id="node-14"><span id="14" class="selector-list-yellow-bg-off" name="0" ></span></div>
+							<div class="icon-yellow box-yellow-selector" id="node-15"><span id="15" class="selector-list-yellow-bg-off" name="0" ></span></div>
+						</div>
+					</div>
+					<div class="selector-list-green" id="selectorListGreen">
+						<div id="iconContainerSelector">
+							<div class="icon-green box-green-selector" id="node-0"><span id="0" class="selector-list-green-bg-off" name="0" ></span></div>
+							<div class="icon-green box-green-selector" id="node-1"><span id="1" class="selector-list-green-bg-off" name="0" ></span></div>
+							<div class="icon-green box-green-selector" id="node-2"><span id="2" class="selector-list-green-bg-off" name="0" ></span></div>
+							<div class="icon-green box-green-selector" id="node-3"><span id="3" class="selector-list-green-bg-off" name="0" ></span></div>
+							<div class="icon-green box-green-selector" id="node-4"><span id="4" class="selector-list-green-bg-off" name="0" ></span></div>
+							<div class="icon-green box-green-selector" id="node-5"><span id="5" class="selector-list-green-bg-off" name="0" ></span></div>
+							<div class="icon-green box-green-selector" id="node-6"><span id="6" class="selector-list-green-bg-off" name="0" ></span></div>
+							<div class="icon-green box-green-selector" id="node-7"><span id="7" class="selector-list-green-bg-off" name="0" ></span></div>
+							<div class="icon-green box-green-selector" id="node-8"><span id="8" class="selector-list-green-bg-off" name="0" ></span></div>
+							<div class="icon-green box-green-selector" id="node-9"><span id="9" class="selector-list-green-bg-off" name="0" ></span></div>
+							<div class="icon-green box-green-selector" id="node-10"><span id="10" class="selector-list-green-bg-off" name="0" ></span></div>
+							<div class="icon-green box-green-selector" id="node-11"><span id="11" class="selector-list-green-bg-off" name="0" ></span></div>
+							<div class="icon-green box-green-selector" id="node-12"><span id="12" class="selector-list-green-bg-off" name="0" ></span></div>
+							<div class="icon-green box-green-selector" id="node-13"><span id="13" class="selector-list-green-bg-off" name="0" ></span></div>
+							<div class="icon-green box-green-selector" id="node-14"><span id="14" class="selector-list-green-bg-off" name="0" ></span></div>
+							<div class="icon-green box-green-selector" id="node-15"><span id="15" class="selector-list-green-bg-off" name="0" ></span></div>
+						</div>
+					</div>
+					<div class="selector-list-skyblue" id="selectorListSkyblue">
+						<div id="iconContainerSelector">
+							<div class="icon-skyblue box-skyblue-selector" id="node-0"><span id="0" class="selector-list-skyblue-bg-off " name="0" ></span></div>
+							<div class="icon-skyblue box-skyblue-selector" id="node-1"><span id="1" class="selector-list-skyblue-bg-off" name="0" ></span></div>
+							<div class="icon-skyblue box-skyblue-selector" id="node-2"><span id="2" class="selector-list-skyblue-bg-off" name="0" ></span></div>
+							<div class="icon-skyblue box-skyblue-selector" id="node-3"><span id="3" class="selector-list-skyblue-bg-off" name="0" ></span></div>
+							<div class="icon-skyblue box-skyblue-selector" id="node-4"><span id="4" class="selector-list-skyblue-bg-off" name="0" ></span></div>
+							<div class="icon-skyblue box-skyblue-selector" id="node-5"><span id="5" class="selector-list-skyblue-bg-off" name="0" ></span></div>
+							<div class="icon-skyblue box-skyblue-selector" id="node-6"><span id="6" class="selector-list-skyblue-bg-off" name="0" ></span></div>
+							<div class="icon-skyblue box-skyblue-selector" id="node-7"><span id="7" class="selector-list-skyblue-bg-off" name="0" ></span></div>
+							<div class="icon-skyblue box-skyblue-selector" id="node-8"><span id="8" class="selector-list-skyblue-bg-off" name="0" ></span></div>
+							<div class="icon-skyblue box-skyblue-selector" id="node-9"><span id="9" class="selector-list-skyblue-bg-off" name="0" ></span></div>
+							<div class="icon-skyblue box-skyblue-selector" id="node-10"><span id="10" class="selector-list-skyblue-bg-off" name="0" ></span></div>
+							<div class="icon-skyblue box-skyblue-selector" id="node-11"><span id="11" class="selector-list-skyblue-bg-off" name="0" ></span></div>
+							<div class="icon-skyblue box-skyblue-selector" id="node-12"><span id="12" class="selector-list-skyblue-bg-off" name="0" ></span></div>
+							<div class="icon-skyblue box-skyblue-selector" id="node-13"><span id="13" class="selector-list-skyblue-bg-off" name="0" ></span></div>
+							<div class="icon-skyblue box-skyblue-selector" id="node-14"><span id="14" class="selector-list-skyblue-bg-off" name="0" ></span></div>
+							<div class="icon-skyblue box-skyblue-selector" id="node-15"><span id="15" class="selector-list-skyblue-bg-off" name="0" ></span></div>
+						</div>
+					</div>
+					<div class="selector-list-blue" id="selectorListBlue">
+						<div id="iconContainerSelector">
+							<div class="icon-blue box-blue-selector" id="node-0"><span id="0" class="selector-list-blue-bg-off " name="0" ></span></div>
+							<div class="icon-blue box-blue-selector" id="node-1"><span id="1" class="selector-list-blue-bg-off" name="0" ></span></div>
+							<div class="icon-blue box-blue-selector" id="node-2"><span id="2" class="selector-list-blue-bg-off" name="0" ></span></div>
+							<div class="icon-blue box-blue-selector" id="node-3"><span id="3" class="selector-list-blue-bg-off" name="0" ></span></div>
+							<div class="icon-blue box-blue-selector" id="node-4"><span id="4" class="selector-list-blue-bg-off" name="0" ></span></div>
+							<div class="icon-blue box-blue-selector" id="node-5"><span id="5" class="selector-list-blue-bg-off" name="0" ></span></div>
+							<div class="icon-blue box-blue-selector" id="node-6"><span id="6" class="selector-list-blue-bg-off" name="0" ></span></div>
+							<div class="icon-blue box-blue-selector" id="node-7"><span id="7" class="selector-list-blue-bg-off" name="0" ></span></div>
+							<div class="icon-blue box-blue-selector" id="node-8"><span id="8" class="selector-list-blue-bg-off" name="0" ></span></div>
+							<div class="icon-blue box-blue-selector" id="node-9"><span id="9" class="selector-list-blue-bg-off" name="0" ></span></div>
+							<div class="icon-blue box-blue-selector" id="node-10"><span id="10" class="selector-list-blue-bg-off" name="0" ></span></div>
+							<div class="icon-blue box-blue-selector" id="node-11"><span id="11" class="selector-list-blue-bg-off" name="0" ></span></div>
+							<div class="icon-blue box-blue-selector" id="node-12"><span id="12" class="selector-list-blue-bg-off" name="0" ></span></div>
+							<div class="icon-blue box-blue-selector" id="node-13"><span id="13" class="selector-list-blue-bg-off" name="0" ></span></div>
+							<div class="icon-blue box-blue-selector" id="node-14"><span id="14" class="selector-list-blue-bg-off" name="0" ></span></div>
+							<div class="icon-blue box-blue-selector" id="node-15"><span id="15" class="selector-list-blue-bg-off" name="0" ></span></div>
+						</div>
+					</div>
+				</div>
+				
+			<!-- SELECTOR LIST ENDS HERE-->
+			
+			<!-- BEAT INDICATOR LIST STARTS HERE-->
+			
+				<div class="indicator-list-red" id="indicatorListRed">
+					<div id="iconContainerIndicator">
+						<div class="icon-3" id="node-0-red"><span class="beat-indicator-red-off box-red-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-1-red"><span class="beat-indicator-red-off box-red-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-2-red"><span class="beat-indicator-red-off box-red-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-3-red"><span class="beat-indicator-red-off box-red-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-4-red"><span class="beat-indicator-red-off box-red-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-5-red"><span class="beat-indicator-red-off box-red-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-6-red"><span class="beat-indicator-red-off box-red-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-7-red"><span class="beat-indicator-red-off box-red-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-8-red"><span class="beat-indicator-red-off box-red-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-9-red"><span class="beat-indicator-red-off box-red-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-10-red"><span class="beat-indicator-red-off box-red-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-11-red"><span class="beat-indicator-red-off box-red-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-12-red"><span class="beat-indicator-red-off box-red-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-13-red"><span class="beat-indicator-red-off box-red-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-14-red"><span class="beat-indicator-red-off box-red-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-15-red"><span class="beat-indicator-red-off box-red-indicator" name="0" ></span></div>
+					</div>
+				</div>
+			
+				<div class="indicator-list-yellow" id="indicatorListYellow">
+					<div id="iconContainerIndicator">
+						<div class="icon-3" id="node-0-yellow"><span class="beat-indicator-red-off box-yellow-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-1-yellow"><span class="beat-indicator-red-off box-yellow-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-2-yellow"><span class="beat-indicator-red-off box-yellow-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-3-yellow"><span class="beat-indicator-red-off box-yellow-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-4-yellow"><span class="beat-indicator-red-off box-yellow-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-5-yellow"><span class="beat-indicator-red-off box-yellow-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-6-yellow"><span class="beat-indicator-red-off box-yellow-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-7-yellow"><span class="beat-indicator-red-off box-yellow-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-8-yellow"><span class="beat-indicator-red-off box-yellow-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-9-yellow"><span class="beat-indicator-red-off box-yellow-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-10-yellow"><span class="beat-indicator-red-off box-yellow-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-11-yellow"><span class="beat-indicator-red-off box-yellow-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-12-yellow"><span class="beat-indicator-red-off box-yellow-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-13-yellow"><span class="beat-indicator-red-off box-yellow-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-14-yellow"><span class="beat-indicator-red-off box-yellow-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-15-yellow"><span class="beat-indicator-red-off box-yellow-indicator" name="0" ></span></div>
+					</div>
+				</div>
+				
+				<div class="indicator-list-green" id="indicatorListGreen">
+					<div id="iconContainerIndicator">
+						<div class="icon-3" id="node-0-green"><span class="beat-indicator-red-off box-green-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-1-green"><span class="beat-indicator-red-off box-green-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-2-green"><span class="beat-indicator-red-off box-green-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-3-green"><span class="beat-indicator-red-off box-green-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-4-green"><span class="beat-indicator-red-off box-green-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-5-green"><span class="beat-indicator-red-off box-green-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-6-green"><span class="beat-indicator-red-off box-green-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-7-green"><span class="beat-indicator-red-off box-green-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-8-green"><span class="beat-indicator-red-off box-green-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-9-green"><span class="beat-indicator-red-off box-green-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-10-green"><span class="beat-indicator-red-off box-green-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-11-green"><span class="beat-indicator-red-off box-green-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-12-green"><span class="beat-indicator-red-off box-green-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-13-green"><span class="beat-indicator-red-off box-green-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-14-green"><span class="beat-indicator-red-off box-green-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-15-green"><span class="beat-indicator-red-off box-green-indicator" name="0" ></span></div>
+					</div>
+				</div>
+				
+				<div class="indicator-list-skyblue" id="indicatorListSkyblue">
+					<div id="iconContainerIndicator">
+						<div class="icon-3" id="node-0-skyblue"><span class="beat-indicator-skyblue-off box-skyblue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-1-skyblue"><span class="beat-indicator-skyblue-off box-skyblue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-2-skyblue"><span class="beat-indicator-skyblue-off box-skyblue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-3-skyblue"><span class="beat-indicator-skyblue-off box-skyblue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-4-skyblue"><span class="beat-indicator-skyblue-off box-skyblue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-5-skyblue"><span class="beat-indicator-skyblue-off box-skyblue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-6-skyblue"><span class="beat-indicator-skyblue-off box-skyblue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-7-skyblue"><span class="beat-indicator-skyblue-off box-skyblue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-8-skyblue"><span class="beat-indicator-skyblue-off box-skyblue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-9-skyblue"><span class="beat-indicator-skyblue-off box-skyblue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-10-skyblue"><span class="beat-indicator-skyblue-off box-skyblue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-11-skyblue"><span class="beat-indicator-skyblue-off box-skyblue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-12-skyblue"><span class="beat-indicator-skyblue-off box-skyblue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-13-skyblue"><span class="beat-indicator-skyblue-off box-skyblue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-14-skyblue"><span class="beat-indicator-skyblue-off box-skyblue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-15-skyblue"><span class="beat-indicator-skyblue-off box-skyblue-indicator" name="0" ></span></div>
+					</div>
+				</div>
+				
+				<div class="indicator-list-blue" id="indicatorListBlue">
+					<div id="iconContainerIndicator">
+						<div class="icon-3" id="node-0-blue"><span class="beat-indicator-blue-off box-blue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-1-blue"><span class="beat-indicator-blue-off box-blue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-2-blue"><span class="beat-indicator-blue-off box-blue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-3-blue"><span class="beat-indicator-blue-off box-blue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-4-blue"><span class="beat-indicator-blue-off box-blue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-5-blue"><span class="beat-indicator-blue-off box-blue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-6-blue"><span class="beat-indicator-blue-off box-blue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-7-blue"><span class="beat-indicator-blue-off box-blue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-8-blue"><span class="beat-indicator-blue-off box-blue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-9-blue"><span class="beat-indicator-blue-off box-blue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-10-blue"><span class="beat-indicator-blue-off box-blue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-11-blue"><span class="beat-indicator-blue-off box-blue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-12-blue"><span class="beat-indicator-blue-off box-blue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-13-blue"><span class="beat-indicator-blue-off box-blue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-14-blue"><span class="beat-indicator-blue-off box-blue-indicator" name="0" ></span></div>
+						<div class="icon-3" id="node-15-blue"><span class="beat-indicator-blue-off box-blue-indicator" name="0" ></span></div>
+					</div>
+				</div>
+				
+			<!-- BEAT INDICATOR LIST ENDS HERE-->	
+			
+				<div class="box-play" id="playIcon"></div>
+				<div class="box-paused" id="pauseIcon"></div>
+			</div>
+			
+	<div class="right-block right-float" id="panelView">
+			
+				<!-- SWITCH BLOCK STARTS HERE -->
+			
+				<div class="instrument-block" id="panelViewSwitch">
+				
+					<div id="instrumentIconRed">
+						<div class="instrument-icon-red" >
+							<span class="instrument-left instrument-include-off"></span>
+						 	<span class="instrument-body instrument-title">guitar</span>
+							<span class="instrument-right instrument-reset"></span>
+						</div>
+					</div>
+					
+					<div class="clear"></div>
+					
+					<div id="instrumentIconYellow">
+						<div class="instrument-icon-yellow" >
+							<span class="instrument-left instrument-include-off"></span>
+						 	<span class="instrument-body instrument-title">drums</span>
+							<span class="instrument-right instrument-reset"></span>
+						</div>
+					</div>
+					
+					<div class="clear"></div>
+					
+					<div id="instrumentIconGreen">
+						<div class="instrument-icon-green" >
+							<span class="instrument-left instrument-include-off"></span>
+						 	<span class="instrument-body instrument-title">flute</span>
+							<span class="instrument-right instrument-reset"></span>
+						</div>
+					</div>
+					
+					<div class="clear"></div>
+					
+					<div id="instrumentIconSkyblue">
+						<div class="instrument-icon-skyblue" >
+							<span class="instrument-left instrument-include-off"></span>
+						 	<span class="instrument-body instrument-title">cello</span>
+							<span class="instrument-right instrument-reset"></span>
+						</div>
+					</div>
+					
+					<div class="clear"></div>
+					
+					<div id="instrumentIconBlue">
+						<div class="instrument-icon-blue" >
+							<span class="instrument-left instrument-include-off"></span>
+						 	<span class="instrument-body instrument-title">brass</span>
+							<span class="instrument-right instrument-reset"></span>
+						</div>
+					</div>
+					<div class="clear"></div>
+					
+					<div id="musicList">
+						<ul id="musicListRed" class="music-list-red"></ul>
+						<ul id="musicListYellow" class="music-list-yellow"></ul>
+						<ul id="musicListGreen" class="music-list-green"></ul>
+						<ul id="musicListSkyblue" class="music-list-skyblue"></ul>
+						<ul id="musicListBlue" class="music-list-blue"></ul>
+					</div>
+					<div class="clear"></div>
+				</div>
+				
+			<!-- SWITCH BLOCK ENDS HERE -->
+			
+			<!-- SAVE BLOCK STARTS HERE -->
+				<div class="instrument-block" id="panelViewSave">
+					<div>
+						SAVE BLOCK
+					</div>
+				</div>
+			<!-- SAVE BLOCK ENDS HERE -->
+			
+			<!-- SAVE BLOCK STARTS HERE -->
+				<div class="instrument-block" id="panelViewLoad">
+					<div>
+						LOAD BLOCK
+					</div>
+				</div>
+			<!-- SAVE BLOCK ENDS HERE -->
+			
+			<!-- SAVE BLOCK STARTS HERE -->
+				<div class="instrument-block" id="panelViewVolume">
+					<div>
+						VOLUME BLOCK
+					</div>
+				</div>
+			<!-- SAVE BLOCK ENDS HERE -->
+			
+			<!-- SAVE BLOCK STARTS HERE -->
+				<div class="instrument-block" id="panelViewBars">
+					<div>
+						BARS BLOCK
+					</div>
+				</div>
+			<!-- SAVE BLOCK ENDS HERE -->
+			
+			<!-- SAVE BLOCK STARTS HERE -->
+				<div class="instrument-block" id="panelViewTempo">
+					<div>
+						TEMPO BLOCK
+					</div>
+				</div>
+			<!-- SAVE BLOCK ENDS HERE -->
+			
+			<!-- CONTROL BLOCK STARTS HERE -->
+			
+				<div class="control-block" id="controlBlock">
+				
+				<table border="0" align="right">
+					<tr>
+						<td id="switch">
+							<div class="switch-icon-standard right-float" id="switchIcon"></div>
+						</td>
+						<td id="save" class="">
+							<div class="save-icon-standard right-float" id="saveIcon"></div>
+						</td>
+						<td id="load">
+							<div class="load-icon-standard right-float" id="loadIcon"></div>
+						</td>
+					
+					</tr>
+					<br/>
+					<tr class="hidden">
+						<td id="volume">
+							<div class="volume-icon-standard right-float" id="volumeIcon"></div>
+						</td>
+						<td id="bars">
+							<div class="bars-icon-standard right-float" id="barsIcon"></div>
+						</td>
+						<td id="tempo">
+							<div class="tempo-icon-standard right-float" id="tempoIcon"></div>
+						</td>
+					</tr>
+				</table>
+					
+				</div>
+				
+			<!-- CONTROL BLOCK ENDS HERE -->	
+			
+			</div>
+			
+	<div class="clear"></div>
+
+	</div>
+</body> 
+</html>
+

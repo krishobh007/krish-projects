@@ -1,0 +1,66 @@
+
+li{list-style:none;}
+
+.list label{
+		color:white;
+		font-size:100%;
+}
+
+.music-list-red,.music-list-yellow,.music-list-green,.music-list-skyblue,.music-list-blue{
+		float:right;
+		background-position: right;
+		text-align: left;
+		height:100px;
+		padding: 13px 35px 75px 8px;
+}
+
+.music-list-red{
+		background: url("../assets/Images/scrollable_list_background_1.png");
+		background-repeat:no-repeat ;
+		
+}
+.music-list-yellow{
+		background: url("../assets/Images/scrollable_list_background_2.png");
+		background-repeat:no-repeat ;
+		
+}
+.music-list-green{
+		background: url("../assets/Images/scrollable_list_background_3.png");
+		background-repeat:no-repeat ;
+		
+}
+.music-list-skyblue{
+		background: url("../assets/Images/scrollable_list_background_4.png");
+		background-repeat:no-repeat ;
+}
+.music-list-blue{
+		background: url("../assets/Images/scrollable_list_background_5.png");
+		background-repeat:no-repeat ;
+}
+
+.music-list-red .list{
+		background: url("../assets/Images/list_cell_background_1.png") repeat;
+		background-size: 78% 156%;
+		background-position: 0px 19px;
+}
+.music-list-yellow .list{
+		background: url("../assets/Images/list_cell_background_2.png") no-repeat;
+		background-size: 78% 156%;
+		background-position: 0px 19px;
+		
+}
+.music-list-green .list{
+		background: url("../assets/Images/list_cell_background_3.png") no-repeat;
+		background-size: 78% 156%;
+		background-position: 0px 19px;
+}
+.music-list-skyblue .list{
+		background: url("../assets/Images/list_cell_background_4.png") no-repeat;
+		background-size: 78% 156%;
+		background-position: 0px 19px;
+}
+.music-list-blue .list{
+		background: url("../assets/Images/list_cell_background_5.png") no-repeat;
+		background-size: 78% 156%;
+		background-position: 0px 19px;	
+}

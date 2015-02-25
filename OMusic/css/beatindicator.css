@@ -1,0 +1,83 @@
+
+.beat-indicator-red-off {
+		background-attachment:scroll;
+		background-color:transparent;
+		background-image:url(../assets/Images/beat_indicator_off_1.png) ;
+		background-repeat:no-repeat ;
+		display:block;
+		float:left;
+}
+ 
+.beat-indicator-red-on {
+		
+	 	background-color:transparent;
+	 	background: url("../assets/Images/beat_indicator_on_1.png")    ;
+		background-repeat:no-repeat ;
+	 	
+}
+.beat-indicator-yellow-off {
+		background-attachment:scroll;
+		background-color:transparent;
+		background-image:url(../assets/Images/beat_indicator_off_2.png) ;
+		background-repeat:no-repeat ;
+		display:block;
+		float:left;
+}
+ 
+.beat-indicator-yellow-on {
+		
+	 	background-color:transparent;
+	 	background: url("../assets/Images/beat_indicator_on_2.png")    ;
+		background-repeat:no-repeat ;
+	 	
+}
+.beat-indicator-green-off {
+		background-attachment:scroll;
+		background-color:transparent;
+		background-image:url(../assets/Images/beat_indicator_off_1.png) ;
+		background-repeat:no-repeat ;
+		display:block;
+		float:left;
+}
+ 
+.beat-indicator-green-on {
+		
+	 	background-color:transparent;
+	 	background: url("../assets/Images/beat_indicator_on_3.png")    ;
+		background-repeat:no-repeat ;
+	 	
+}
+.beat-indicator-skyblue-off {
+		background-attachment:scroll;
+  		background-color:transparent;
+  		background-image:url(../assets/Images/beat_indicator_off_4.png) ;
+		background-position:8px 6px;
+		background-repeat:no-repeat ;
+		display:block;
+		float:left;
+		
+}
+.beat-indicator-skyblue-on {
+		
+	 	background-color:transparent;
+	 	background: url("../assets/Images/beat_indicator_on_4.png")    ;
+		background-repeat:no-repeat ;
+	 	
+}
+.beat-indicator-blue-off {
+		background-attachment:scroll;
+  		background-color:transparent;
+  		background-image:url(../assets/Images/beat_indicator_off_5.png) ;
+		background-position:8px 6px;
+		background-repeat:no-repeat ;
+		display:block;
+		float:left;
+		
+}
+.beat-indicator-blue-on {
+		
+	 	background-color:transparent;
+	 	background: url("../assets/Images/beat_indicator_on_5.png")    ;
+		background-repeat:no-repeat ;
+	 	
+}

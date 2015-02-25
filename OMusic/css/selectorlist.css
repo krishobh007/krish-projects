@@ -1,0 +1,39 @@
+.selector-list-red-bg-off,.selector-list-red-bg-selected,
+.selector-list-yellow-bg-selected,.selector-list-yellow-bg-off,
+.selector-list-green-bg-off,.selector-list-green-bg-selected,
+.selector-list-skyblue-bg-off,.selector-list-skyblue-bg-selected,
+.selector-list-blue-bg-off,.selector-list-blue-bg-selected{
+		display: block;
+		height: 50px;
+		width: 50px;
+}
+.selector-list-red-bg-off {
+		background: url("../assets/Images/pad_off_1.png") ;
+}
+.selector-list-red-bg-selected{
+		background-image:url(../assets/Images/pad_on_1.png);
+}
+.selector-list-yellow-bg-off {
+	    background: url("../assets/Images/pad_off_2.png") ;
+}
+.selector-list-yellow-bg-selected	{
+		background-image:url(../assets/Images/pad_on_2.png);
+}	
+.selector-list-green-bg-off {
+	    background: url("../assets/Images/pad_off_3.png") ;
+}
+.selector-list-green-bg-selected	{
+		background-image:url(../assets/Images/pad_on_3.png);
+}
+.selector-list-skyblue-bg-off {
+	    background: url("../assets/Images/pad_off_4.png") ;
+}
+.selector-list-skyblue-bg-selected	{
+		background-image:url(../assets/Images/pad_on_4.png);
+}
+.selector-list-blue-bg-off {
+	    background: url("../assets/Images/pad_off_5.png") ;
+}
+.selector-list-blue-bg-selected	{
+		background-image:url(../assets/Images/pad_on_5.png);
+}	

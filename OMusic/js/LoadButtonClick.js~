@@ -1,0 +1,13 @@
+$("#loadIcon").live("click", function(){
+	
+	disableControlBtnNotActive();
+	
+	$(this).removeClass("load-icon-standard").addClass("load-icon-selected");
+	
+	hideAllPanelsExcept("load");
+	
+	
+	showAllInstruments();
+	hideAllMusicList();
+	
+});	

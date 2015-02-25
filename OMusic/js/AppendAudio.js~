@@ -1,0 +1,131 @@
+/*
+var appendAudio = function(){
+	console.log("appendAudio");
+	$("#audioList").html("");
+	$.ajax({
+		url:"html/audioList.html",
+		async :false,
+		success:function(result){
+			for(var i=0;i<16;i++){
+				
+				if(selectorListIdRed[i]!='0'){
+					if(musicNodeIdRed[i]!=undefined){
+						
+						$("#audioList").append(result);
+						$('audio').last().attr('id', "musicRed-"+i);
+						$('source').last().attr('id', "mp3srcRed-"+i);
+						$('source').last().attr('src', musicNodeIdRed[i]);
+					}
+				}
+				if(selectorListIdYellow[i]!='0'){
+					if(musicNodeIdYellow[i]!=undefined){
+						
+						$("#audioList").append(result);
+						$('audio').last().attr('id', "musicYellow-"+i);
+						$('source').last().attr('id', "mp3srcYellow-"+i);
+						$('source').last().attr('src', musicNodeIdYellow[i]);
+					}
+				}
+				if(selectorListIdGreen[i]!='0'){
+					if(musicNodeIdGreen[i]!=undefined){
+						
+						$("#audioList").append(result);
+						$('audio').last().attr('id', "musicGreen-"+i);
+						$('source').last().attr('id', "mp3srcGreen-"+i);
+						$('source').last().attr('src', musicNodeIdGreen[i]);
+					}
+				}
+				if(selectorListIdSkyblue[i]!='0'){
+					if(musicNodeIdSkyblue[i]!=undefined){
+						
+						$("#audioList").append(result);
+						$('audio').last().attr('id', "musicSkyblue-"+i);
+						$('source').last().attr('id', "mp3srcSkyblue-"+i);
+						$('source').last().attr('src', musicNodeIdSkyblue[i]);
+					}
+				}
+				if(selectorListIdBlue[i]!='0'){
+					if(musicNodeIdBlue[i]!=undefined){
+						
+						$("#audioList").append(result);
+						$('audio').last().attr('id', "musicBlue-"+i);
+						$('source').last().attr('id', "mp3srcBlue-"+i);
+						$('source').last().attr('src', musicNodeIdBlue[i]);
+					}
+				}
+			}
+		
+		}
+	});
+};
+*/
+
+var appendAudio = function(color){
+	
+	console.log("appendAudio - "+color);
+	var selectorListId=[];
+	var musicNodeId=[];
+	var audioListId;
+	
+	switch(color){
+	
+		case 'red':
+			audioListId="#audioList #redList";
+			musicId="musicRed-";
+			mp3SrcId="mp3srcRed-";
+			selectorListId=selectorListIdRed;
+			musicNodeId=musicNodeIdRed;
+			break;
+		case 'yellow':
+			audioListId="#audioList #yellowList";
+			musicId="musicYellow-";
+			mp3SrcId="mp3srcYellow-";
+			selectorListId=selectorListIdYellow;
+			musicNodeId=musicNodeIdYellow;
+			break;
+		case 'green':
+			audioListId="#audioList #greenList";
+			musicId="musicGreen-";
+			mp3SrcId="mp3srcGreen-";
+			selectorListId=selectorListIdGreen;
+			musicNodeId=musicNodeIdGreen;
+			break;
+		case 'skyblue':
+			audioListId="#audioList #skyblueList";
+			musicId="musicSkyblue-";
+			mp3SrcId="mp3srcSkyblue-";
+			selectorListId=selectorListIdSkyblue;
+			musicNodeId=musicNodeIdSkyblue;
+			break;
+		case 'blue':
+			audioListId="#audioList #blueList";
+			musicId="musicBlue-";
+			mp3SrcId="mp3srcBlue-";
+			selectorListId=selectorListIdBlue;
+			musicNodeId=musicNodeIdBlue;
+			break;
+		default:
+			console.log("case default");
+	}
+	
+	$.ajax({
+		url:"html/audioList.html",
+		async :false,
+		success:function(result){
+			$(audioListId).html("");
+			for(var i=0;i<16;i++){
+				
+				if(selectorListId[i]!='0' && selectorListId[i]!=undefined){
+					if(musicNodeId[i]!='0' && musicNodeId[i]!=undefined){
+						
+						$(audioListId).append(result);
+						$(audioListId+' audio').last().attr('id', musicId+i);
+						$(audioListId+' source').last().attr('id', mp3SrcId+i);
+						$(audioListId+' source').last().attr('src', musicNodeId[i]);
+					}
+				}
+			}
+		
+		}
+	});
+};
