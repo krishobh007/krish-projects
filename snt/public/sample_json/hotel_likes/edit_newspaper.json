@@ -1,0 +1,19 @@
+{
+    "news_papers": [
+        {
+            "id": "1",
+            "name": "Newspaper 1",
+            "is_checked": "true"
+        },
+        {
+            "id": "2",
+            "name": "Newspaper 2",
+            "is_checked": "false"
+        },
+        {
+            "id": "3",
+            "name": "Newspaper 3",
+            "is_checked": "true"
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+{
+     "chains" : [
+        {
+            "value": "1",
+            "name": "chain one"
+        },
+         {
+            "value": "4",
+            "name": "chain four"
+        },
+         {
+            "value": "3",
+            "name": "chain three"
+        },
+         {
+            "value": "6",
+            "name": "chain five"
+        } ,{
+            "value": "7",
+            "name": "chain six"
+        },
+         {
+            "value": "8",
+            "name": "chain seven"
+        }
+    ]
+}

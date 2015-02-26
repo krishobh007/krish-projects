@@ -1,0 +1,103 @@
+<!-- Company Card Tab 1 -->
+
+<form method="post"  id="cc-contact-info" name="cc-contact-info" class="form card-tab scrollable tab-header full-width" ng-show="currentSelectedTab == 'cc-contact-info'"   aria-labelledby="ui-id-1"
+ role="tabpanel" aria-expanded="true" aria-hidden="false" ng-controller="companyCardDetailsContactCtrl"  ng-iscroll="companyCardDetailsContactCtrl" ng-iscroll-delay="2000">
+    
+    <div class="wrapper cc-contact-info-height1" >
+
+    	<div ng-include="'/assets/partials/common/notification_message.html'"></div>
+
+        <div class="holder left">
+            <strong class="h3" translate>COMAPNY_INFO</strong>
+
+            <rv-textbox ng-if="account_type == 'COMPANY'" value="contactInformation.account_details.account_name" label="Company Name" placeholder = "Enter Company Name" styleclass="full-width"></rv-textbox>
+
+            <rv-textbox ng-if="account_type == 'TRAVELAGENT'" value="contactInformation.account_details.account_name" label="Travel Agent Name" placeholder = "Enter Travel Agent Name" styleclass="full-width"></rv-textbox>
+
+            <rv-textbox value="contactInformation.address_details.street1" label="Address" placeholder = "Enter Address Line 1" styleclass="margin"></rv-textbox>
+
+            <rv-textbox value="contactInformation.address_details.street2" placeholder = "Enter Address Line 2" styleclass="no-label"></rv-textbox>
+
+            <rv-textbox value="contactInformation.address_details.street3" placeholder = "Enter Address Line 3" styleclass="no-label full-width"></rv-textbox>
+
+            <rv-textbox value="contactInformation.address_details.city" label="City" placeholder = "Enter City" styleclass="margin"></rv-textbox>
+
+            <rv-textbox value="contactInformation.address_details.postal_code" label="Postal code" placeholder = "Enter Postal code" ></rv-textbox>
+
+            <rv-textbox value="contactInformation.address_details.state" label="State" placeholder = "Enter State" styleclass="margin"></rv-textbox>
+
+            <!--<rv-dropdown label="Country" label-in-drop-down="Select country" list="contactInformation.countries" selected-Id='contactInformation.address_details.country' ></rv-dropdown> -->
+            <!-- drop down directive is name & value, but in here it is different-->
+            <div class="entry">
+                <label for="company-country" translate>COUNTRY</label>
+                <div class="select">
+                    <select iscroll-stop-propagation id="company-country" name="company-country" ng-model="contactInformation.address_details.country_id">
+                        <option value="" class="placeholder" translate>SELECT_COUNTRY</option>
+                        <option ng-repeat="country in countries" value="{{country.id}}" ng-selected="country.id==contactInformation.address_details.country_id" >
+                            {{country.value}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <rv-textbox value="contactInformation.address_details.phone" inputtype="tel" label="Phone" placeholder = "Enter Contact Phone"></rv-textbox>
+
+            <rv-textbox value="contactInformation.address_details.email_address" label="E-mail address" placeholder = "Enter Contact Email Address" styleclass="full-width"></rv-textbox>
+
+            <rv-textbox value="contactInformation.account_details.web_page" label="Web Page" placeholder = "Enter Web Page" styleclass="full-width"></rv-textbox>
+
+            <div class="entry full-width" ng-hide="true">
+                <label for="company-logo" translate>COMAPNY_LOGO</label>
+                <div class="file-upload with-preview">
+                    <input type="file" name="company-logo" id="company-logo"  ng-model="contactInformation.account_details.company_logo" accept="*" app-filereader />
+                    <button type="button" class="button brand-colors" translate>CHOOSE_FILE</button>
+                </div>
+                <span class="file-preview" ng-if="escapeNull(contactInformation.account_details.company_logo)!=''"><img ng-src="{{contactInformation.account_details.company_logo}}" alt="" /></span>
+                <!-- When no image, use  -->
+                <span class="file-preview" ng-if="escapeNull(contactInformation.account_details.company_logo)==''"><em translate>PREVIEW_NOT_AVAILABLE</em></span>
+            </div>
+        </div>
+
+        <div class="holder right">
+            <strong class="h3" translate>EXTENDED_COMPANY_DETAILS</strong>
+
+            <rv-textbox ng-if="account_type == 'COMPANY'" value="contactInformation.account_details.account_number" label="Corporate ID" placeholder = "Enter Corporate ID" styleclass="margin"></rv-textbox>
+
+            <rv-textbox ng-if="account_type == 'TRAVELAGENT'" value="contactInformation.account_details.account_number" label="IATA Number" placeholder = "Enter IATA Number" styleclass="margin"></rv-textbox>
+            <div class= "entry full-width">
+                <label><span translate>BILLING_INFORMATION</span>
+                    <span ng-show ="contactInformation.account_details !== undefined"> ({{contactInformation.account_details.routes_count}} 
+                        <span translate>ROUTES_DEFINED</span>) 
+                    </span>
+                </label>
+                <a class="button blue ng-scope ng-binding" ng-click="openBillingInformation(account_type)" ng-show="isStandAlone" translate>ADD_BILLLING_INFORMATION</a>
+            </div>
+
+            <!-- <rv-textbox value="contactInformation.account_details.billing_information" label="Billing Information" placeholder = "Enter Billing Information" ></rv-textbox> -->
+
+            <div class="entry margin">
+                <label for="company-card-arn" translate>ACCOUNTS_RECIEVABLE_NUMBER</label>
+                <input type="text" ng-model="contactInformation.account_details.accounts_receivable_number" placeholder="AR Number" ng-readonly="true" ng-disabled="true">
+            </div>
+            <div class="entry">
+              <label>&nbsp;</label>
+              <button ng-click="showARTab($event)" ng-hide="contactInformation.account_details.accounts_receivable_number || isArTabAvailable || !contactInformation.id" class="button green" translate>CREATE_ACCOUNT</button>
+              <button ng-click="deleteArAccount()" ng-show="contactInformation.account_details.accounts_receivable_number" class="button red" translate>DELETE_ACCOUNT</button>
+            </div>
+
+            <strong class="h3 margin" translate>PRIMARY_CONTACT_DETAILS</strong>
+
+            <rv-textbox value="contactInformation.primary_contact_details.contact_first_name" label="First name" placeholder = "Enter Contact First Name" styleclass="margin"></rv-textbox>
+
+            <rv-textbox value="contactInformation.primary_contact_details.contact_last_name" label="Last Name" placeholder = "Enter Contact Last Name" ></rv-textbox>
+
+            <rv-textbox value="contactInformation.primary_contact_details.contact_job_title" label="Job title" placeholder = "Enter Job Title" styleclass="margin"></rv-textbox>
+
+            <rv-textbox value="contactInformation.primary_contact_details.contact_phone" label="Phone" placeholder = "Enter Contact Phone" ></rv-textbox>
+
+            <rv-textbox value="contactInformation.primary_contact_details.contact_email" label="E-mail address" placeholder = "Enter Contact Email Address" styleclass="full-width"></rv-textbox>
+
+        </div>
+    </div>
+</form>
+

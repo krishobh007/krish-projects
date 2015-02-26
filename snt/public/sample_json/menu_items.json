@@ -1,0 +1,72 @@
+{
+    "status": "success",
+    "data": {
+        "menus": [
+            {
+                "menu_id": 10,
+                "menu_name": "Hotels",
+                "header_name": "Hotels setup",
+                "components": [
+                    {
+                        "id": 27,
+                        "name": "Hotels",
+                        "action_path": "/admin/hotels",
+                        "is_group": false,
+                        "icon_class": "icon-hotel",
+                        "state": "admin.hotels",
+                        "sub_components": [],
+                        "is_bookmarked": false
+                    },
+                    {
+                        "id": 28,
+                        "name": "Chains",
+                        "action_path": "/admin/hotel_chains",
+                        "is_group": false,
+                        "icon_class": "icon-chain",
+                        "state": "admin.chains",
+                        "sub_components": [],
+                        "is_bookmarked": true
+                    },
+                    {
+                        "id": 29,
+                        "name": "Brands",
+                        "action_path": "/admin/hotel_brands/",
+                        "is_group": false,
+                        "icon_class": "icon-brand",
+                        "state": "admin.brands",
+                        "sub_components": [],
+                        "is_bookmarked": false
+                    }
+                ]
+            },
+            {
+                "menu_id": 11,
+                "menu_name": "Dashboard",
+                "header_name": "Dashboard setup",
+                "components": []
+            },
+            {
+                "menu_id": 12,
+                "menu_name": "Configuration",
+                "header_name": "Configuration setup",
+                "components": []
+            }
+        ],
+        "bookmarks": [
+            {
+                "id": 27,
+                "name": "Hotels",
+                "icon_class": "icon-hotel",
+                "state": "admin.hotels"
+            },
+            {
+                "id": 28,
+                "name": "Chains",
+                "icon_class": "icon-chain",
+                "state": "admin.chains"
+            }
+        ],
+        "bookmark_count": 1
+    },
+    "errors": []
+}

@@ -1,0 +1,79 @@
+#guest_likes{"data-view" => "LikesView"}
+  .wrapper.float
+    .entry.full-width
+      #notification-message-guest
+    .holder.left
+      %strong.h3 Preferences
+      -if (!@data['newspapers'].blank?)
+        .entry.full-width
+          %label{for: "newspaper"} Newspaper
+          %select{name: "newspaper", id:"newspaper"}
+            %option{value: nil}
+            -@data['newspapers'].each do |newspapers|
+              =newspapers['id']
+              %option{value: newspapers['name'], :selected => (newspapers['id'] == @data['user_newspaper'] ? true: nil)}
+                =newspapers["name"]
+      -if (!@data['roomtype'].blank?)
+        .entry.full-width
+          %label{for: "roomtype"} Room type
+          %select{name: "roomtype", id:"roomtype"}
+            %option{value: nil}
+            -@data['roomtype'].each do |roomtype|
+              %option{value: roomtype['name'], :selected => (roomtype['id'] == @data['user_roomtype'] ? true: nil)}
+                =roomtype["name"]
+      - @i = 0
+      - @k = 0
+      - @data["preferences"].each do |dataPreferences|
+        .entry.radio-check.float
+          %label{for: "floor"}
+            =dataPreferences["name"]
+          
+          - dataPreferences["values"].each do |dataPreferencesInside|
+            %label.checkbox
+              -if(@data["user_preference"].include? dataPreferencesInside["id"])
+                %span.icon-form.icon-checkbox.checked
+              -else
+                %span.icon-form.icon-checkbox
+              %input{id: "pref_#{@k}",:checked => ((@data["user_preference"].include? dataPreferencesInside["id"]) ? true: nil), name: "pref_#{@i}", type: "checkbox", value: dataPreferencesInside["details"], prefname: dataPreferences["name"], "data-group" => dataPreferences["name"]}/
+              =dataPreferencesInside["details"]
+            - @k = @k + 1  
+          - @i= @i+1
+    %input{id:"totalpreference", type: "hidden", value: @i}/
+    .holder.right
+      - room_features_count = 0
+      - @data["room features"].each do |dataRoomFeatures|
+        - dataRoomFeatures["values"].each do |dataRoomFeaturesInside|
+          -room_features_count = room_features_count + 1
+      -if(room_features_count != 0)
+        %strong.h3 Room Features
+        - @data["room features"].each do |dataRoomFeatures|
+          - @j = 0
+          - dataRoomFeatures["values"].each do |dataRoomFeaturesInside|
+            -if(@j%2 == 0)
+              / To handle custom div starting and closing using HTML
+              != "<div class='entry radio-check float'>"
+              %label.checkbox
+                -if(dataRoomFeatures['user_selection'].include? dataRoomFeaturesInside['id'])
+                  %span.icon-form.icon-checkbox.checked
+                -else
+                  %span.icon-form.icon-checkbox
+                -if(@j==0)
+                  %input{id: "feat_#{@j}", :checked => ((dataRoomFeatures['user_selection'].include? dataRoomFeaturesInside['id'])? true: nil), name: "features", type: "checkbox", value: dataRoomFeaturesInside['details']}/
+                -else
+                  %input{id: "feat_#{@j}", :checked => ((dataRoomFeatures['user_selection'].include? dataRoomFeaturesInside['id'])? true: nil), name: "features", type: "checkbox", value: dataRoomFeaturesInside['details']}/
+                =dataRoomFeaturesInside["details"]
+            -else
+              %label.checkbox
+                -if(dataRoomFeatures['user_selection'].include? dataRoomFeaturesInside['id'])
+                  %span.icon-form.icon-checkbox.checked
+                -else
+                  %span.icon-form.icon-checkbox
+                -if(@j==0)
+                  %input{id: "feat_#{@j}", :checked => ((dataRoomFeatures['user_selection'].include? dataRoomFeaturesInside['id'])?true: nil), name: "features", type: "checkbox", value: dataRoomFeaturesInside['details']}/
+                -else
+                  %input{id: "feat_#{@j}", :checked => ((dataRoomFeatures['user_selection'].include? dataRoomFeaturesInside['id'])?true: nil), name: "features", type: "checkbox", value: dataRoomFeaturesInside['details']}/
+                =dataRoomFeaturesInside["details"]
+              / To handle custom div starting and closing using HTML
+              != "</div>"
+            - @j = @j+1
+    %input{id:"totalfeatures", type: "hidden", value: @j}/

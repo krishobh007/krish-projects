@@ -1,0 +1,15 @@
+[{
+    "hl_description": "American Airlines (AAdvantage)",
+    "hl_value": "AA",
+    "levels": []
+}, {
+    "hl_description": "Delta Air Lines (SkyMiles)",
+    "hl_value": "DL",
+    "levels": [{
+        "description": "Delta Platinum Membership",
+        "membership_level": "PLATINUM"
+    }, {
+        "description": "Delta Gold Membership",
+        "membership_level": "GOLD"
+    }]
+}]

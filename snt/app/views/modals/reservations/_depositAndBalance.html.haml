@@ -1,0 +1,126 @@
+%form#deposit-balance.modal-content.form.deposit-balance{:action => "{action}", :method => "post", :name => "deposit-balance"}
+  %button#modal-close.modal-close{:type => "button"}
+    %span.icons.icon-close.invert/
+  / Left side
+  %fieldset.content-left
+    %strong.h2.message Balance
+    %ul#expenses.expenses
+      %li
+        Room Cost
+        %span
+          =get_currency_symbol(data[:currency_code])
+          =data[:room_cost]
+      %li
+        Packages
+        %span
+          =get_currency_symbol(data[:currency_code])
+          =data[:packages]
+      %li.total
+        Sub Total
+        %span
+          =get_currency_symbol(data[:currency_code])
+          =data[:sub_total]
+      %li
+        Fees
+        %span
+          =get_currency_symbol(data[:currency_code])
+          =data[:fees]
+      %li.total
+        Stay Total
+        %span
+          =get_currency_symbol(data[:currency_code])
+          =data[:stay_total]
+      %li
+        Nightly Charge
+        %span
+          =get_currency_symbol(data[:currency_code])
+          =data[:nightly_charges]
+      %li.total.final
+        Total Cost of Stay
+        %span
+          =get_currency_symbol(data[:currency_code])
+          =data[:total_cost_of_stay]
+      %li.deposit
+        Deposit Paid
+        %span.green
+          =get_currency_symbol(data[:currency_code])
+          =data[:deposit_paid]
+      %li.balance
+        Outstanding Stay Total
+        -@outClass = 'red'
+        -if(data[:outstanding_stay_total] == '0' || data[:outstanding_stay_total] == "0.00" || data[:outstanding_stay_total] == "0.0")
+          -@outClass = 'green'
+        %span{:class => @outClass}
+          =get_currency_symbol(data[:currency_code])
+          =data[:outstanding_stay_total]
+        %span.hidden#merchantId{"data-merchantId" => data[:merchant_id] }
+        %span.hidden#outstandingAmount{"data-outstanding-amount" => data[:outstanding_stay_total] }
+        %span.hidden#isSwiped{"data-is-swiped" => "false" }
+  / Right side
+  %fieldset.content-right
+    %strong.h2.message Deposit
+    .entry.full-width
+      #notification-message
+    .entry.amount
+      %label{:for => "amount"}
+        Amount to pay (
+        %span> 
+        =get_currency_symbol(data[:currency_code])
+        )
+      %input#amount{:name => "amount", :type => "text", :value => data[:outstanding_stay_total]}/
+    / Show these options only if there are existing cards
+    %ul#make-payment-options.modal-options
+      %li#existing-cards Existing Cards
+      %li#add-new-card.active Add New Card
+    / Select cards, if exsist
+    #select-make-payment-card.select-card.hidden
+      #available-cards.cards-list.scrollable.cards-list-height{"data-selected-payment" => data[:selected_payment], "data-is-existing-card" => "no" }
+        .wrapper#available-cards-wrapper
+          / Selected card
+          
+          -if(data[:existing_payments].count>0)
+            -data[:existing_payments].each do |existingPayments|
+              -if(existingPayments[:is_credit_card])
+                %label.active-item.item-payment.primary{"payment-id" => existingPayments[:value]}
+                  %figure.card-logo
+                    %img{:alt => "", :src => "/assets/#{existingPayments[:card_code].downcase}.png"}/
+                  %span.number
+                    Ending with
+                    %span.value.number
+                      =existingPayments[:ending_with]
+                  %span.date
+                    Date
+                    %span.value.date
+                      =existingPayments[:expiry_date]
+                  %span.primary
+                    %span.value.primary.primary-selected{:id => "primary-#{existingPayments[:value]}" } 
+          
+          / repeat ... this is same as in {modals/pay-bill/card-attached.html}, lines 70, 89
+    / New Card form - this is same as in {modals/pay-bill/card-attached.html}, lines 98-129
+    #new-make-payment-card.new-card
+      .holder
+        .entry.margin
+          %label{:for => "card-number"} Card number
+          %input#card-number{:maxlength => "16", :name => "card-number", :placeholder => "Enter Card number", :type => "text", :value => ""}/
+        .entry
+          %label{:for => "expiry-month"}
+            Expiration date (
+            %span> MM/YY
+            )
+          %input#expiry-month{:maxlength => "2", :name => "expiry-month", :placeholder => "MM", :size => "3", :type => "text", :value => ""}/
+          %input#expiry-year{:maxlength => "2", :name => "expiry-year", :placeholder => "YY", :size => "3", :type => "text", :value => ""}/
+        .entry.margin
+          %label{:for => "name-on-card"} Name on card
+          %input#name-on-card{:name => "name-on-card", :placeholder => "Enter name on card", :type => "text", :value => ""}/
+        .entry
+          %label{:for => "ccv"} CCV
+          %input#ccv{:maxlength => "3", :name => "ccv", :placeholder => "CCV", :size => "4", :type => "text", :value => ""}/
+        .entry.full-width
+          %label.checkbox.inline{:id => "add-in-guest-card"}
+            %span.icon-form.icon-checkbox
+            %input#add-in-guest-card{:name => "checkin", :type => "checkbox", :value => "1"}/
+            Add to Guest Card
+    .actions
+      %button.button.blank.modal-close#close{:type => "button"} Close
+      %button.button.grey.modal-close#make-payment{:type => "button"}
+        Make Payment

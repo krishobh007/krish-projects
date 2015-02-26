@@ -1,0 +1,17 @@
+{
+	"results":
+	[
+    {
+        "location": "bar",
+        "id": "000",
+        "type_name": "type1",
+        "status": false
+    },
+    {
+        "location": "spa",
+        "id": "001",
+        "type_name": "type2",
+        "status": true
+    }
+	]
+}

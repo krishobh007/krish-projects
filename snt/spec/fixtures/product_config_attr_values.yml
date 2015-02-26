@@ -1,0 +1,56 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+value1:
+  id: 1
+  product_config_attr_id: 1
+  value: 1000
+  created_at: <%= 5.days.ago.iso8601 %>
+  updated_at: <%= 5.days.ago.iso8601 %>
+  hotel_id : 1
+
+value2:
+  id: 2
+  product_config_attr_id: 2
+  value: 100
+  created_at: <%= 5.days.ago.iso8601 %>
+  updated_at: <%= 5.days.ago.iso8601 %>
+  hotel_id : 1
+
+pms_type_value1:
+  product_config_attr: pms_type
+  hotel: one
+  value: OWS
+
+ows_access_url_value1:
+  product_config_attr: ows_access_url
+  hotel: one
+  value: http://test-ows.com
+
+ows_user_name_value1:
+  product_config_attr: ows_user_name
+  hotel: one
+  value: test
+
+ows_user_pwd_value1:
+  product_config_attr: ows_user_pwd
+  hotel: one
+  value: password
+
+ows_channel_code_value1:
+  product_config_attr: ows_channel_code
+  hotel: one
+  value: SNT
+
+ows_chain_code_value1:
+  product_config_attr: ows_chain_code
+  hotel: one
+  value: testchain
+  
+ows_hotel_code_value1:
+  product_config_attr: ows_hotel_code
+  hotel: one
+  value: testhotel

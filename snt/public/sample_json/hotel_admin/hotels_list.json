@@ -1,0 +1,645 @@
+{
+    "hotels": [
+        {
+            "id": "2",
+            "hotel_name": "hotel_one",
+            "number_of_rooms": "100",
+            "brand_name": "Marriot",
+            "chain_name": "Marriot",
+            "city": "hotel_one_city",
+            "state": "hotel_one_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        },
+        {
+            "id": "5",
+            "hotel_name": "hotel_two",
+            "number_of_rooms": "120",
+            "brand_name": "Blue Sidney",
+            "chain_name": "Blue Sidney",
+            "city": "hotel_two_city",
+            "state": "hotel_two_state"
+        },
+        {
+            "id": "4",
+            "hotel_name": "hotel_three",
+            "number_of_rooms": "80",
+            "brand_name": "Holiday Inn",
+            "chain_name": "Holiday Inn",
+            "city": "hotel_three_city",
+            "state": "hotel_three_state"
+        }
+    ],
+    "chains": [
+        {
+            "id": 2,
+            "name": "chain one"
+        },
+        {
+            "id": 5,
+            "name": "chain two"
+        }
+    ],
+    "brands": [
+        {
+            "id": 2,
+            "name": "brand one"
+        },
+        {
+            "id": 5,
+            "name": "brand two"
+        }
+    ]
+}

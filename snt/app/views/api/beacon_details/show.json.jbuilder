@@ -1,0 +1,20 @@
+json.beacon_id @beacon_detail.id
+json.proximity_id @beacon_detail.hotel.andand.hotel_chain.andand.beacon_uuid_proximity
+json.major_id @beacon_detail.hotel.andand.beacon_uuid_major
+json.minor_id @estimote_id[6]
+json.location @beacon_detail.location
+json.type @beacon_detail.type.andand.to_s
+json.status @beacon_detail.is_active
+json.trigger_range @beacon_detail.trigger_range.andand.to_s
+json.message @beacon_detail.notification_text
+json.title @beacon_detail.promotion.andand.title
+json.description @beacon_detail.promotion.andand.description
+json.picture @beacon_detail.promotion.andand.picture.andand.image.present? ? @beacon_detail.promotion.picture.andand.image.andand.url.to_s : ""
+json.neighbours @beacon_detail.neighbours.pluck(:id)
+json.notification_id @notification_detail.andand.id.to_s
+json.is_linked @beacon_detail.is_linked
+json.updated_detail_time_stamp @beacon_detail.updated_at.to_i
+json.updated_list_time_stamp @last_updated.to_i
+json.is_upgrades_present @has_upgrades.to_s
+json.is_late_checkout_present @has_late_checkouts.to_s
+json.is_beacon_valid @is_beacon_valid

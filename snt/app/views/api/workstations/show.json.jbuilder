@@ -1,0 +1,1 @@
+json.call(@work_station, :id, :station_identifier, :name)

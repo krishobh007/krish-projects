@@ -1,0 +1,1 @@
+json.proximity_id @hotel_chain.beacon_uuid_proximity

@@ -1,0 +1,99 @@
+{
+    "status": "success",
+    "data": {
+        "availability_status": "to_be_unassigned",
+        "restrictions": [
+            {
+                "name": "Minimun stay through",
+                "days": "3"
+            }
+        ],
+        "preassigned_guest": {
+            "name": "Akhila",
+            "arrival_date": "2014-06-22"
+        },
+        "rooms": [
+            {
+                "room_number": "555",
+                "room_status": "READY",
+                "fo_status": "VACANT"
+            },
+            {
+                "room_number": "666",
+                "room_status": "READY",
+                "fo_status": "VACANT"
+            },
+            {
+                "room_number": "555",
+                "room_status": "READY",
+                "fo_status": "VACANT"
+            },
+            {
+                "room_number": "666",
+                "room_status": "READY",
+                "fo_status": "VACANT"
+            },
+            {
+                "room_number": "555",
+                "room_status": "READY",
+                "fo_status": "VACANT"
+            },
+            {
+                "room_number": "666",
+                "room_status": "READY",
+                "fo_status": "VACANT"
+            },
+            {
+                "room_number": "555",
+                "room_status": "READY",
+                "fo_status": "VACANT"
+            },
+            {
+                "room_number": "666",
+                "room_status": "READY",
+                "fo_status": "VACANT"
+            },
+            {
+                "room_number": "555",
+                "room_status": "READY",
+                "fo_status": "VACANT"
+            },
+            {
+                "room_number": "666",
+                "room_status": "READY",
+                "fo_status": "VACANT"
+            },
+            {
+                "room_number": "555",
+                "room_status": "READY",
+                "fo_status": "VACANT"
+            },
+            {
+                "room_number": "666",
+                "room_status": "READY",
+                "fo_status": "VACANT"
+            },
+            {
+                "room_number": "555",
+                "room_status": "READY",
+                "fo_status": "VACANT"
+            },
+            {
+                "room_number": "666",
+                "room_status": "READY",
+                "fo_status": "VACANT"
+            },
+            {
+                "room_number": "555",
+                "room_status": "READY",
+                "fo_status": "VACANT"
+            },
+            {
+                "room_number": "666",
+                "room_status": "READY",
+                "fo_status": "VACANT"
+            }
+        ]
+    },
+    "errors": []
+}

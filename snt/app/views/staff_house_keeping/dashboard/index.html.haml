@@ -1,0 +1,28 @@
+!!!
+<!--[if IE 9 ]><html lang="en" class="no-js ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><html lang="en" class="no-js"><![endif]-->
+%html.no-js{:lang => "en"}
+  %head
+    %meta{charset: "utf-8"}
+    %title StayNTouch Housekeeping 
+    / Meta tags
+    %meta{content: "noindex, nofollow", name: "robots"}/
+    %meta{content: "width=device-width, initial-scale=1, maximum-scale=1", name: "viewport"}/
+    %meta{content: "yes", name: "apple-mobile-web-app-capable"}/
+    %meta{content: "black", name: "apple-mobile-web-app-status-bar-style"}/
+    %meta{content: "Housekeeping", name: "apple-mobile-web-app-title"}/
+    / Icons & startup images
+    %link{href: "/assets/favicon.png", rel: "icon", type: "image/png"}/
+    %link{href: "/assets/apple-touch-icon-precomposed.png", rel: "apple-touch-icon"}/
+    %link{href: "/assets/apple-touch-startup-image-320x460.png", media: "(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1", rel: "apple-touch-startup-image"}/
+    %link{href: "/assets/apple-touch-startup-image-640x920.png", media: "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)", rel: "apple-touch-startup-image"}/
+    %link{href: "/assets/apple-touch-startup-image-768x1004.png", media: "(device-width: 768px) and (orientation: portrait)", rel: "apple-touch-startup-image"}/   
+    %link{href: "/assets/apple-touch-startup-image-1024x748.png", media: "(device-width: 768px) and (orientation: landscape)", rel: "apple-touch-startup-image"}/
+    %link{href: "/assets/apple-touch-startup-image-1536x2008.png", media: "(device-width: 768px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)", rel: "apple-touch-startup-image"}/
+    %link{href: "/assets/apple-touch-startup-image-2048x1496.png", media: "(device-width: 768px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)", rel: "apple-touch-startup-image"}/
+    = stylesheet_link_tag (:staff_housekeeping)
+    = javascript_include_tag (:staff_housekeeping)	
+  %body#house-page{"ng-app" => "hkRover"}
+    <ui-view> </ui-view> <!-- When div structure is used, style breaks -->
+
+    

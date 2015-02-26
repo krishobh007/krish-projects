@@ -1,0 +1,66 @@
+{
+    "first_name": "John",
+    "last_name": "smith",
+    "avatar": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRsERbFm7S0vTL1Xdr1mrCi3sJg_v4k1Ea-JUQhlUzDUMcOSYMo",
+    "job_title": "President",
+    "works_at": "Multimedia Inc",
+    "review_description": "This is sample Review",
+    "review_title": "This is sample Review Title",
+    "average_rating": "3.5",
+    "created_at": "DEC 15",
+    "review_details": [
+        {
+            "category_name": "Location",
+            "rating": "3"
+        },
+        {
+            "category_name": "Sleep Quality",
+            "rating": "4"
+        },
+        {
+            "category_name": "Room",
+            "rating": "3"
+        },
+        {
+            "category_name": "Service",
+            "rating": "2"
+        },
+        {
+            "category_name": "Value",
+            "rating": "5"
+        },
+        {
+            "category_name": "Cleanliness",
+            "rating": "3"
+        }
+    ],
+    "management_responses": [
+        {
+            "first_name": "John",
+            "last_name": "smith",
+            "avatar": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRsERbFm7S0vTL1Xdr1mrCi3sJg_v4k1Ea-JUQhlUzDUMcOSYMo",
+            "job_title": "President",
+            "works_at": "Multimedia Inc",
+            "response": "We are so happy that you enjoyed",
+            "created_at": "DEC 15"
+        },
+        {
+            "first_name": "John",
+            "last_name": "smith",
+            "avatar": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRsERbFm7S0vTL1Xdr1mrCi3sJg_v4k1Ea-JUQhlUzDUMcOSYMo",
+            "job_title": "President",
+            "works_at": "Multimedia Inc",
+            "response": "We are so happy that you enjoyed",
+            "created_at": "DEC 15"
+        },
+        {
+            "first_name": "John",
+            "last_name": "smith",
+            "avatar": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRsERbFm7S0vTL1Xdr1mrCi3sJg_v4k1Ea-JUQhlUzDUMcOSYMo",
+            "job_title": "President",
+            "works_at": "Multimedia Inc",
+            "response": "We are so happy that you enjoyed",
+            "created_at": "DEC 15"
+        }
+    ]
+}

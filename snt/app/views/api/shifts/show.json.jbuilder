@@ -1,0 +1,1 @@
+json.call(@shift, :id, :name, :time, :hotel_id)

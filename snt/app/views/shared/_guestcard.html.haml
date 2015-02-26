@@ -1,0 +1,67 @@
+#guest-card{role: "complementary"}
+  %input#user_id{name: "user_id", type: "hidden", value: @guest_card_hash["user_id"]}
+  %input#guest_id{name: "guest_id", type: "hidden", value: @guest_card_hash["guest_id"]}
+  %input#reservation_id{name: "reservation_id", type: "hidden", value: @guest_card_hash["reservation_id"]}
+  #card-wrapper
+    / Guest Card Header
+    %header#guest-card-header.float
+      %figure.guest-image
+        / TODO: use actual image
+        %img#guest-image{alt: "", src: @guest_card_hash["avatar"]}
+        -if @guest_card_hash["vip"]
+          %span.vip VIP
+      %form#change-name{action: "", method: "post", name: "change-name"}
+        .holder
+          .entry
+            %input#gc-firstname.masked-input.h1{name: "gc-firstname", "data-val" => "first_name", placeholder: "", type: "text", value: @guest_card_hash["first_name"]}
+            %input#gc-lastname.masked-input.h1{name: "gc-lastname", "data-val" => "last_name", placeholder: "", type: "text", value: @guest_card_hash["last_name"]}
+          %strong.status
+            =@guest_card_hash["membership_type"]
+          / The VIP button is hidden since the VIP turn on/off option is not available now.
+          -if @guest_card_hash["vip"]
+            .switch-button.on.hidden
+              %input#vip{checked: "checked", name: "vip", type: "checkbox", value: "1", disabled: true}
+              %label.data-off
+                %span.switch-icon.vip VIP
+                %span.value Off
+              %label.data-on
+                %span.value On
+                %span.switch-icon.vip VIP              
+          -else
+            .switch-button.hidden
+              %input#vip{name: "vip", type: "checkbox", value: "0", disabled: true}
+              %label.data-off
+                %span.switch-icon.vip VIP
+                %span.value Off
+              %label.data-on
+                %span.value On
+                %span.switch-icon.vip VIP
+        .holder.data
+          %input#gc-city.masked-input.icons.icon-gc-location{name: "gc-city", placeholder: "", type: "text", value: @guest_card_hash["city"], "data-val" => "city"}
+          %input#gc-state.masked-input{name: "gc-state", placeholder: "", type: "text", value: @guest_card_hash["state"], "data-val" => "state"}
+          %input#gc-phone.masked-input.icons.icon-gc-phone{name: "gc-phone", placeholder: "", type: "tel", value: @guest_card_hash["phone"], "data-val" => "phone"}
+          %input#gc-email.masked-input.icons.icon-gc-email{name: "gc-email", placeholder: "", type: "email", value: @guest_card_hash["email"], "data-val" => "email"}
+      
+    / Guest Card Content
+    #guest-card-content
+      / Guest Card tabs navigation
+      %ul#guest-card-tabs-nav.float
+        %li
+          %a#guest-contact{href: "#contact-info"} Contact Information
+        %li
+          %a#guest-like{href: "#likes"} Likes
+        %li
+          %a#guest-credit{href: "#cc-payment"} Credit Cards & Payment
+        %li
+          %a#guest-loyalty{href: "#loyalty"} Loyalty
+      / Guest Card Tab 1
+      = render :partial => "shared/contact"
+      / Guest Card Tab 2
+      %form#likes.card-content.form.scrollable{action: "", method: "post", name: "likes"}
+      /= render :partial => "shared/like"
+      / Guest Card Tab 3
+      %form#cc-payment.card-content.form.scrollable{action: "", method: "post", name: "cc-payment"}
+
+      / Guest Card Tab 4
+      %form#loyalty.card-content.form.scrollable{action: "", method: "post", name: "loyalty"}
+

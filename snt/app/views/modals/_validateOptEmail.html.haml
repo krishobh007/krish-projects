@@ -1,0 +1,13 @@
+%form#validate-opt-email.modal-content.form.confirmation
+  %button#modal-close.modal-close{:type => "button"}
+    %span.icons.icon-close.invert
+  .entry.full-width
+    #notification-message
+  %span.h2.message E-mail missing!
+  %span.text Ask the guest to provide email
+  .entry.full-width#guest-opt-email-entry
+    %label{for: "guest-email"} E-mail
+    %input#guest-email{autocomplete: "off", name: "guest-email", type: "text", value: ""}
+  .actions.float
+    %a#save.button.green.modal-close Submit 
+    %a#cancel.button.blank.modal-close Cancel

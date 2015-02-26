@@ -1,0 +1,26 @@
+<div class="page inner-page page-current" id="page-inner-first">
+    <div ng-include="'/assets/partials/common/header.html'"></div>
+    <!-- Rooms details -->
+    <section id="room-details" class="content">
+      
+      <!-- {room-status} can be clean, dirty, pickup, inspected or out -->
+      <header id="room-header" class="room-header {{ getHeaderColor() }}" role="banner"> 
+          <div class="icons icon-room">
+            <h1>{{ roomDetails.current_room_no }}</h1>
+            <span ng-if="isStandAlone">{{ roomDetails.room_type.name }}</span>
+          </div>
+          <ul id="room-detail-options" class="display">
+            <li ng-class="{ 'active': openTab === 'Guest' }" ng-click="tabSwitch('Guest')"><span class="icons icon-navbar icon-hk-guest">Guest</span></li>
+            <li ng-class="{ 'active': openTab === 'Work' }" ng-click="tabSwitch('Work')"><span class="icons icon-navbar icon-hk-work">Work</span></li>
+            <li ng-if="isStandAlone" ng-class="{ 'active': openTab === 'Room' }" ng-click="tabSwitch('Room')"><span class="icons icon-navbar icon-hk-room">Room</span></li>
+          </ul>
+        </header>
+        
+        <div ng-if="openTab === 'Guest'" ng-include="'/assets/partials/housekeeping/rvGuestTab.html'" class="room-info"></div>
+
+        <div ng-if="openTab === 'Work'" ng-include="'/assets/partials/housekeeping/rvWorkTab.html'" class="room-info"></div>
+
+        <div ng-if="isStandAlone && openTab === 'Room'" ng-include="'/assets/partials/housekeeping/rvRoomTab.html'" class="room-info"></div>
+        
+    </section>
+</div>

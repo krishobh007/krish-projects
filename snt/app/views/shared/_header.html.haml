@@ -1,0 +1,48 @@
+/ Page header area
+#header.float.orange-background
+  %a#logo{:href =>  admin_hotels_path}
+    %img{:alt => "", :height => "30", :src => "#{get_current_hotel_chain_logo}", :width => "140"}
+  %ul#main-nav
+    %li#main-dahsboard
+      %a{:href => admin_hotels_path, :title => "Dash Board"} Dash Board
+    - if admin?
+      %li#main-lobby
+        %a{:href => admin_hotels_path, :title => "Social lobby"} Social lobby
+    %li#main-promotions
+      %a{:href => "#", :title => "Promotions"} Promotions
+    %li#main-jobs
+      %a{:href => "#", :title => "Jobs", :target => :blank} Jobs
+    - if admin?
+      %li#main-reports
+        %a{:href => "?link-to=reports", :title => "Reports"} Reports
+  / User nav & search form
+  #user-search
+    #active-user
+      %img{:alt => "", :height => "30", :src => "/assets/default-user-avatar.png", :width => "30"}
+      - if current_user
+        %p
+          Hello,
+          = succeed "!" do
+            - if current_user.admin?
+              %strong admin
+            - else
+              %strong #{current_user.hotel.name}
+      #user-nav.r5
+        %span.arrow.r5
+        %ul.r5
+          - if current_user
+            - if current_user.admin?
+              %li
+                %a{:href => "#", :title => "Settings"} Settings
+          - if current_user
+            - if current_user.admin? || current_user.hotel_admin?
+              %li
+                %a{:href => admin_users_path, :title => "Account & Users"} Account & Users
+          %li
+            %a{:href=>logout_url, :title => "Logout"} Logout
+    %form#search.form.search-form.r25{:method => "get", :name => "search"}
+      %fieldset
+        %button.lupe{:name => "search", :title => "Search", :type => "submit"} Search
+        %input{:autocomplete => "off", :maxlength => "120", :name => "keyword", :placeholder => "Search", :type => "text"}
+
+

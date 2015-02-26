@@ -1,0 +1,589 @@
+{
+
+    "status": "success",
+    "data": [
+        {
+            "id": 38431,
+            "confirmation": "4866254",
+            "guest_detail_id": 17799,
+            "room": "333",
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "NOTREADY",
+            "fostatus": "",
+            "lastname": "Resheil",
+            "firstname": "Mohammed",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+                }
+            ],
+            "room_ready_status": "",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "03:00PM"
+        },
+        {
+            "id": 37944,
+            "confirmation": "4865754",
+            "guest_detail_id": 17226,
+            "room": null,
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "NOTREADY",
+            "fostatus": "",
+            "lastname": "Chin",
+            "firstname": "David",
+            "location": "",
+            "vip": 1,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-male.png"
+                }
+            ],
+            "room_ready_status": "",
+            "is_reservation_queued": "true",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "04:00PM"
+        },
+        {
+            "id": 37861,
+            "confirmation": "4865583",
+            "guest_detail_id": 17466,
+            "room": null,
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "NOTREADY",
+            "fostatus": "",
+            "lastname": "CICO-9580",
+            "firstname": "Test",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+                }
+            ],
+            "room_ready_status": "",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "05:00PM"
+        },
+        {
+            "id": 38013,
+            "confirmation": "4866003",
+            "guest_detail_id": 17185,
+            "room": "2015",
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "READY",
+            "fostatus": "VACANT",
+            "lastname": "Qb",
+            "firstname": "Krishobh",
+            "location": "",
+            "vip": 1,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-female.png"
+                }
+            ],
+            "room_ready_status": "INSPECTED",
+            "is_reservation_queued": "true",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "08:00PM"
+        },
+        {
+            "id": 37883,
+            "confirmation": "4865749",
+            "guest_detail_id": 17481,
+            "room": null,
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "NOTREADY",
+            "fostatus": "",
+            "lastname": "Revathi",
+            "firstname": "A",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+                }
+            ],
+            "room_ready_status": "",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "03:00PM"
+        },
+        {
+            "id": 37919,
+            "confirmation": "4865750",
+            "guest_detail_id": 36,
+            "room": null,
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "NOTREADY",
+            "fostatus": "",
+            "lastname": "Sarangdharan",
+            "firstname": "Gopkumar",
+            "location": "GERMANTOWN, Maryland",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+                }
+            ],
+            "room_ready_status": "",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "03:00PM"
+        },
+        {
+            "id": 37924,
+            "confirmation": "4865752",
+            "guest_detail_id": 17483,
+            "room": null,
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "NOTREADY",
+            "fostatus": "",
+            "lastname": "Shahul",
+            "firstname": "Test",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+                }
+            ],
+            "room_ready_status": "",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "03:00PM"
+        },
+        {
+            "id": 37984,
+            "confirmation": "4865997",
+            "guest_detail_id": 17485,
+            "room": null,
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "NOTREADY",
+            "fostatus": "",
+            "lastname": "Shahul",
+            "firstname": "Test",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+                }
+            ],
+            "room_ready_status": "",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "03:00PM"
+        },
+        {
+            "id": 37922,
+            "confirmation": "4865751",
+            "guest_detail_id": 17482,
+            "room": "4012",
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "READY",
+            "fostatus": "VACANT",
+            "lastname": "Shuan",
+            "firstname": "Alex M",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+                }
+            ],
+            "room_ready_status": "INSPECTED",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "03:00PM"
+        },
+        {
+            "id": 38575,
+            "confirmation": "4866255",
+            "guest_detail_id": 17918,
+            "room": null,
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "NOTREADY",
+            "fostatus": "",
+            "lastname": "Soumya",
+            "firstname": "Test",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+                }
+            ],
+            "room_ready_status": "",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "03:00PM"
+        },
+        {
+            "id": 37871,
+            "confirmation": "4865747",
+            "guest_detail_id": 17479,
+            "room": null,
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "NOTREADY",
+            "fostatus": "",
+            "lastname": "Test4",
+            "firstname": "Zest",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+                }
+            ],
+            "room_ready_status": "",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "03:00PM"
+        },
+        {
+            "id": 37863,
+            "confirmation": "4865585",
+            "guest_detail_id": 17212,
+            "room": "2001",
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "READY",
+            "fostatus": "VACANT",
+            "lastname": "Vasista",
+            "firstname": "Manisha",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-female.png"
+                }
+            ],
+            "room_ready_status": "INSPECTED",
+            "is_reservation_queued": "true",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "03:00PM"
+        },
+        {
+            "id": 38079,
+            "confirmation": "4866007",
+            "guest_detail_id": 17369,
+            "room": null,
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "NOTREADY",
+            "fostatus": "",
+            "lastname": "Vasista",
+            "firstname": "Manisha",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+                }
+            ],
+            "room_ready_status": "",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "03:00PM"
+        },
+        {
+            "id": 37866,
+            "confirmation": "4865588",
+            "guest_detail_id": 17212,
+            "room": null,
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "NOTREADY",
+            "fostatus": "",
+            "lastname": "Vasista",
+            "firstname": "Manisha",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-female.png"
+                }
+            ],
+            "room_ready_status": "",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "03:00PM"
+        },
+        {
+            "id": 38078,
+            "confirmation": "4866006",
+            "guest_detail_id": 17369,
+            "room": null,
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "NOTREADY",
+            "fostatus": "",
+            "lastname": "Vasista",
+            "firstname": "Manisha",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+                }
+            ],
+            "room_ready_status": "",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "03:00PM"
+        },
+        {
+            "id": 37957,
+            "confirmation": "4865755",
+            "guest_detail_id": 17484,
+            "room": "1001",
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "READY",
+            "fostatus": "VACANT",
+            "lastname": "Zest",
+            "firstname": "Test5",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+                }
+            ],
+            "room_ready_status": "INSPECTED",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "03:00PM"
+        },
+        {
+            "id": 38134,
+            "confirmation": "4866247",
+            "guest_detail_id": 17552,
+            "room": null,
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "NOTREADY",
+            "fostatus": "",
+            "lastname": "Zest",
+            "firstname": "Test6",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+                }
+            ],
+            "room_ready_status": "",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true"
+        },
+        {
+            "id": 38135,
+            "confirmation": "4866248",
+            "guest_detail_id": 17553,
+            "room": null,
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "NOTREADY",
+            "fostatus": "",
+            "lastname": "Zest",
+            "firstname": "Test7",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+                }
+            ],
+            "room_ready_status": "",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "03:00PM"
+        },
+        {
+            "id": 38136,
+            "confirmation": "4866249",
+            "guest_detail_id": 17554,
+            "room": null,
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "NOTREADY",
+            "fostatus": "",
+            "lastname": "Zest",
+            "firstname": "Test8",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+                }
+            ],
+            "room_ready_status": "",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "03:00PM"
+        },
+        {
+            "id": 38137,
+            "confirmation": "4866250",
+            "guest_detail_id": 17555,
+            "room": null,
+            "group": null,
+            "reservation_status": "PRE_CHECKIN",
+            "roomstatus": "NOTREADY",
+            "fostatus": "",
+            "lastname": "Zest",
+            "firstname": "Test9",
+            "location": "",
+            "vip": 0,
+            "images": [
+                {
+                    "is_primary": true,
+                    "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+                }
+            ],
+            "room_ready_status": "",
+            "is_reservation_queued": "false",
+            "is_opted_late_checkout": false,
+            "late_checkout_time": null,
+            "use_inspected": "true",
+            "use_pickup": "true",
+            "checkin_inspected_only": "false",
+            "is_queue_rooms_on": "true",
+            "estimated_time_of_arrival": "03:00PM"
+        }
+    ],
+    "errors": null,
+    "is_eod_in_progress": false,
+    "is_eod_manual_started": false
+
+}

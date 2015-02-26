@@ -1,0 +1,27 @@
+{
+    "revenue": "300",
+    "payment": "200",
+    "cashier_status": "open",
+    "departments": [
+	{
+		"id":100,
+		"name":"front desk"
+	},
+	{
+		"id":101,
+		"name":"house keeping"
+	}
+    ],
+    "employees": [
+	{
+		"id":100,
+		"name":"john",
+		"department_id": 100
+	},
+	{
+		"id":101,
+		"name":"smith",
+		"department_id": 101
+	}
+    ]
+}

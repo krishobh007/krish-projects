@@ -1,0 +1,24 @@
+%ul#page-nav
+  %li#page-hotels
+    = link_to "Hotel", admin_hotels_path ,:title => "Hotels"
+  %li#page-chains
+    = link_to "Hotel chains", admin_hotel_chains_path ,:title => "Hotel chains"
+  %li#page-brands
+    = link_to "Hotel brands", admin_hotel_brands_path ,:title => "Hotel brands"
+  - if admin?
+    %li#page-guests
+      = link_to "Guests", "#" ,:title => "Guests"
+    %li#page-groups
+      = link_to "Groups", "#", :title => "Groups"
+    %li#page-conversations
+      %a{:href => "#", :title => "Conversations"} Conversations
+    %li#page-events
+      %a{:href => "#", :title => "Events"} Events
+    %li#page-keywords
+      %a{:href => "#", :title => "Keywords"} Keywords
+
+  - if current_user.hotel_admin?
+    %li#page-UpSell
+      %a{:href => "#", :title => "UpSell Screen"} UpSell Screen 
+    %li#page-RoomType
+      %a{:href => "#", :title => "Room Type"} Room Type

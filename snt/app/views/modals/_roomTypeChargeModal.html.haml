@@ -1,0 +1,18 @@
+%form.modal-content.form.new-content#room-type-charge-modal
+  %button#modal-close.modal-close{:type => "button"}
+    %span.icons.icon-close.invert
+  %strong.h2.message Add change room type charge to rate amount
+  .entry.full-width
+    #notification-message
+  .holder.float
+  .entry.full-width
+    %label{for: "room-type-charge"}
+      Charge Amount (IN 
+      =get_currency_symbol(data)
+      )
+      %strong
+    %input#room-type-charge{name: "room-type-charge", type: "number", value: "",placeholder:"Enter the room type charge"}/
+  .actions.float.is-disabled
+    %button#cancel-room-type-charge-modal.button.blank.modal-close{type: "button"} CANCEL
+    %button#nocharge.button.green{type: "button", disabled: false} NO CHARGE
+    %button#ok.button.green{type: "button", disabled: true} CHARGE

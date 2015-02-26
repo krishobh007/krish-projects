@@ -1,0 +1,13 @@
+one:
+  url: "http://dozerqa.stayntouch.com:3000/"
+  hotel_id : 1
+  hotel_chain_id:
+two:
+  url: "http://cha.stayntouch.com:3000/"
+  hotel_id :
+  hotel_chain_id:1
+two:
+  url: "http://myhotel.stayntouch.com:3000/"
+  hotel_id : 1
+  hotel_chain_id:
+

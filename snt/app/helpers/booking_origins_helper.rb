@@ -1,0 +1,2 @@
+module BookingOriginsHelper
+end

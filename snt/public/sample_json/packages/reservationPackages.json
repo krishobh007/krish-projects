@@ -1,0 +1,49 @@
+{
+
+	"room_no": "301",
+	"existing_packages": [
+		{ 
+			"package_id": "20",
+			"package_name" : "Fruit platter",
+			"count": "5",
+			"price_per_piece": "35",
+			"is_inclusive" : "true/false"
+		}, 
+		{ 
+			"package_id": "21",
+			"package_name" : "Green fee",
+			"count": "4",
+			"price_per_piece": "22",
+			"is_inclusive" : "true/false"
+		}, 
+		{ 
+			"package_id": "22",
+			"package_name" : "Green fee",
+			"count": "4",
+			"price_per_piece": "25",
+			"is_inclusive" : "true/false"
+		}, 
+		{ 
+			"package_id": "23",
+			"package_name" : "Green fee",
+			"count": "4",
+			"price_per_piece": "22",
+			"is_inclusive" : "true/false"
+		}, 
+		{ 
+			"package_id": "24",
+			"package_name" : "Green fee",
+			"count": "4",
+			"price_per_piece": "12",
+			"is_inclusive" : "true/false"
+		}, 
+		{ 
+			"package_id": "24",
+			"package_name" : "Green fee",
+			"count": "4",
+			"price_per_piece": "12",
+			"is_inclusive" : "true"
+		}
+
+	]
+}

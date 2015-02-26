@@ -1,0 +1,29 @@
+{"results":
+[
+    {
+        "name": "BAR",
+        "value": "0"
+    },
+    {
+        "name": "RESTARAUNT",
+        "value":"1"
+    },
+     {
+        "name": "SPA",
+        "value":"2"
+    },
+     {
+        "name": "POOL",
+        "value": "3"
+    },
+    {
+        "name": "CAFE",
+        "value":"4"
+    },
+     {
+        "name": "MULTIPLEX",
+        "value":"5"
+    }
+
+]
+}

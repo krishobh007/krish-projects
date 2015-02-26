@@ -1,0 +1,6 @@
+one:
+  review_category_id: 1
+  reservation_id: 1
+  rating: 4
+  created_at: <%= 5.days.ago.iso8601 %>
+  updated_at: <%= 5.days.ago.iso8601 %>

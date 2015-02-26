@@ -1,0 +1,48 @@
+%form#print-key.modal-content.form.key-delivery{"data-retrieve-uid" => data[:retrieve_uid]? "true" : "false" }
+  %button#modal-close.modal-close{type: "button"}
+    %span.icons.icon-close
+  #notification-message
+  #room-status.print-key
+    -if(data[:is_late_checkout] == "true")
+      %span.h2.message
+        Checking Out 
+        %br
+        =data[:late_checkout_time]
+    -else
+      %span.h2.message
+    %h1
+      =data[:user_name]
+      %span=data[:room_number]
+    %span.number 
+      Reservation 
+      =data[:confirmation_number]
+  #key-status.print-key
+    %span.h2.message Print Room Key
+    %em.status.icon-key
+    #key-action.action
+      %button#try-again.button.blue{type: "button"} Try Again
+      %button.cancel-key-popup.button.blank{type: "button"} Cancel
+    #print-keys
+      .entry.radio-check.cols-4.float
+        %label{for: "keys"} How many keys?
+        %label.only-number
+          %input#key1{name: "keys", type: "checkbox", value: "1"}/
+          1
+        %label.only-number{style: "margin-right: 10px !important;"}
+          %input#key2{name: "keys", type: "checkbox", value: "2"}/
+          2
+        %label.only-number
+          %input#key3{name: "keys", type: "checkbox", value: "3"}/
+          3
+        %label.only-number{style: "margin-right: 10px !important;"}
+          %input#key4{name: "keys", type: "checkbox", value: "4"}/
+          4          
+      .actions.float
+        %button#create-key.button.grey{disabled: "disabled", type: "button"} Print key
+        %button.cancel-key-popup.button.blank{type: "button"} Cancel
+    #print-over-action.action
+      %button.cancel-key-popup.hidden.button.blank{type: "button"} Cancel
+      %a#goto-staycard.back-button.modal-close.button.brand-colors View Stay Card
+      %a#goto-search.modal-close.button.blue Search
+      
+      

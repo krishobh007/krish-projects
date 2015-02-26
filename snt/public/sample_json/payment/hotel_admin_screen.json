@@ -1,0 +1,74 @@
+[
+    {
+        "menu_id": "id",
+        "menu_name": "Admin&Staff",
+        "header_name": "Admin&Staffsetup",
+        "components": [
+            {
+                "id": 1,
+                "name": "HotelDetails",
+                "is_bookmarked": "True/False",
+                "url": "URLfortheaction",
+                "type": "component", 
+                "icon_url": "imageURL",
+                "sub_components": [
+                    
+                        ]
+            },
+            {
+                "id": 2,
+                "name": "Promotions",
+                "url": "",
+                "type": "Group",
+                "icon_url": "imageURL",
+                "is_bookmarked": false
+                "sub_components": [
+                    {
+                        "id": 10,
+                        "name": "Aboutscreenpromotions",
+                        icon_url: "urloficonimage",
+                        url: "actionurl",
+                        "is_bookmarked": "True/False"
+                    },
+                    
+                ]
+            }
+        ]
+    },
+    {
+        "menu_id": "id",
+        "menu_name": "Admin&Staff",
+        "header_name": "Admin&Staffsetup",
+        "components": [
+            {
+                "id": 1,
+                "name": "HotelDetails",
+                "is_bookmarked": "True/False",
+                "url": "URLfortheaction",
+                "type": "component", 
+                "icon_url": "imageURL",
+                "sub_components": [
+                    
+                        ]
+            },
+            {
+                "id": 2,
+                "name": "Promotions",
+                "url": "",
+                "type": "Group",
+                "icon_url": "imageURL",
+                "is_bookmarked": false
+                "sub_components": [
+                    {
+                        "id": 10,
+                        "name": "Aboutscreenpromotions",
+                        icon_url: "urloficonimage",
+                        url: "actionurl",
+                        "is_bookmarked": "True/False"
+                    },
+                    
+                ]
+            }
+        ]
+    }
+]

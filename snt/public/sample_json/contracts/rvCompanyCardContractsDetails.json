@@ -1,0 +1,40 @@
+{
+			"rate": [
+				 {
+				    "id": 1,
+	                "name": "COR",
+	                "is_system_defined": true
+				 },
+	             {
+				    "id": 2,
+			        "name": "COR1",
+			        "is_system_defined": false
+				  }
+			],
+			"contracted_rate_selected":2,
+		    "start_date": "2014-03-01",
+		    "end_date": "2015-03-01",
+		 	"is_fixed_rate": true,
+			"is_on_guest_bill": true,
+			"total_contracted_nights": 240,
+			"statistics": {
+		 	    "booked_nights": 163,
+		        "total_nights": 159,
+		        "total_stays": 49,
+			    "total_revenue": 3579.00,
+		        "average_rate": 291.00
+			},
+			"occupancy":[
+			    {
+					"month": "Jan",
+					"actual_occupancy": 10,
+					"contracted_occupancy": 20
+				},
+				{
+					"month": "Feb",
+					"actual_occupancy": 10,
+					"contracted_occupancy": 20
+				}
+			]
+
+    }

@@ -1,0 +1,1 @@
+json.id @beacon_detail.id

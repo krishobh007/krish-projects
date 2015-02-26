@@ -1,0 +1,1 @@
+json.message "Last transaction is cancelled"

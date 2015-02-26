@@ -1,0 +1,9 @@
+one:
+  hotel: one
+  business_date: <%= Date.today %>
+  status: 'OPEN'
+
+two:
+  hotel: two
+  business_date: <%= Date.today %>
+  status: 'OPEN'

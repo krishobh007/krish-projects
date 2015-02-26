@@ -1,0 +1,50 @@
+#search_list{"data-view" => "Search", "data-search-type" => data["type"] }
+  / Navbar
+  %header.nav-bar.float{role: "banner"}
+    / Drawer toggle
+    %a.nav-toggle{href: "#main-nav"} Menus page
+    / Title
+    %h1.h2#search-title
+      Search
+      %span
+        %strong 
+          =current_user.detail.first_name 
+          =current_user.detail.last_name
+        &#124;
+        %em.date
+          =current_hotel.active_business_date.strftime("%A, %d %B %Y")
+          
+    -if @is_late_checkout_on
+      / Late checkout
+      %a#late-checkout-alert.icons.icon-alert.late-check-out
+        =@late_checkout_count
+    -if @is_queue_rooms_on
+      / Queue Rooms
+      %a#queue-rooms.icons.icon-alert.queued-rooms
+        =@queued_rooms_count
+    .logo
+      %img{:alt => "", :src => "#{get_current_hotel_logo(current_hotel)}"}
+
+  %form#search-form.search-form.form.float{action: "", method: "get", name: "search-form", role: "search"}
+    .entry
+      %a#clear-query.icons.icon-clear-search Clear query
+      %button.icons.icon-search{name: "submit", type: "submit"} Search
+      %input#query{autocomplete: "off", name: "query", placeholder: "Name, Group, Room No. or Confirmation No.", type: "text"}/
+    /%button.button.blank{name: "advanced", type: "button"} Advanced search
+  %section#search.content.scrollable{role: "main"}
+    .wrapper
+      #notification-message
+      %ul#search-results.search-results.hidden
+    #no-results.no-content
+      .info
+        %span.icon-no-content.icon-search
+        %strong.h1 Find Guests
+        %span.h2
+          Search by
+          = succeed "," do
+            %strong Name
+          = succeed "," do
+            %strong Group
+          %strong Room No.
+          or
+          %strong Confirmation No.

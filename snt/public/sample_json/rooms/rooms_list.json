@@ -1,0 +1,33 @@
+{
+	"number_of_rooms_configured": "2",
+	"total_number_of_rooms": "5",
+	"is_add_available": "yes",
+	"rooms": [
+		{
+			"room_id": "1",
+			"room_number": "100",
+			"room_type_name": "Deluxe Suite",
+			"room_type_id": "1"
+		}, {
+			"room_id": "2",
+			"room_number": "101",
+			"room_type_name": "Deluxe Suite",
+			"room_type_id": "1"
+		}, {
+			"room_id": "3",
+			"room_number": "102",
+			"room_type_name": "Deluxe Suite",
+			"room_type_id": "1"
+		}, {
+			"room_id": "4",
+			"room_number": "103",
+			"room_type_name": "Deluxe Suite",
+			"room_type_id": "1"
+		}, {
+			"room_id": "5",
+			"room_number": "104",
+			"room_type_name": "Deluxe Suite",
+			"room_type_id": "1"
+		}
+	]
+}

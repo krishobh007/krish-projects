@@ -1,0 +1,80 @@
+{
+    "hotel_name": "TAJ HOTEL",
+    "hotel_code": "TAJ",
+    "street": "Kochi",
+    "city": "Kochi",
+    "state": "Kerala",
+    "countries": [
+        {
+            "name": "India",
+            "id": "1"
+        },{
+            "name": "Pakistan",
+            "id": "2"
+        }
+    ],
+    "country": "2",
+    "phone": "12133",
+    "zipcode": "678678",
+    "number_of_rooms": "23",
+    "currency_list": [
+        {
+            "code": "USD",
+            "id": "1"
+        },
+         {
+            "code": "EURO",
+            "id": "2"
+        }
+    ],
+    "default_currency": "2",
+    "check_in_time": {
+        "hour": "05",
+        "minute": "30"
+    },
+    "check_out_time": {
+        "hour": "08",
+        "minute": "30"
+    },
+    "chains": [
+        {
+            "name": "Marriot",
+            "id": "1"
+        },
+         {
+            "name": "Holiday Inn",
+            "id": "2"
+        }
+    ],
+    "hotel_chain": "2",
+    "brands": [
+        {
+            "name": "Taj Hotels",
+            "id": "1"
+        },
+         {
+            "name": "Leela palaces",
+            "id": "2"
+        }
+    ],
+    "hotel_brand": "1",
+    "time_zones": [
+        {
+            "value": "(GMT-08:00) Tijuana",
+            "code": "1"
+        },
+         {
+            "value": "(GMT-08:00) Tijuana",
+            "code": "2"
+        }
+    ],
+    "hotel_time_zone": "1",
+    "contact_first_name": "Smith",
+    "contact_last_name": "Aaron",
+    "contact_email": "smith@test.com",
+    "contact_phone": "1234343",
+    "admin_first_name": "Mathew",
+    "admin_last_name": "KW",
+    "admin_email": "matthew@test.com",
+    "admin_phone": "678678678"
+}

@@ -1,0 +1,29 @@
+%form#new-loyalty-program.modal-content.form.new-content{action: "index.html", method: "post", name: "new-loyalty-program"}
+  %button#modal-close.modal-close{:type => "button"}
+    %span.icons.icon-close.invert
+  %strong.h2.message New Loyalty Program
+  .entry.full-width
+    #notification-message
+  .entry.full-width
+    %label{for: "program"} Loyalty Program
+    .select
+      %select{name: "program",id:"program"}
+        %option.placeholder{selected: "selected",value: ""} Select Loyalty Program
+        %option{ value: "hlp"} Hotel Loyalty Program
+        %option{value: "ffp"} Frequent Flyer Program
+  .entry.full-width
+    %label{for: "type"} Type
+    .select
+      %select{name: "type",id:"type"}
+        %option.placeholder{value: ""} Select Loyalty Type
+  .entry.full-width
+    %label{for: "level"} Level
+    .select
+      %select{name: "level",id:"level"}
+        %option.placeholder{value: ""} Select Loyalty Level
+  .entry.full-width
+    %label{for: "code"} Code
+    %input#code{name: "code", type: "text", value: ""}/
+  .actions.float
+    %button#cancel.button.blank.modal-close{type: "button"} Cancel
+    %button#save.button.green.modal-close{type: "button"} Add

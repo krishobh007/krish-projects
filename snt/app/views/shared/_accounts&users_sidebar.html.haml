@@ -1,0 +1,9 @@
+%ul#page-nav
+  %li#page-account
+    = link_to "Users", admin_users_path, :title => "Users"
+  -# %li#page-roles
+    -# = link_to "Roles",roles_path,:title => "Roles"
+  - if current_user.admin? || current_user.hotel_admin? || current_user.hotel_staff?
+    %li#page-permissions
+      = link_to "Permissions",admin_roles_permissions_path,:title => "Permissions"
+    

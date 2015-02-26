@@ -1,0 +1,44 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+  id: 1
+  name: upsell_target_amount
+  display_name: Upsell Target Amount"
+
+two:
+ id: 2
+ name: upsell_target_rooms
+ display_name: Upsell Target Rooms
+ 
+pms_type:
+  name: pms_type
+  display_name: PMS Type
+
+ows_access_url:
+  name: ows.access_url
+  display_name: OWS Access URL
+  
+ows_channel_code:
+  name: ows.channel_code
+  display_name: OWS Channel Code
+
+ows_user_name:
+  name: ows.user_name
+  display_name: OWS Username
+  
+ows_user_pwd:
+  name: ows.user_pwd
+  display_name: OWS Password
+
+ows_hotel_code:
+    name: ows.hotel_code
+    display_name: OWS Hotel Code
+    
+ows_chain_code:
+  name: ows.chain_code
+  display_name: OWS Chain Code
+

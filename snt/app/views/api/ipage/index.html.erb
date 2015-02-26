@@ -1,0 +1,111 @@
+<html>
+	<head></head>
+	<body>
+		<style>
+			body{
+				display: none;
+			}
+			form {
+				width: 400px;
+				margin: 0 auto;
+			}
+			.cell-content {
+				padding-top: 20px;
+			}
+			label {
+				margin-right: 10px;
+			}
+			input {
+				float: right;
+			}
+		</style>
+		<form id="six_form" name="six_form" action="<%= Setting.six_ipage_url %>" method="post">
+			<div class="cell-content">
+				<label>eMerchant Id</label>
+				<input type="text" name="security_emerchant_id" value="<%= @hotel.settings.six_merchant_id %>" />
+				<br />
+			</div>
+			<div class="cell-content">
+				<label>Validation Code</label>
+				<input type="text" name="security_validation_code" value="<%= @hotel.settings.six_validation_code %>" />
+				<br />
+			</div>
+			<div class="cell-content">
+				<label>First name</label>
+				<input type="text" name="card_holder_first_name" value="<%= @card_holder_first_name %>" />
+				<br />
+			</div>
+			<div class="cell-content">
+				<label>Last name</label>
+				<input type="text" name="card_holder_last_name" value="<%= @card_holder_last_name %>" />
+				<br />
+			</div>
+			<div class="cell-content">
+				<label>Transaction Id</label>
+				<input type="text" name="trx_merchant_reference" value="<%= @credit_card_transaction.nil? ? "" : @credit_card_transaction.id %>" />
+				<br />
+			</div>
+			<div class="cell-content">
+				<label>Currency Code</label>
+				<input type="text" name="trx_amount_currency_code" value="<%= @currency_code %>" />
+				<br />
+			</div>
+			<div class="cell-content">
+				<label>Amount To Pay</label>
+				<input type="text" name="trx_amount_value" value="<%= @amount %>" />
+				<br />
+			</div>
+			<div class="cell-content">
+				<label>Template Id</label>
+				<input type="text" name="template_id" value="" />
+				<br />
+			</div>
+			<div class="cell-content">
+				<label>Post Url Success</label>
+
+				<input type="text" name="posturl_success" value="<%= "#{request.protocol}#{request.host}" %>:3000/api/ipage/success" />
+				<!-- <input type="text" name="posturl_success" value="https://web2payuat.3cint.com/iPage/Service/_2006_05_v1_0_1/service.aspx" /> -->
+
+				<br />
+			</div>
+			<div class="cell-content">
+				<label>Post Url Failure</label>
+
+				<input type="text" name="posturl_failure" value="<%= "#{request.protocol}#{request.host}" %>:3000/api/ipage/failure" />
+
+				<br />
+			</div>
+			<div class="cell-content">
+				<label>Redirect Approved</label>
+
+				<input type="text" name="redirect_approved" value="<%= "#{request.protocol}#{request.host}" %>:3000/api/ipage/success.html" />
+
+				<br />
+			</div>
+			<div class="cell-content">
+				<label>Redirect Declined</label>
+
+				<input type="text" name="redirect_declined" value="<%= "#{request.protocol}#{request.host}" %>:3000/api/ipage/failure" />
+
+				<br />
+			</div>
+			<div class="cell-content">
+				<label>Service Action</label>
+				<input type="text" name="service_action" value="<%= @service_action %>" />
+				<br />
+			</div>
+			<div class="cell-content">
+				<label>Generate Token?</label>
+				<input type="text" name="trx_options" value="G" />
+				<br />
+			</div>
+			<div class="cell-content">
+				<input type="submit" />
+			</div>
+		</form>
+		<script>
+			 document.getElementById("six_form").submit();
+		</script>
+	</body>
+</html>
+

@@ -1,0 +1,6 @@
+{
+    "is_social_lobby_on": "true",
+    "is_my_group_on": "false",
+    "arrival_grace_days": "2",
+    "departure_grace_days": "3"
+}

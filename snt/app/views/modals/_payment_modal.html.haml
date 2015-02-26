@@ -1,0 +1,56 @@
+%div.setOverlay#setOverlay
+  %div.noSwipe
+    %div.titleSwipe
+      PLEASE SWIPE CREDIT CARD
+    %div.button.red.noSwipeButton#noSwipe
+      NO SWIPE
+%form#new-payment.modal-content.form.new-content
+  %button#modal-close.modal-close{:type => "button"}
+    %span.icons.icon-close.invert
+  %strong.h2.message New payment method
+  .entry.full-width
+    .error-messages
+  .entry.full-width
+    #notification-message
+  %div#payment-form-section
+    .entry.full-width.payment-form-section
+      %label{for: "payment-type"} Payment type
+      .select
+        %select#payment-type{name: "payment-type"}
+          %option.placeholder{value: ""} Select Payment Type
+          -@payments_hash[:payment_types].each do |payment|
+            %option{value: payment['name']} 
+              =payment['description']
+    .entry.full-width.payment-form-section
+      %label{for: "credit-card"} Select credit card
+      .select
+        %select#payment-credit-type{name: "credit-card"}
+          %option.placeholder{value: ""} Select credit card       
+    .holder.float.payment-form-section
+      .entry
+        %label{for: "card-number-set"} Card number
+        %input#card-number-set1{name: "card-number-set1", size: "", type: "text", value: ""}/      
+      .entry
+        %label{for: "expiry-month"}
+          Expiration date (
+          %span> MM/YY
+          )
+        %input#expiry-month{maxlength: "2", name: "expiry-month", size: "2", type: "text", value: ""}/
+        %input#expiry-year{maxlength: "2", name: "expiry-year", size: "2", type: "text", value: ""}/        
+    .entry.full-width.payment-form-section
+      %label{for: "name-on-card"} Name on card
+      %input#name-on-card{name: "name-on-card", type: "text", value: ""}/
+    .holder.float
+      .entry{:style => "display:none"}
+        %label.checkbox.inline
+          %span.icon-form.icon-checkbox
+          %input#add-in-guest-card{:name => "checkin", :type => "checkbox", :value => "1"}
+            Add to Guest Card
+      .entry.hidden
+        %label.checkbox.inline
+          %span.icon-form.icon-checkbox#auth-card
+          %input#authorize-card{:name => "authorize", :type => "checkbox", :value => "1"}
+            Do Not Authorize Card
+  .actions.float
+    %button#cancel.button.blank.modal-close{type: "button"} Cancel
+    %button#save_new_credit_card.button.green.modal-close{type: "button"} Add

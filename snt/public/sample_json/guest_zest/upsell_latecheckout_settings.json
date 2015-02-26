@@ -1,0 +1,18 @@
+{
+    "hotel_id": "2",
+    "is_late_checkout_available" : "true",
+    "reservation_id": "2",
+    "currency": "$",
+    "late_checkout_offers": [
+        {
+           "id" : "1",
+            "time": "2",
+            "amount": "100"
+        },
+        {
+           "id" : "2",
+            "time": "3",
+            "amount": "200"
+        }
+    ]
+}

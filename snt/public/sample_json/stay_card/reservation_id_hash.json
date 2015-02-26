@@ -1,0 +1,53 @@
+{
+
+"current_reservations_arr":[
+ {
+  "confirmation_num": 4813095,
+  "reservation_status": "check-in"
+ },
+ {
+  "confirmation_num": 375700279,
+
+  "reservation_status": "check-out"
+ }
+
+],
+
+
+
+"upcoming_reservations_arr":[
+ {
+  "confirmation_num": 375700178,
+
+  "reservation_status": "check-in"
+ },
+ {
+  "confirmation_num": 375700177,
+  "reservation_status": "check-out"
+ },
+ {
+  "confirmation_num": 375700176,
+  "reservation_status": "check-out"
+ },
+ {
+  "confirmation_num": 375700175,
+
+  "reservation_status": "check-out"
+ }
+],
+
+
+
+"history_reservations_arr":[
+ {
+  "confirmation_num": 375700277,
+  "reservation_status": "check-out"
+ },
+ {
+  "confirmation_num": 375700171,
+  "reservation_status": "check-out"
+ }
+]
+
+
+}

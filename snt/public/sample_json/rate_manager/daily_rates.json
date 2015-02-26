@@ -1,0 +1,78 @@
+{
+    "results": [
+        {
+            "date": "2014-04-01",
+            "all_rate_restrictions": [
+                {
+                    "restriction_type_id": 1,
+                    "days": 2
+                },
+                {
+                    "restriction_type_id": 2,
+                    "days": 5
+                }
+            ],
+            "rates": [
+                {
+                    "id": 1,
+                    "name": "RACK",
+                    "restrictions": [
+                        {
+                            "restriction_type_id": 1,
+                            "days": 2
+                        },
+                        {
+                            "restriction_type_id": 3,
+                            "days": 8
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "name": "ABC",
+                    "restrictions": [
+                        {
+                            "restriction_type_id": 1,
+                            "days": 2
+                        },
+                        {
+                            "restriction_type_id": 2,
+                            "days": 5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "date": "2014-04-02",
+            "all_rate_restrictions": [],
+            "rates": [
+                {
+                    "id": 1,
+                    "name": "RACK",
+                    "restrictions": [
+                        {
+                            "restriction_type_id": 4,
+                            "days": 8
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "name": "ABC",
+                    "restrictions": [
+                        {
+                            "restriction_type_id": 1,
+                            "days": 2
+                        },
+                        {
+                            "restriction_type_id": 2,
+                            "days": 5
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "total_count": 2
+}

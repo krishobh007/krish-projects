@@ -1,0 +1,92 @@
+[
+    {
+        "id": 4347,
+        "confirmation": "4862989",
+        "guest_detail_id": 14182,
+        "room": null,
+        "company_name": "Qburst",
+        "travel_agent_name": "Qburst Technologies",
+        "group": null,
+        "reservation_status": "CHECKING_IN",
+        "roomstatus": "NOTREADY",
+        "fostatus": "",
+        "lastname": "Shaun",
+        "firstname": "Alex M",
+        "location": "",
+        "vip": 0,
+        "images": [
+            {
+                "is_primary": true,
+                "guest_image": "https://pms-ngdev.stayntouch.com/assets/avatar-trans.png"
+            }
+        ],
+        "room_ready_status": "",
+        "is_reservation_queued": "false",
+        "is_opted_late_checkout": false,
+        "late_checkout_time": null,
+        "use_inspected": "true",
+        "use_pickup": "true",
+        "checkin_inspected_only": "false",
+        "is_queue_rooms_on": "true"
+    },
+    {
+        "id": 4346,
+        "confirmation": "4862988",
+        "guest_detail_id": 14181,
+        "room": "2023",
+        "group": null,
+        "company_name": "Qburst",
+        "travel_agent_name": "Qburst Technologies",
+        "reservation_status": "CHECKEDIN",
+        "roomstatus": "NOTREADY",
+        "fostatus": "OCCUPIED",
+        "lastname": "Shaun",
+        "firstname": "Alex M",
+        "location": "",
+        "vip": 0,
+        "images": [
+            {
+                "is_primary": true,
+                "guest_image": "https://pms-ngdev.stayntouch.com/assets/avatar-trans.png"
+            }
+        ],
+        "room_ready_status": "INSPECTED",
+        "is_reservation_queued": "false",
+        "is_opted_late_checkout": false,
+        "late_checkout_time": null,
+        "use_inspected": "true",
+        "use_pickup": "true",
+        "checkin_inspected_only": "false",
+        "is_queue_rooms_on": "true"
+    },
+    {
+        "id": 4225,
+        "confirmation": "4861986",
+        "guest_detail_id": 14130,
+        "room": "6010",
+        "group": null,
+        "reservation_status": "CHECKEDOUT",
+        "company_name": "Qburst",
+        "travel_agent_name": "Qburst Technologies",
+        "roomstatus": "READY",
+        "fostatus": "VACANT",
+        "lastname": "Alex M",
+        "firstname": "Shaun",
+        "location": "",
+        "vip": 0,
+        "images": [
+            {
+                "is_primary": true,
+                "guest_image": "https://pms-ngdev.stayntouch.com/assets/avatar-trans.png"
+            }
+        ],
+        "room_ready_status": "CLEAN",
+        "is_reservation_queued": "false",
+        "is_opted_late_checkout": false,
+        "late_checkout_time": null,
+        "use_inspected": "true",
+        "use_pickup": "true",
+        "checkin_inspected_only": "false",
+        "is_queue_rooms_on": "true"
+    }
+]

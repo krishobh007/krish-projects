@@ -1,0 +1,73 @@
+#notification-message
+%form#post-charge.modal-content.post-charge
+  %button#modal-close.modal-close{:type => "button"}
+    %span.icons.icon-close.invert
+  / Left side
+  %fieldset.content-left
+    .search-form{role: "search"}
+      .select
+        %select#charge-groups{name: "charge-groups"}
+          %option.placeholder{value: "all-charge-groups",id:"all-charge-groups"} All Charge Groups
+          %option{selected: "selected",value: "favorites",id:"favorites"} Favorites
+          -data[:charge_groups].each do |charge_groups|
+            %option{:value=>charge_groups[:name], :id=>charge_groups[:value]}
+              =charge_groups[:name]
+      .entry
+        %a#clear-query.icons.icon-clear-search{href: "#"} Clear query
+        %button.icons.icon-search{name: "submit", type: "button"} Search
+        %input#query{autocomplete: "off", name: "query", placeholder: "Search items", type: "search", "data-keyboard" => "lock"}
+    #items-listing.scrollable
+      %ul.wrapper#search-item-results
+        -data[:items].each do |items|
+          -if(items[:is_favorite] == "true")
+            %li#items-list
+              %a.button.white{"data-is-favourite"=>items[:is_favorite],"data-charge-group"=>items[:charge_group_value],"data-base" => "unit","data-id" =>items[:value], "data-item" => items[:item_name], "data-price" => items[:unit_price],"data-cc"=>items[:currency_code], "data-type" => "post-charge", href: "#"}
+                =items[:item_name]
+                %span.price<
+                  =get_currency_symbol(items[:currency_code])
+                  %span.value
+                    =number_with_precision(items[:unit_price],:precision => 2)
+
+  / Right side
+  %fieldset.content-right
+    %span.h2.message
+      Post charge to Bill #
+      .select#select-bill-number
+        %select{name: "post-charge-to-bill"}
+          -data[:bill_numbers].each do |bill_number|
+            %option{value: "#{bill_number}"}
+              =bill_number
+    #no-items-added.no-content
+      .info
+        %strong.h1 0 items selected
+    #items-added.hidden
+      #items-summary.scrollable
+        %ul.wrapper
+      %p#total-charge
+
+      #numpad
+        #numpad-numbers
+          %button.button.white{type: "button",value:"1"} 1
+          %button.button.white{type: "button",value:"2"} 2
+          %button.button.white{type: "button",value:"3"} 3
+          %button.button.white{type: "button",value:"4"} 4
+          %button.button.white{type: "button",value:"5"} 5
+          %button.button.white{type: "button",value:"6"} 6
+          %button.button.white{type: "button",value:"7"} 7
+          %button.button.white{type: "button",value:"8"} 8
+          %button.button.white{type: "button",value:"9"} 9
+          %button.button.white.small{type: "button",value:"+/-"} +/-
+          %button.button.white{type: "button",value:"0"} 0
+          %button.button.white.small{type: "button",value:"."} .
+        #numpad-options
+          %button.button.white.numpad-toggle.selected#quantity{type: "button",value:"QTY"} QTY
+          %button.button.white.numpad-toggle#price{type: "button",value:"PR"} PR
+          %button.button.white.with-icon.only-icon.clear-value{type: "button",value:"undo"}
+            %span.icons.icon-clear>
+            Clear last value
+          %button.button.white.with-icon.only-icon.remove-item{type: "button",value:"delete"}
+            %span.icons.icon-trash>
+            Remove item
+      .actions.float
+        %button#post.button.green.modal-close{type: "button"} Post charge
+        %button#cancel.button.blank.modal-close{type: "button"} Cancel

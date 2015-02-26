@@ -1,0 +1,35 @@
+{
+    "user_id": "23",
+    "first_name": "Soumya test",
+    "last_name": "Cyriac",
+    "user_department": "20",
+    "departments": [
+        {
+            "value": "20",
+            "name": "Front desk"
+        },
+        {
+            "value": "22",
+            "name": "IT"
+        }
+    ],
+    "job_title": "Software Engineer",
+    "phone": "3453454",
+    "email": "soumya@test.com",
+    "user_roles": [
+        "1",
+        "2",
+        "3"
+    ],
+    "roles": [
+        {
+            "value": "20",
+            "name": "Hotel admin"
+        },
+        {
+            "value": "22",
+            "name": "Hotel staff"
+        }
+    ],
+    "user_photo": ""
+}

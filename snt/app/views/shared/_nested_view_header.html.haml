@@ -1,0 +1,42 @@
+.data
+  %span.room{"data-fostatus" => header_details["fo_status"], "data-room-status" => header_details["room_status"], "data-reserv-status" => header_details["reservation_status"],}
+    -if ((!header_details["room_number"].blank?) || (!header_details["room_type_name"].blank?))
+    -computed_room_color_code = computed_room_color(header_details["room_ready_status"], header_details["checkin_inspected_only"], header_details["fo_status"])
+      %span.guest-status.room room
+      -if header_details["reservation_status"]== "CHECKING_IN"
+        -if (computed_room_color_code== 'GREEN' && header_details["fo_status"]== "VACANT")
+          %strong#header-room-num.room-number.room-green
+            =header_details["room_number"]
+        -elsif computed_room_color_code== 'ORANGE' && header_details["fo_status"]== "VACANT"
+          %strong#header-room-num.room-number.room-orange
+            =header_details["room_number"]            
+        -elsif computed_room_color_code== 'RED' 
+          %strong#header-room-num.room-number.room-red
+            =header_details["room_number"]
+        -else
+          %strong#header-room-num.room-number
+            =header_details["room_number"] 
+      -else
+        %strong#header-room-num.room-number
+          =header_details["room_number"]
+      %span#room-type{"data-room-type" => header_details["room_type"]}
+        =header_details["room_type_name"]
+  %span.nights
+    %span.guest-status.nights 
+
+    =header_details["total_nights"]
+    -if(header_details["total_nights"] == 1)
+      night 
+    -else
+      nights       
+  %span.date
+    %span.guest-status.small-icon.check-in check-in
+    =Date.parse(header_details["arrival_date"].to_s).strftime("%A")
+    =header_details["arrival_date"].strftime("%m-%d-%Y")
+      
+  %span.date
+    %span.guest-status.small-icon.check-out check-out
+    =Date.parse(header_details["departure_date"].to_s).strftime("%A")
+    =header_details["departure_date"].strftime("%m-%d-%Y")
+   
+  

@@ -1,0 +1,11 @@
+%form#terms-and-conditions.modal-content.terms{:action => "", :method => "post", :name => "terms-and-conditions"}
+  %button#modal-close.modal-close{:type => "button"}
+    %span.icons.icon-close.invert
+  %div.head_terms_and_conditions TERMS AND CONDITIONS
+  #terms-content.scrollable
+    .wrapper
+      %p
+        =data.html_safe
+  .actions
+    %button.button.red.modal-close#disagree-button{:type => "button"} Disagree
+    %button.button.green.modal-close#agree-button{:type => "button"} Agree

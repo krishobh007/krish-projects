@@ -1,0 +1,6 @@
+SUCCESS = 'success'
+FAILURE = 'failure'
+VACANT = 'VACANT'
+GREEN = 'GREEN'
+RED = 'RED'
+ORANGE = 'ORANGE'

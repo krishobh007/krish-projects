@@ -1,0 +1,34 @@
+<div bindonce="statisticsData" id="dashboard-occupancy" class="dashboard-block data">
+    <h3>Occupancy</h3>
+    <ul>
+        <li>Today
+        	<span bo-text="'{{statisticsData.occupancy.today | round}}' + '%'" ng-show="escapeNull(statisticsData.occupancy.today)!==''">
+        		
+        	</span>       	
+        </li>
+
+        <li>{{tomorrow|date:monthAndDate}}
+        	<span bo-text="'{{statisticsData.occupancy.tomorrow | round}}' + '%'" ng-show="escapeNull(statisticsData.occupancy.tomorrow)!==''">
+        		
+        	</span>       	
+        </li>
+
+        <li>{{dayAfterTomorrow|date:monthAndDate}}
+        	<span bo-text="'{{statisticsData.occupancy.day_after_tomorrow | round}}' + '%'" ng-show="escapeNull(statisticsData.occupancy.day_after_tomorrow)!==''">
+        		
+        	</span>       	
+        </li>
+
+        <li>{{userInfo.business_date|date:fullMonth}}
+        	<span bo-text="'{{statisticsData.occupancy.current_month | round}}' + '%'" ng-show="escapeNull(statisticsData.occupancy.current_month)!==''">
+        		
+        	</span>
+        </li>
+
+        <li>{{userInfo.business_date|date:fullYear}}
+        	<span bo-text="'{{statisticsData.occupancy.current_year | round}}' + '%'" ng-show="escapeNull(statisticsData.occupancy.current_year)!==''">
+        	
+        	</span>
+        </li>
+    </ul>
+</div>

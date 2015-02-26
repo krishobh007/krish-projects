@@ -1,0 +1,22 @@
+{
+    "departments": [
+        {
+            "value": "20",
+            "name": "Front desk"
+        },
+        {
+            "value": "22",
+            "name": "IT"
+        }
+    ],
+    "roles": [
+        {
+            "value": "20",
+            "name": "Hotel admin"
+        },
+        {
+            "value": "22",
+            "name": "Hotel staff"
+        }
+    ]
+}

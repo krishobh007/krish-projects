@@ -1,0 +1,146 @@
+%meta{:charset => "utf-8"}
+.invoice{:style =>""} 
+  .invoice-logo{:style => "height: 3cm; position: relative;"}
+    %h1{:style => "position: absolute;top: 0;left: 0; font-weight: 600; line-height: 40px;"} Invoice
+    %img{:alt => "Logo of hotel", :src => @data[:hotel_logo_for_pdf], :style => "position: absolute;top: 0;right: 0;height:40px; width:auto;"}
+  %table.guest-info{:style => "text-transform: none; margin: 0;width: 100%;table-layout: auto;border-collapse: collapse;border-spacing: 0;"}
+    %tbody
+      %tr{:style => "page-break-after: avoid;"}
+        %th{:style => " padding: 0 4pt 0 0; page-break-after: avoid;white-space: normal;font-weight: 600;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"} Guest Full Name
+        %th{:style => " padding: 0 4pt 0 0; page-break-after: avoid;white-space: normal;font-weight: 600;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"} Arrival Date
+        %th{:style => " padding: 0 4pt 0 0; page-break-after: avoid;white-space: normal;font-weight: 600;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"} Departure Date
+      %tr{:style => "page-break-after: avoid;"}
+        %td{:style => " padding: 0 4pt 8pt 0; page-break-after: avoid;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"} 
+          =@data[:guest_details][:first_name]
+          =@data[:guest_details][:last_name]
+        %td{:style => " padding: 0 4pt 8pt 0; page-break-after: avoid;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+          =@data[:arrival_date]
+        %td{:style => " padding: 0 4pt 8pt 0; page-break-after: avoid;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+          =@data[:departure_date]
+      %tr{:style => "page-break-after: avoid;"}
+        %th{:style => " padding: 0 4pt 0 0; page-break-after: avoid;white-space: normal;font-weight: 600;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"} City
+        %th{:style => " padding: 0 4pt 0 0; page-break-after: avoid;white-space: normal;font-weight: 600;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"} State
+        %th{:style => " padding: 0 4pt 0 0; page-break-after: avoid;white-space: normal;font-weight: 600;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"} Postal Code
+        %th{:style => " padding: 0 4pt 0 0; page-break-after: avoid;white-space: normal;font-weight: 600;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"} Country
+      %tr{:style => "page-break-after: avoid;"}
+        %td{:style => " padding: 0 4pt 8pt 0; page-break-after: avoid;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+          =@data[:guest_details][:city]
+        %td{:style => " padding: 0 4pt 8pt 0; page-break-after: avoid;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+          =@data[:guest_details][:state]
+        %td{:style => " padding: 0 4pt 8pt 0; page-break-after: avoid;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+          =@data[:guest_details][:postal_code]
+        %td{:style => " padding: 0 4pt 8pt 0; page-break-after: avoid;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+          =@data[:guest_details][:country]
+      %tr{:style => "page-break-after: avoid;"}
+        %th{:style => " padding: 0 4pt 0 0; page-break-after: avoid;white-space: normal;font-weight: 600;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"} Confirmation No.
+        %th{:style => " padding: 0 4pt 0 0; page-break-after: avoid;white-space: normal;font-weight: 600;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"} Room No.
+        %th{:style => " padding: 0 4pt 0 0; page-break-after: avoid;white-space: normal;font-weight: 600;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"} Invoice No.
+      %tr{:style => "page-break-after: avoid;"}
+        %td{:style => " padding: 0 4pt 8pt 0; page-break-after: avoid;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+          =@data[:confirmation_number]
+        %td{:style => " padding: 0 4pt 8pt 0; page-break-after: avoid;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+          =@data[:room_number]
+        %td{:style => " padding: 0 4pt 8pt 0; page-break-after: avoid;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+          =@data[:invoice_number]
+  .invoice-header{:style => " font-size: 9pt;line-height: 11pt;text-align: center; margin: 1cm 0 -1cm 0;"}
+    =@data[:custom_text_header]
+  .invoice-body{:style => " margin-top: 2cm;"}
+    %p.date{:style => "font-size: 9pt;line-height: 11pt; margin: 0;"}
+      %strong{:style => "font-weight: 600;"} Invoice Date :
+      %br
+      =@data[:invoice_date]
+    %table.invoice-details{:style => "text-transform: none;margin: 4pt 0;page-break-after:auto;margin: 0;width: 100%;table-layout: auto; border-collapse: collapse;border-spacing: 0;"}
+      %caption{:style => "font-size: 14pt; line-height: 12pt; padding: 12pt 0 8pt; border-top: 2px solid #d8d8d8;text-align:left;"}
+        =@data[:hotel_name]
+        %br
+        -if (@data[:show_hotel_address])
+          %span{:style => "font-size: 9pt;"}
+            =@data[:street]
+            &#9830;
+            =@data[:city]
+            ,
+            =@data[:state]
+            =@data[:zipcode]
+            &#9830;
+            =@data[:country]
+      %thead
+        %tr
+          %th{:style => "padding: 2pt 2pt 2pt 0;background-color: transparent;white-space: normal;font-weight: 600;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"} 
+            Date of Charge
+          %th{:style => "padding: 2pt 2pt 2pt 0;background-color: transparent;white-space: normal;font-weight: 600;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+            Charge description
+          %th{:style => "padding:2pt 2pt 2pt 0;text-align:right;background-color:transparent;white-space: normal;font-weight: 600;font-size: 9pt;line-height: 1em;vertical-align: top;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+            Charge amount                                                                                                       
+          %th{:style => "padding: 2pt 2pt 2pt 0;text-align: right;background-color: transparent;white-space: normal;font-weight: 600;font-size: 9pt;line-height: 1em;vertical-align: top;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+            Credit amount
+      %tfoot{:style => " padding: 12pt 0 4pt;border-top: 2px solid #d8d8d8;"}
+        %tr{:style => ""}
+          %td{:colspan => "3", :style => "padding: 12pt 2pt 2pt 0;text-align: right;font-size: 9pt;line-height: 1em;vertical-align: top;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+            %strong Total Charge
+          %td{:style => "padding: 12pt 2pt 2pt 0; text-align: right;font-size: 9pt;line-height: 1em;vertical-align: top;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+            %strong
+              =@data["currency_for_html"].html_safe
+              =@data["total_fees"]
+              
+        %tr
+          %td{:colspan => "3", :style => "padding: 2pt 2pt 2pt 0;text-align: right;font-size: 9pt;line-height: 1em;vertical-align: top;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+            %strong
+              Total Credits
+              
+          %td{:style => "padding: 2pt 2pt 2pt 0;text-align: right;font-size: 9pt;line-height: 1em;vertical-align: top;page-break-after: auto;page-break-inside: avoid;white-space: normal; "}
+            %strong
+              =@data["currency_for_html"].html_safe
+              =@data["credits"]
+              
+        %tr
+          %td{:colspan => "3", :style => "padding: 2pt 2pt 2pt 0;text-align: right;font-size: 9pt;line-height: 1em;vertical-align: top;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+            %strong Balance
+          %td{:style => "padding: 2pt 2pt 2pt 0;text-align: right;font-size: 9pt;line-height: 1em;vertical-align: top;page-break-after: auto;page-break-inside: avoid;white-space: normal; "}
+            %strong 
+              =@data["currency_for_html"].html_safe
+              =@data["balance"]
+        %tr
+          %td{:colspan => "3", :style => "padding: 2pt 2pt 2pt 0;text-align: right;font-size: 9pt;line-height: 1em;vertical-align: top;page-break-after: auto;page-break-inside: avoid;white-space: normal;"} Net Amount
+          %td{:style => "padding: 2pt 2pt 2pt 0;text-align: right;font-size: 9pt;line-height: 1em;vertical-align: top;page-break-after: auto;page-break-inside: avoid;white-space: normal; "} 
+            =@data["currency_for_html"].html_safe
+            =@data["net_amount"]
+        -@data["tax_details"].each do |tax_details|
+          %tr
+            %td{:colspan => "3", :style => "padding: 2pt 2pt 2pt 0;text-align: right;font-size: 9pt;line-height: 1em;vertical-align: top;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+              =tax_details[:description]
+            %td{:style => "padding: 2pt 2pt 2pt 0;text-align: right; padding-bottom: 12pt;font-size: 9pt;line-height: 1em;vertical-align: top;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+              =@data["currency_for_html"].html_safe
+              =tax_details[:amount]
+      %tbody
+        -@data["fee_details"].each do |fees_details|
+          -fees_details["charge_details"].each do |charge_details|
+            -if(!charge_details["is_tax"])
+              %tr
+                %td{:style => "padding: 2pt 2pt 2pt 0;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+                  =fees_details["date"]
+                %td{:style => "padding: 2pt 2pt 2pt 0;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+                  %span{:style => "display: block;"}
+                    =charge_details["description"]
+                  -if(!charge_details['reference_text'].blank?)
+                    %span{:style => "color:  #9d9d9d; margin-bottom: 2pt; display: block;"}
+                      =charge_details["reference_text"]
+                %td{:style => "padding: 2pt 2pt 2pt 0;text-align: right;font-size: 9pt;line-height: 1em;vertical-align: top;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+                  =@data["currency_for_html"].html_safe
+                  =charge_details["amount"]
+                %td{:style => "padding: 2pt 2pt 2pt 0;text-align: right; padding-bottom: 12pt;font-size: 9pt;line-height: 1em;vertical-align: top;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+          -fees_details["credit_details"].each do |credit_details|
+            %tr{"ng-repeat" => "item in printData.credit_details_list"}
+              %td{:style => "padding: 2pt 2pt 2pt 0;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+                =fees_details["date"]
+              %td{:style => "padding: 2pt 2pt 2pt 0;font-size: 9pt;line-height: 1em;vertical-align: top;text-align: left;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+                %span{:style => "display: block;"}
+                  =credit_details["description"]
+                -if(!credit_details['reference_text'].blank?)
+                  %span{:style => "color:  #9d9d9d; margin-bottom: 2pt; display: block;"}
+                    =credit_details["reference_text"]
+              %td{:style => "padding: 2pt 2pt 2pt 0;text-align: right;font-size: 9pt;line-height: 1em;vertical-align: top;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+              %td{:style =>"padding: 2pt 2pt 2pt 0;text-align: right; padding-bottom: 12pt;font-size: 9pt;line-height: 1em;vertical-align: top;page-break-after: auto;page-break-inside: avoid;white-space: normal;"}
+                =@data["currency_for_html"].html_safe
+                =credit_details["amount"]
+  .invoice-footer{:style => " font-size: 8pt; padding-top: 16pt;"}
+    =@data[:custom_text_footer]

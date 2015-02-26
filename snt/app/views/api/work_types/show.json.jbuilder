@@ -1,0 +1,1 @@
+json.call(@work_type, :id, :name, :is_active, :is_system)

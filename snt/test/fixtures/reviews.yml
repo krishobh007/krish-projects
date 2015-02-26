@@ -1,0 +1,9 @@
+one:
+  review_category: cleanliness
+  reservation: checked_out
+  rating: 4
+
+two:
+  review_category: cleanliness
+  reservation: checked_out
+  rating: 3

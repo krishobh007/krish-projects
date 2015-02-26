@@ -1,0 +1,76 @@
+{
+    "status": "success",
+    "data": [
+        {
+            "room_number": "5025",
+            "room_status": "READY",
+            "fo_status": "VACANT",
+            "is_dueout": "false",
+            "room_features": ["1","2","3"]
+        },
+        {
+            "room_number": "5008",
+            "room_status": "NOTREADY",
+            "fo_status": "VACANT",
+            "is_dueout": "false",
+            "room_features": ["2","3","4"]
+        },
+        {
+            "room_number": "1057",
+            "room_status": "READY",
+            "fo_status": "VACANT",
+            "is_dueout": "false",
+            "room_features": ["4","5","6"]
+        },
+        {
+            "room_number": "5028",
+            "room_status": "READY",
+            "fo_status": "VACANT",
+            "is_dueout": "false",
+            "room_features": ["1","2","3"]
+        },
+        {
+            "room_number": "5030",
+            "room_status": "NOTREADY",
+            "fo_status": "OCCUPIED",
+            "is_dueout": "true",
+            "room_features": ["1"]
+        },
+        {
+            "room_number": "1060",
+            "room_status": "READY",
+            "fo_status": "VACANT",
+            "is_dueout": "false",
+            "room_features": ["3","4","5","6"]
+        },
+        {
+            "room_number": "1058",
+            "room_status": "NOTREADY",
+            "fo_status": "OCCUPIED",
+            "is_dueout": "false",
+            "room_features": []
+        },
+        {
+            "room_number": "1026",
+            "room_status": "READY",
+            "fo_status": "VACANT",
+            "is_dueout": "false",
+            "room_features": []
+        },
+        {
+            "room_number": "1052",
+            "room_status": "NOTREADY",
+            "fo_status": "VACANT",
+            "is_dueout": "false",
+            "room_features": []
+        },
+        {
+            "room_number": "4020",
+            "room_status": "NOTREADY",
+            "fo_status": "VACANT",
+            "is_dueout": "false",
+            "room_features": ["1","2","3","4","5","6"]
+        }
+    ],
+    "errors": []
+}

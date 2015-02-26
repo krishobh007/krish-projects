@@ -1,0 +1,6 @@
+:address: "smtp.gmail.com"
+:port: 587
+:domain: "gmail.com"
+:user_name: "alexsam374"
+:password: "123qweAadmin"
+:enable_starttls_auto: true

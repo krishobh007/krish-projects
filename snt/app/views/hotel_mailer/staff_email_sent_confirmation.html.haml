@@ -1,0 +1,31 @@
+%tr
+  %td{align: "center", bgcolor: "#ffffff", style: "background:#ffffff; text-align:justify; font:normal 16px Arial, Helvetica, sans-serif; color:#231f20; line-height:22px; padding:20px 5% 19px;", valign: "top"}
+    = t('mailer.staff_email_sent_confirmation.confirmation_message', time: @time, type: @type, count: @total_guests_count)
+
+  - @guests.each do |guest|
+    %tr
+      %td{align: "center", bgcolor: "#ffffff", style: "background:#ffffff; text-align:left; font:normal 16px Arial, Helvetica, sans-serif; color:#231f20; line-height:18px; padding:10px 5% 15px; background:#e5f1fa;", valign: "top"}
+        = t('mailer.staff_email_sent_confirmation.guest_name')
+        =':'
+        %span{style: " text-transform: capitalize;"}
+          = guest[:guest_name]
+    %tr
+      %td{align: "center", bgcolor: "#ffffff", style: "background:#ffffff; text-align:left; font:normal 16px Arial, Helvetica, sans-serif; color:#231f20; line-height:18px; padding:10px 5% 15px; background:#e5f1fa;", valign: "top"}
+        = t('mailer.staff_email_sent_confirmation.room_no')
+        =':'
+        %span
+          = guest[:room_no]      
+    %tr
+      %td{align: "center", bgcolor: "#ffffff", style: "background:#ffffff; text-align:left; font:normal 16px Arial, Helvetica, sans-serif; color:#231f20; line-height:18px; padding:10px 5% 15px; background:#e5f1fa;", valign: "top"}
+        = t('mailer.staff_email_sent_confirmation.payment_type')
+        =':'
+        %span{style: " text-transform: capitalize;"}
+          = guest[:payment_type]
+    %tr
+      %td{align: "center", bgcolor: "#ffffff", style: "background:#ffffff; text-align:left; font:normal 16px Arial, Helvetica, sans-serif; color:#231f20; line-height:18px; padding:10px 5% 15px; background:#e5f1fa;", valign: "top"}
+        = t('mailer.staff_email_sent_confirmation.email')
+        =':'
+        %span
+          = guest[:email]
+    %tr
+      %td{align: "center", bgcolor: "#ffffff", style: "background:#ffffff; text-align:left; font:normal 16px Arial, Helvetica, sans-serif; color:#231f20; line-height:18px; padding:10px 5% 15px;", valign: "top"}        

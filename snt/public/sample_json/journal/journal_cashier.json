@@ -1,0 +1,125 @@
+
+{	
+    "status":"open",
+    "history":  [
+        {
+            "id": "0",
+            "status": "closed",
+            "user": "cashiere",
+            "time": "09:13",
+            "date": "2014-08-25"
+        },
+        {
+            "id": "1",
+            "status": "open",
+            "user": "cashier",
+            "time": "09:13",
+            "date": "2014-08-25"
+        },
+        {
+            "id": "2",
+            "status": "open",
+            "user": "new transaction",
+            "time": "09:13",
+            "date": "2014-08-25"
+        },
+         {
+            "id": "3",
+            "status": "closed",
+            "user": "cashier",
+            "time": "09:13",
+            "date": "2014-08-25"
+        },
+        {
+            "id": "4",
+            "status": "closed",
+            "user": "cashier",
+            "time": "09:13",
+            "date": "2014-08-25"
+        },
+        {
+            "id": "5",
+            "status": "open",
+            "user": "new transaction",
+            "time": "09:13",
+            "date": "2014-08-25"
+        },
+         {
+            "id": "6",
+            "status": "closed",
+            "user": "cashier",
+            "time": "09:13",
+            "date": "2014-08-25"
+        },
+        {
+            "id": "7",
+            "status": "closed",
+            "user": "cashier",
+            "time": "09:13",
+            "date": "2014-08-25"
+        },
+        {
+            "id": "8",
+            "status": "open",
+            "user": "new transaction",
+            "time": "09:13",
+            "date": "2014-08-25"
+        },
+         {
+            "id": "9",
+            "status": "closed",
+            "user": "cashier",
+            "time": "09:13",
+            "date": "2014-08-25"
+        },
+        {
+            "id": "10",
+            "status": "closed",
+            "user": "cashier",
+            "time": "09:13",
+            "date": "2014-08-25"
+        },
+        {
+            "id": "11",
+            "status": "open",
+            "user": "new transaction",
+            "time": "09:13",
+            "date": "2014-08-25"
+        },
+         {
+            "id": "12",
+            "status": "closed",
+            "user": "cashier",
+            "time": "09:13",
+            "date": "2014-08-25"
+        },
+        {
+            "id": "13",
+            "status": "closed",
+            "user": "cashier",
+            "time": "09:13",
+            "date": "2014-08-25"
+        },
+        {
+            "id": "14",
+            "status": "open",
+            "user": "new transaction",
+            "time": "09:13",
+            "date": "2014-11-25"
+        },
+          {
+            "id": "15",
+            "status": "closed",
+            "user": "cashier",
+            "time": "09:13",
+            "date": "2014-08-25"
+        },
+        {
+            "id": "16",
+            "status": "open",
+            "user": "new transaction",
+            "time": "09:13",
+            "date": "2014-09-25"
+        }
+    ]
+}

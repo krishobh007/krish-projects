@@ -1,0 +1,57 @@
+{
+    "status": "success",
+    "data": {
+        "menus": [
+            {
+                "menu_id": 1,
+                "menu_name": "Hotels",
+                "header_name": "Hotels ",
+                "components": [
+                    {
+                        "id": 1,
+                        "name": "Hotels",
+                        "state": "admin.hotels",
+                        "action_path": "/admin/hotels/1/",
+                        "is_group": false,
+                        "icon_class": "icon-hotel",
+                        "sub_components": [],
+                        "is_bookmarked": false
+                    },
+                    {
+                        "id": 2,
+                        "name": "Chains",
+                        "action_path": "/admin/chains",
+                        "is_group": false,
+                        "icon_class": "icon-user",
+                        "sub_components": [],
+                        "is_bookmarked": false,
+                        "state": "admin.chains"
+                    },
+                    {
+                        "id": 3,
+                        "name": "Brands",
+                        "action_path": "/admin/departments",
+                        "is_group": false,
+                        "icon_class": "icon-admin-menu icon-departments",
+                        "sub_components": [],
+                        "is_bookmarked": false,
+                        "state": "admin.brands"
+                    }
+                ]
+            },
+            {
+                "menu_id": 2,
+                "menu_name": "Dashboard",
+                "header_name": "Dashboard setup",
+                "components": []
+            },
+            {
+                "menu_id": 3,
+                "menu_name": "Configuration",
+                "header_name": "Configuration setup",
+                "components": []
+            }
+        ],
+        "errors": []
+    }
+}

@@ -1,0 +1,23 @@
+{
+
+ "timeline": "current",
+ "confirmation_num": "4813095",
+ "reservation_status": "check-in",
+ "arrival_date": "Tuesday 03-09-13",
+ "departure_date": "Friday 06-09-13",
+ "group_name": "Hospitality Leaders conference",
+ "guests_total": 5,
+ "number_of_infants": 0,
+ "number_of_adults": 2,
+ "number_of_children": 2,
+ "payment_details": true,
+ "guarentee_type": "6pm",
+ "room_number": 104,
+ "room_status": "not-ready",
+ "room_status_explained": "",
+ "room_type_description": "Superior King Double Deluxe",
+ "avg_daily_rate": "$239",
+ "total_rate": "$719"
+}
+
+

@@ -1,0 +1,61 @@
+{
+        "id": "31",
+        "user_id": "15",
+        "hotel_id": "1",
+        "last_name": "Brunels",
+        "first_name": "Patricias",
+        "arrival_date": "2013-11-14",
+        "dep_date": "2014-02-27",
+        "confirm_no": "4816097",
+        "room_no": "5022",
+        "status": "CHECKEDIN",
+        "hotel_name": "Dupont Circle Hotel",
+        "has_primary_card": "false",
+        "is_late_checkouts_available": "true",
+        "is_profile_completed": "false",
+        "is_firsttime_checkin": "false",
+        "force_upsell": "true",
+        "upsell_available": "false",
+        "room_type_name": "Deluxe Room",
+        "group_code": "",
+        "group_id": "",
+        "lobby_status": "false",
+        "hotel_business_date": "2013-12-26",
+        "checkin_date_with_grace": "2013-11-11",
+        "checkout_date_with_grace": "2014-03-02",
+        "sociallobby_first_time": "true",
+        "room_type": "DLK",
+        "room_status": "READY",
+        "fo_status": "OCCUPIED",
+        "wake_up_call_time": "06:45 AM",
+        "note_topics": [{
+            "id": "1",
+            "value": "GENERAL"
+        }],
+        "news_paper_pref": {
+            "news_papers": [{
+                "value": "12",
+                "name": "BBC"
+            }, {
+                "value": "13",
+                "name": "TIMES OF INDIA"
+            }, {
+                "value": "19",
+                "name": "BOSTON HERALD"
+            }, {
+                "value": "20",
+                "name": "CROATIAN TIMES"
+            }, {
+                "value": "21",
+                "name": "SUEDDEUTSCHE ZEITUNG"
+            }, {
+                "value": "22",
+                "name": "SYDNEY MORNING HERALD"
+            }, {
+                "value": "23",
+                "name": "USA TODAY"
+            }],
+            "selected_newspaper": "13"
+        },
+        "is_upsell_selected": "false"
+    }

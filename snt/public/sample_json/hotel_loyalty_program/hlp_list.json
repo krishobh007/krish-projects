@@ -1,0 +1,21 @@
+{
+	"hotel_loyalty_program": [
+		{
+			"value": "1",
+			"name": "Preffered Customer",
+			"is_active": "true"
+		}, {
+			"value": "2",
+			"name": "Card Priviledges",
+			"is_active": "true"
+		}, {
+			"value": "3",
+			"name": "Dupont Honors",
+			"is_active": "false"
+		}, {
+			"value": "4",
+			"name": "Hotel Customer",
+			"is_active": "false"
+		}
+	]
+}

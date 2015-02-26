@@ -1,0 +1,57 @@
+Pms::Application.routes.draw do
+  namespace :api, defaults: { format: :json } do
+
+    resources :rate_types, except: [:new, :edit] do
+      get :active, on: :collection
+      post :activate, on: :member
+    end
+
+    resources :rates, except: [:new, :edit] do
+      put :room_types, on: :member
+      post :import, on: :collection
+      resources :rate_date_ranges, only: [:index, :create]
+    end
+
+    resources :rate_date_ranges, only: [:show, :update, :destroy]
+    resources :rate_sets, only: [:show, :update, :destroy]
+    resources :room_types, only: [:index]
+
+    resources :restriction_types, only: :index do
+      post 'activate', on: :member
+    end
+
+   # TODO Once UI start working on API Guide format, will change the routes accordingly.  
+    match 'password_resets/:id/update' => 'password_resets#update', :as => :password_update,  :via => [:put]
+    match 'password_resets/validate_token' =>  'password_resets#validate_token', :via => [:post]
+
+<<<<<<< HEAD
+    resources :hotel_settings, only: :index
+    resources :sources, only: [:index,:create,:update] do
+      post :use_sources,on: :collection
+=======
+    resources :hotel_settings, only: :index do
+       post 'change_settings', on: :collection
+>>>>>>> 58aad71996bf6943c09368fe767dbfe7b662dd9f
+    end
+
+    resources :reports, only: [:index, :show] do
+      get :submit, on: :member
+    end
+    
+    resources :users, only: [] do
+      get :active, on: :collection
+    end
+    
+    resources :maintenance_reasons
+     
+    get 'hotel_statistics', to: 'hotels#hotel_statistics'
+    get 'rover_header_info', to: 'hotels#rover_header_info'
+
+    resources :reservations, only: :show
+
+    resources :market_segments, except: [:new, :edit] do
+      post :use_markets, on: :collection
+    end
+    
+  end
+end

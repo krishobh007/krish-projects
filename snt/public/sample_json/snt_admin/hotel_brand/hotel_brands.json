@@ -1,0 +1,28 @@
+{
+    "brands": [
+        {
+            "value": "1",
+            "name": "brand_one"
+        },
+        {
+            "value": "2",
+            "name": "brand_two"
+        },
+        {
+            "value": "3",
+            "name": "brand_three"
+        },
+        {
+            "value": "4",
+            "name": "brand_four"
+        },
+        {
+            "value": "5",
+            "name": "brand_five"
+        },
+        {
+            "value": "6",
+            "name": "brand_six"
+        }
+      ]
+}

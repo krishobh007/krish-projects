@@ -1,0 +1,68 @@
+checked_out:
+  first_name: CheckedOut
+  last_name: Guest
+  confirm_no: 121
+  confirm_no: 123
+  arrival_date: <%= (Date.today - 10.days).strftime("%Y-%m-%d") %>
+  dep_date: <%= (Date.today - 5.days).strftime("%Y-%m-%d") %>
+  status: CHECKEDOUT
+  email: test@snt.com
+  user: admin 
+  hotel: one
+
+in_house:
+  first_name: InHouse
+  last_name: Guest
+  confirm_no: 122
+  arrival_date: <%= (Date.today - 3.days).strftime("%Y-%m-%d") %>
+  dep_date: <%= (Date.today + 1.days).strftime("%Y-%m-%d") %>
+  status: CHECKEDIN
+  email: test@snt.com
+  user: admin
+  hotel: one
+
+due_in:
+  first_name: DueIn
+  last_name: Guest
+  confirm_no: 123
+  arrival_date: <%= Date.today.strftime("%Y-%m-%d") %>
+  dep_date: <%= (Date.today + 2.days).strftime("%Y-%m-%d") %>
+  status: RESERVED
+  email: test@snt.com
+  user: admin
+  hotel: one
+
+due_out:
+  first_name: DueOut
+  last_name: Guest
+  confirm_no: 124
+  arrival_date: <%= (Date.today - 5.days).strftime("%Y-%m-%d") %>
+  dep_date: <%= Date.today.strftime("%Y-%m-%d") %>
+  status: CHECKEDIN
+  email: test@snt.com
+  user: admin
+  hotel: one
+
+checked_in:
+  first_name: InHouse
+  last_name: Guest
+  confirm_no: 122
+  arrival_date: <%= Date.today.strftime("%Y-%m-%d") %>
+  dep_date: <%= (Date.today + 1.days).strftime("%Y-%m-%d") %>
+  status: CHECKEDIN
+  email: test@snt.com
+  user: admin
+  hotel: one
+  upsell_amount: 588.34
+  
+reserved:
+  first_name: Reserved
+  last_name: Guest
+  confirm_no: 122
+  arrival_date: <%= (Date.today - 10.days).strftime("%Y-%m-%d") %>
+  dep_date: <%= (Date.today - 4.days).strftime("%Y-%m-%d") %>
+  status: RESERVED
+  email: guest@snt.com
+  user: guest
+  hotel: two
+  upsell_amount: 0

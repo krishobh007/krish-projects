@@ -1,0 +1,191 @@
+{
+    "total_revenue": "200",
+    "charge_groups": [
+        {
+            "id": "3",
+            "name": "Room",
+            "total": 100,
+            "charge_codes": [
+                {
+                    "id": "31",
+                    "name": "TRA1",
+                    "code": "55",
+                    "total": "600",
+                    "transactions": [
+                        {
+                            "room": "44",
+                            "name": "Resheil",
+                            "reservation_number": "3333",
+                            "type": "split",
+                            "details": "1112",
+                            "time": "01:23",
+                            "debit": "33",
+                            "credit": "233",
+                            "department_id": "46",
+                            "employee_id": "70",
+                            "date": "2014-05-22"
+                        },
+                        {
+                            "room": "43",
+                            "name": "Jon",
+                            "reservation_number": "333",
+                            "type": "split",
+                            "details": "1112",
+                            "time": "01:23",
+                            "debit": "33",
+                            "credit": "233",
+                            "department_id": "100",
+                            "employee_id": "96",
+                            "date": "2014-05-22"
+                        }
+                    ]
+                },
+                {
+                    "id": "32",
+                    "name": "TRA2",
+                    "code": "55",
+                    "total": "600",
+                    "transactions": [
+                        {
+                            "room": "24",
+                            "name": "RA",
+                            "reservation_number": "11",
+                            "type": "split",
+                            "details": "11",
+                            "time": "01:23",
+                            "debit": "33",
+                            "credit": "233",
+                            "department_id": "46",
+                            "employee_id": "70",
+                            "date": "2014-05-22"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "name": "Food & beverage",
+            "total": 200,
+            "charge_codes": [
+                {
+                    "id": "34",
+                    "name": "TRA3",
+                    "code": "55",
+                    "total": "600",
+                    "transactions": [
+                        {
+                            "room": "44",
+                            "name": "Resheil",
+                            "reservation_number": "3333",
+                            "type": "split",
+                            "details": "1112",
+                            "time": "01:23",
+                            "debit": "33",
+                            "credit": "233",
+                            "department_id": "70",
+                            "employee_id": "71",
+                            "date": "2014-05-22"
+                        },
+                        {
+                            "room": "43",
+                            "name": "Jon",
+                            "reservation_number": "333",
+                            "type": "split",
+                            "details": "1112",
+                            "time": "01:23",
+                            "debit": "33",
+                            "credit": "233",
+                            "department_id": "71",
+                            "employee_id": "96",
+                            "date": "2014-05-22"
+                        }
+                    ]
+                },
+                {
+                    "id": "35",
+                    "name": "TRA4",
+                    "code": "55",
+                    "total": "600",
+                    "transactions": [
+                        {
+                            "room": "24",
+                            "name": "RA",
+                            "reservation_number": "11",
+                            "type": "split",
+                            "details": "11",
+                            "time": "01:23",
+                            "debit": "33",
+                            "credit": "233",
+                            "department_id": "70",
+                            "employee_id": "71",
+                            "date": "2014-05-22"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "5",
+            "name": "Tax",
+            "total": 300,
+            "charge_codes": [
+                {
+                    "id": "36",
+                    "name": "TRA5",
+                    "code": "55",
+                    "total": "600",
+                    "transactions": [
+                        {
+                            "room": "44",
+                            "name": "Resheil",
+                            "reservation_number": "3333",
+                            "type": "split",
+                            "details": "1112",
+                            "time": "01:23",
+                            "debit": "33",
+                            "credit": "233",
+                            "department_id": "46",
+                            "employee_id": "96",
+                            "date": "2014-05-22"
+                        },
+                        {
+                            "room": "43",
+                            "name": "Jon",
+                            "reservation_number": "333",
+                            "type": "split",
+                            "details": "1112",
+                            "time": "01:23",
+                            "debit": "33",
+                            "credit": "233",
+                            "department_id": "71",
+                            "employee_id": "100",
+                            "date": "2014-05-22"
+                        }
+                    ]
+                },
+                {
+                    "id": "37",
+                    "name": "TRA6",
+                    "code": "55",
+                    "total": "600",
+                    "transactions": [
+                        {
+                            "room": "24",
+                            "name": "RA",
+                            "reservation_number": "11",
+                            "type": "split",
+                            "details": "11",
+                            "time": "01:23",
+                            "debit": "33",
+                            "credit": "233",
+                            "department_id": "70",
+                            "employee_id": "71",
+                            "date": "2014-05-22"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

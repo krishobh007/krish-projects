@@ -1,0 +1,17 @@
+%header.nav-bar.float{role: "banner"}
+  / Drawer toggle with back icon
+  %a.nav-toggle{id:"back-arrow", href: "#main-nav"} Menu
+  / Title
+  %h1.h2 
+    Stay Card
+    %span
+      %strong 
+        =current_user.detail.first_name 
+        =current_user.detail.last_name
+      &#124;
+      %em.date
+        =current_hotel.active_business_date.strftime("%A, %d %B %Y")
+        
+  / Logo
+  .logo
+    %img{:alt => "", :src => "#{get_current_hotel_chain_logo}"}

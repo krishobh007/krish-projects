@@ -1,0 +1,11 @@
+admin:
+  name: admin
+  
+hotel_admin:
+  name: hotel_admin
+  
+hotel_staff:
+  name: hotel_staff
+  
+guest:
+  name: guest

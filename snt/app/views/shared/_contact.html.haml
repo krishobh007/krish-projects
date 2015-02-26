@@ -1,0 +1,63 @@
+%form#contact-info.card-content.form.scrollable{action: "", method: "post", name: "contact-info"}
+  
+  .wrapper.float
+    .entry.full-width
+      #notification-message-guest
+    .holder.float.left
+      .entry
+        %label{for: "title"} Title
+        %input#title{name: "title", type: "text", value: ""}
+      .entry
+      .entry
+        %label{for: "firstname"} First name
+        %input#guest_firstname{name: "firstname", type: "text", value: ""}
+      .entry
+        %label{for: "lastname"} Last Name
+        %input#guest_lastname{name: "lastname", type: "text", value: ""}
+      .entry
+        %label{for: "works-at"} Works at
+        %input#works-at{name: "works-at", type: "text", value: ""}
+      .entry
+        %label{for: "job-title"} Job title
+        %input#job-title{name: "job-title", type: "text", value: ""}
+      
+      .entry.has-datepicker
+        %label{for: "birthday"}
+          Birthday 
+        %input#guest-birthday{maxlength: "8", name: "guest-birthday", type: "text", value: "" , readonly: true}
+      
+      .entry.radio-check.full-width
+        %label{for: "opt-in"} Email Opt In
+        %label.checkbox
+          %input#opt-in{name: "opt-in", type: "checkbox", value: "opt-in"}/
+          Promotions & News Email Opt In
+      
+
+    .holder.float.right
+      .entry.full-width
+        %label{for: "email"} E-mail address
+        %input#email{name: "email", type: "email", value: ""}
+      .entry.full-width
+        %label{for: "streetname"} Address
+        %input#streetname{name: "streetname", type: "text", value: ""}
+      .entry
+        %label{for: "city"} City
+        %input#city{name: "city", type: "text", value: ""}
+      .entry
+        %label{for: "postalcode"} Postal code
+        %input#postalcode{name: "postalcode", type: "number", value: ""}
+      .entry
+        %label{for: "state"} State
+        %input#state{name: "state", type: "text", value: ""}
+      .entry
+        %label{for: "country"} Country
+        .select{form: "contact-info"}
+          = select(:countries, :status, @country, { :include_blank => true })
+      .entry
+        %label{for: "phone"} Phone
+        %input#phone{name: "phone", type: "tel",  value: ""}
+      .entry
+        %label{for: "mobile"} Mobile
+        %input#mobile{name: "mobile", type: "tel", value: ""}
+      .entry
+        %input#reservation_id{name: "reservation_id", type: "hidden", value: ""}

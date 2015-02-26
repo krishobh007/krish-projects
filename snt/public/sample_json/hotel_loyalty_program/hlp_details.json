@@ -1,0 +1,19 @@
+{
+    "value": "1",
+    "name": "Dupont Honors",
+    "code": "123456",
+    "levels": [
+        {
+            "value": "1",
+            "name": "Silver"
+        },
+        {
+            "value": "2",
+            "name": "Black"
+        },
+        {
+            "value": "3",
+            "name": "Diamond"
+        }
+    ]
+}

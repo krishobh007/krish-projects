@@ -1,0 +1,16 @@
+%form#validate.modal-content.form.confirmation
+  %button#modal-close.modal-close{:type => "button"}
+    %span.icons.icon-close.invert
+  .entry.full-width
+    #notification-message
+  %span.h2.message Phone & e-mail missing!
+  %span.text Ask the guest to provide them before check in
+  .entry.full-width#guest-phone-entry
+    %label{for: "guest-phone"} Phone
+    %input#guest-phone{autocomplete: "off", name: "guest-phone", type: "text", value: ""}
+  .entry.full-width#guest-email-entry
+    %label{for: "guest-email"} E-mail
+    %input#guest-email{autocomplete: "off", name: "guest-email", type: "text", value: ""}
+  .actions.float
+    %a#submit.button.green.modal-close Submit and go to check in
+    %a#cancel.button.blank.modal-close Ignore and go to check in

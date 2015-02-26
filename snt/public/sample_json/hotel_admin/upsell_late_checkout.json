@@ -1,0 +1,17 @@
+{
+    "is_late_checkout_set": "true",
+    "allowed_late_checkout": "5",
+    "is_exclude_guests": "true",
+    "currency_code": "USD",
+    "extended_checkout": [{
+        "time": "2",
+        "charge": "20"
+    },{
+        "time": "4",
+        "charge": "25"
+    },{
+        "time": "6",
+        "charge": "28"
+    }],   
+    "sent_alert": "8"
+}

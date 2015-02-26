@@ -1,0 +1,106 @@
+[
+    {
+        "id": "1",
+        "name": "Aron Smith",
+        "bill_no": "1",
+        "images": {
+            "primary": "http://localhost:3000/assets/avatar-female.png",
+            "secondary": "http://localhost:3000/assets/avatar-female.png"
+        },
+        "entity_type": "RESERVATION",
+        "has_accompanying_guests": "true",
+        "attached_charge_codes": [],
+        "attached_billing_groups": [
+            {
+                "id": "1",
+                "name": "Test1"
+            },
+            {
+                "id": "2",
+                "name": "Test2"
+            },
+            {
+                "id": "3",
+                "name": "Test3"
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "name": "Allianz Insurance",
+        "bill_no": "1",
+        "images": {
+            "primary": "http://localhost:3000/assets/avatar-female.png",
+            "secondary": ""
+        },
+        "entity_type": "COMPANY_CARD",
+        "has_accompanying_guests": "false",
+        "attached_charge_codes": [
+            {
+                "id": "1",
+                "name": "Test1"
+            },
+            {
+                "id": "2",
+                "name": "Test2"
+            },
+            {
+                "id": "3",
+                "name": "Test3"
+            }
+        ],
+        "attached_billing_groups": []
+    },
+    {
+        "id": "3",
+        "name": "Mctavish travels",
+        "bill_no": "1",
+        "images": {
+            "primary": "http://localhost:3000/assets/avatar-female.png",
+            "secondary": ""
+        },
+        "entity_type": "TRAVEL_AGENT",
+        "has_accompanying_guests": "false",
+        "attached_charge_codes": [],
+        "attached_billing_groups": [
+            {
+                "id": "1",
+                "name": "Test1"
+            },
+            {
+                "id": "2",
+                "name": "Test2"
+            },
+            {
+                "id": "3",
+                "name": "Test3"
+            }
+        ]
+    },
+    {
+        "id": "4",
+        "name": "John Smith",
+        "bill_no": "1",
+        "images": {
+            "primary": "http://localhost:3000/assets/avatar-female.png",
+            "secondary": ""
+        },
+        "entity_type": "RESERVATION",
+        "has_accompanying_guests": "false",
+        "attached_charge_codes": [],
+        "attached_billing_groups": [
+            {
+                "id": "1",
+                "name": "Test1"
+            },
+            {
+                "id": "2",
+                "name": "Test2"
+            },
+            {
+                "id": "3",
+                "name": "Test3"
+            }
+        ]
+    }
+]

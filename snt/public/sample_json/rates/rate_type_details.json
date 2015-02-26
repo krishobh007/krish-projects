@@ -1,0 +1,7 @@
+{
+    "description": "Rack Rates",
+ 	"id" : "1",
+    "is_active": "true",
+    "is_system_defined": "true",
+    "url": "/ui/show?haml_file=admin/rates/edit_rate_type&json_input=rates/rate_type_details.json&is_hash_map=true&is_partial=true"
+ }

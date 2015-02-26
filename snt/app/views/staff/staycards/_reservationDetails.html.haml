@@ -1,0 +1,219 @@
+.reservation.ui-tabs-panel.ui-widget-content.ui-corner-bottom{"aria-expanded" => "true", "aria-hidden" => "false", "aria-labelledby" => "ui-id-8", role: "tabpanel", :id => "reservation-#{reservation_hash["confirmation_num"]}", "data-reservation-id" => reservation_hash["reservation_id"], "data-reservation-status" => reservation_hash["reservation_status"]}
+  / Reservation header
+  .reservation-header
+    .actions
+      %a.button.has-arrow.toggle{:href=> "#reservation-#{reservation_hash["confirmation_num"]}-guests"}
+        %span.label Guests
+        =reservation_hash["guests_total"]
+      / nights button is clickable only for the below status
+      -if reservation_hash["enable_nights"] == "true"
+        %a.button.has-arrow.next-view#nights-btn
+          %span.label
+            Nights
+          =reservation_hash["total_nights"]
+          
+        / Show only a label for displaying nights
+      -else
+        .inactive-nights
+          %span.label 
+            Nights
+          =reservation_hash["total_nights"]
+    .data
+      %em.icons.icon-group
+        =reservation_hash["group_name"]
+      %span.date
+        %span.guest-status.small-icon.check-in> check-in
+        =reservation_hash["arrival_date"]
+      %span.date
+        %span.guest-status.small-icon.check-out> check-out
+        =reservation_hash["departure_date"]
+  / Guest details
+  %ul.reservation-guests.hidden{:id => "reservation-#{reservation_hash["confirmation_num"]}-guests"}
+    /Add new guest set as hidden
+    %li
+      %a.hidden.open-modal.add-new-button + New Guest
+    %li
+      %span.guest-icon 0-3
+      %span.label Infants
+      =reservation_hash["number_of_infants"]
+    %li
+      %span.guest-icon 3-18
+      %span.label Children
+      =reservation_hash["number_of_children"]
+    %li
+      %span.guest-icon 18+
+      %span.label Adults
+      =reservation_hash["number_of_adults"]
+  %input#confirm_no{name: "confirm_no", type: "hidden", value: reservation_hash["confirmation_num"]}/
+  .reservation-content.scrollable.check-in{:id => "reservation-content-#{reservation_hash["confirmation_num"]}"}
+    .wrapper
+      #notification-message
+      %h2.h1
+        Reservation
+        =reservation_hash["confirmation_num"]
+      / Credit card
+      %span#reservation-card-payment
+        -if ['NOSHOW', 'CHECKEDOUT', 'CANCELED'].include? reservation_hash["reservation_status"]
+          %form.block-item.item-payment.float{action: "", method: "post"}
+            = render :partial => "staff/staycards/reservation_creditcards", :locals => { :reservation_hash => reservation_hash}
+        -else
+          %form.block-item.item-payment.has-button.float{action: "", method: "post"}
+            = render :partial => "staff/staycards/reservation_creditcards", :locals => { :reservation_hash => reservation_hash}
+      
+      /Checking-in reservation, with Room assinged should show both upgrades and Keys. CICO-9182
+      -if ((reservation_hash["is_upsell_available"] == "true") &&(reservation_hash["reservation_status"] == "CHECKING_IN") && (reservation_hash["room_number"] != nil))
+        .block-item.item-room.has-buttons.float
+          = render :partial => "staff/staycards/room_details", :locals => { :reservation_hash => reservation_hash}
+          .actions
+            %a.button.with-icon.brand-colors#upgrade-btn
+              %span.icons.icon-upgrade
+              Upgrade
+            %a.button.with-icon.blue#add-keys{"data-key-settings" => reservation_hash["key_settings"],"data-reseravation-status" => reservation_hash["reservation_status"], "data-smartband-create-with-key-writing" => ((['RESERVED', 'CHECKING_IN', 'CHECKEDIN', 'CHECKING_OUT', 'NOSHOW_CURRENT', 'CHECKEDOUT'].include? reservation_hash["reservation_status"]) && reservation_hash["icare_enabled"].to_s.eql?("true")).to_s}
+              %span.icons.icon-key
+              Keys
+        / Display only the upgrades option
+      -elsif ((reservation_hash["is_upsell_available"] == "true") &&((reservation_hash["reservation_status"] == "RESERVED") || (reservation_hash["reservation_status"] == "CHECKING_IN")))
+        .block-item.item-room.has-button.float
+          = render :partial => "staff/staycards/room_details", :locals => { :reservation_hash => reservation_hash}
+          .actions
+            %a.button.with-icon.brand-colors#upgrade-btn
+              %span.icons.icon-upgrade
+              Upgrade
+        / Display only the keys option
+        / Key option is shown for CHECKING_IN reservations aswell, if room is assigned. CICO-9182
+      -elsif (((reservation_hash["reservation_status"] == "CHECKING_IN")||(reservation_hash["reservation_status"] == "CHECKING_OUT") || (reservation_hash["reservation_status"] == "CHECKEDIN")) && (reservation_hash["room_number"] != nil))
+        .block-item.item-room.has-button.float#reservation-card-room
+          = render :partial => "staff/staycards/room_details", :locals => { :reservation_hash => reservation_hash}
+          .actions
+            %a.button.with-icon.blue#add-keys{"data-key-settings" => reservation_hash["key_settings"],"data-reseravation-status" => reservation_hash["reservation_status"], "data-smartband-create-with-key-writing" => ((['RESERVED', 'CHECKING_IN', 'CHECKEDIN', 'CHECKING_OUT', 'NOSHOW_CURRENT', 'CHECKEDOUT'].include? reservation_hash["reservation_status"]) && reservation_hash["icare_enabled"].to_s.eql?("true")).to_s}
+              %span.icons.icon-key
+              Keys
+        / Keys or upgrades options are not available
+      -else
+        .block-item.item-room.float
+          = render :partial => "staff/staycards/room_details", :locals => { :reservation_hash => reservation_hash}
+      
+      / Wake up / Newspaper / Loyalty
+      .block-wrapper.float#stay-card-loyalty
+        .block-item.item-wake-up
+          .block-title
+            %span.icons.icon-alarm.active
+            %h3 Wake up
+
+          / Wake up feature available - added class 'feature-available'.
+          -if ((reservation_hash["reservation_status"] == "CHECKEDIN") || (reservation_hash["reservation_status"] == "CHECKING_OUT") ||(reservation_hash["reservation_status"] == "CHECKING_IN"))
+            %a.next-view.hover-hand#wakeup-time.feature-available
+              %span.value.text#reservation_card_wake_up_time.feature-available
+                -if(reservation_hash["wake_up_time"]["wake_up_time"])
+                  =reservation_hash["wake_up_time"]["wake_up_time"]
+                -else
+                  Not Set
+          -else
+            / Wakeup feature not available
+            %a.next-view.hover-hand#wakeup-time
+              %span.value.text#reservation_card_wake_up_time
+                -if(reservation_hash["wake_up_time"]["wake_up_time"])
+                  =reservation_hash["wake_up_time"]["wake_up_time"]
+                -else
+                  Not Set
+                
+        %form.block-item.item-newspaper{method: "post"}
+          -if(!reservation_hash["news_paper_pref"]['news_papers'].blank?)
+            .block-title
+              %h3 Newspaper
+            .select
+              / The newspaper selection option is not available for 'NOSHOW', 'CHECKEDOUT', 'CANCELED' reservations
+              -if ['NOSHOW', 'CHECKEDOUT', 'CANCELED'].include? reservation_hash["reservation_status"]
+                %select{name: "reservation_newspaper", id: "reservation_newspaper", disabled: "disabled" }
+                  %option.placeholder{value: ""} Select newspaper
+                  -reservation_hash["news_paper_pref"]['news_papers'].each do |newspapers|
+                    %option{value: newspapers['value'], :selected => (newspapers['value'] == reservation_hash["news_paper_pref"]['selected_newspaper'] ? true: nil)}
+                      =newspapers["name"]
+                      /The newspaper selection is available
+              -else
+                %select{name: "reservation_newspaper", id: "reservation_newspaper"}
+                  %option.placeholder{value: ""} Select newspaper
+                  -reservation_hash["news_paper_pref"]['news_papers'].each do |newspapers|
+                    %option{value: newspapers['value'], :selected => (newspapers['value'] == reservation_hash["news_paper_pref"]['selected_newspaper'] ? true: nil)}
+                      =newspapers["name"]
+        %form.block-item.item-loyalty.has-buttons.float#reservationcard-loyalty{action: "../stay-card/check-in/", method: "post"}
+          .block-title
+            %h3 Loyalty
+          .select-item.loyalty
+            /Disable the loyalty select feature for 'NOSHOW', 'CHECKEDOUT', 'CANCELED' %reservations 
+            -if ['NOSHOW', 'CHECKEDOUT', 'CANCELED'].include? reservation_hash["reservation_status"]
+              %select.styled{name: "loyalty", id:"loyalty", disabled: "disabled"}
+                = render :partial => "staff/staycards/loyalty_options", :locals => { :reservation_hash => reservation_hash}
+            -else
+              %select.styled{name: "loyalty", id:"loyalty"}
+                = render :partial => "staff/staycards/loyalty_options", :locals => { :reservation_hash => reservation_hash}
+            /Calculates the default selected loyalty
+            -@defaultLoyaltyAvailable = "false"
+            -reservation_hash["loyalty_level"]["frequentFlyerProgram"].each do |frequentFlyerProgram|
+              -if(frequentFlyerProgram["id"] == reservation_hash["loyalty_level"]["selected_loyalty"])
+                -@defaultLoyaltyAvailable = "true"
+                .selected#reservationLoyalty
+                  %span.value.code
+                    =frequentFlyerProgram["membership_type"]
+                  %span.number
+                    Ending with
+                    %span.value.number
+                      =frequentFlyerProgram["membership_card_number"].last(4)
+                      
+            -reservation_hash["loyalty_level"]["hotelLoyaltyProgram"].each do |hotelLoyaltyProgram|
+              -if(hotelLoyaltyProgram["id"]== reservation_hash["loyalty_level"]["selected_loyalty"])
+                -@defaultLoyaltyAvailable = "true"
+                .selected#reservationLoyalty
+                  %span.value.code
+                    =hotelLoyaltyProgram["membership_type"]
+                  %span.number
+                    Ending with
+                    %span.value.number
+                      =hotelLoyaltyProgram["membership_card_number"].last(4)
+            -if(@defaultLoyaltyAvailable == "false")
+              .selected#reservationLoyalty
+                %span.value.code
+                %span.number
+                  Select Loyalty Program
+                  %span.value.number
+          .actions
+            -if ['NOSHOW', 'CHECKEDOUT', 'CANCELED'].include? reservation_hash["reservation_status"]
+              .add-new-button{} + Add
+            -else
+              %a#add_new_loyalty_staycard.add-new-button{} + Add
+
+      / ADR / Total Stay Cost
+      
+      .block-item.item-rate
+        .block-title
+          %h3
+            ADR /
+            %strong Total Room Charge
+        %a.has-arrow.next-view.hover-hand#stay-card-total-stay-cost{"data-is-rates-suppressed" => reservation_hash["is_rates_suppressed"]}
+          -if(reservation_hash["is_rates_suppressed"] == "true")
+            %span.number
+              =reservation_hash["text_rates_suppressed"]
+              \/
+              %strong
+                =reservation_hash["text_rates_suppressed"]
+          -else
+            %span.number<
+              -if(!reservation_hash["avg_daily_rate"].blank?)
+                =get_currency_symbol(reservation_hash["currency_code"])
+                -if(reservation_hash["total_rate"] == 0)
+                  =number_with_precision(reservation_hash["avg_daily_rate"], :precision => 2)
+                -else
+                  =number_with_precision(reservation_hash["avg_daily_rate"], :precision => 0)
+                \/
+              %strong
+                -if(!reservation_hash["total_rate"].blank?)
+                  =get_currency_symbol(reservation_hash["currency_code"])
+                  -if(reservation_hash["total_rate"] == 0)
+                    =number_with_precision(reservation_hash["total_rate"], :precision => 2)
+                  -else
+                    =number_with_precision(reservation_hash["total_rate"], :precision => 0)
+          =reservation_hash["package_description"]
+      / Notes
+      = render :partial => "staff/staycards/reservationNotes", :locals => { :reservation_hash => reservation_hash}
+  / Reservation actions pane
+  = render :partial => "staff/staycards/reservation_actions", :locals => { :reservation_hash => reservation_hash}

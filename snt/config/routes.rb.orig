@@ -1,0 +1,68 @@
+Pms::Application.routes.draw do
+
+<<<<<<< HEAD
+  get "maintenance_reasons/create"
+
+  get "maintenance_reasons/edit"
+
+  get "maintenance_reasons/update"
+
+  get "maintenance_reasons/destroy"
+=======
+  get "sources/index"
+
+  get "sources/create"
+
+  get "sources/update"
+
+  get "sources/destroy"
+
+  get "sources/activate"
+>>>>>>> 75489e5833cf3cdc2d7360a82c4f3568f7c0cc86
+
+  get 'room_assignment/index'
+
+  match 'ui/show', to: 'ui#show'
+
+  # Common Login UI
+  resources :sessions
+  match '/logout', to: 'sessions#logout', as: :logout
+  match '/timeout', to: 'sessions#timeout', via: :get
+  # Root to default staff login
+  root to: 'sessions#new'
+
+  resources :reservation_notes
+
+  match 'reservation/add_newspaper_preference', to: 'reservation_preferences#add_reservation_newspaper_preference'
+  match 'wakeup/wakeup_calls', to: 'wakeups#wakeup_calls', via: :post
+  match 'wakeup/set_wakeup_calls', to: 'wakeups#add_or_update_wakeup_calls', via: :post
+
+  match 'ui/wakeupCall', to: 'ui#wakeupCall'
+
+
+  match "ui/registration", to: "ui#registration"
+  match "ui/updateAccountSettings", to: "ui#updateAccountSettings"
+  match "ui/successModal", to: "ui#successModal"
+  match "ui/failureModal", to: "ui#failureModal"
+  match "ui/bill_card", to: "ui#bill_card"
+  match "ui/validateOptEmail", to: "ui#validateOptEmail"
+  match "ui/earlyDeparture", to: "ui#earlyDeparture"
+
+
+  # search method
+  match 'search_view', to: 'search#search_view', via: :get , as: :search_view
+  match 'search' => 'search#search', via: :get
+
+
+  mount Resque::Server.new, at: '/resque'
+
+  wash_out :ariane
+  
+  # Angular based Login URL
+  match "/login" , to: 'login#new', via: :get
+  match "/login/submit" , to: 'login#create', via: :post
+
+  resources :templates, only: [] do
+    get 'reports', on: :collection
+  end
+end

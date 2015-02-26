@@ -1,0 +1,383 @@
+class ReservationImporter
+  
+  # Create a new instance of the reservation importer
+  def initialize(reservation)
+    @reservation = reservation
+    @guest = reservation.primary_guest
+    raise "Reservation is not set" if !@reservation
+  end  
+  
+  # Create new reservation from booking attributes    
+  def self.create_from_booking_attributes(hotel, attributes)
+    begin
+      Reservation.transaction do
+        reservation = Reservation.new(:hotel => hotel)
+
+        # Find existing user for this reservation
+        guest_detail = ReservationImporter.guest_for_booking_details(hotel, attributes)
+
+        # If no user was found, create a new one
+        guest_detail = GuestImporter.create_from_guest_attributes!(hotel.id, attributes[:guest]) if !guest_detail
+                
+        # Add the guest detail to the reservation
+        reservation.reservations_guest_details.build(:guest_detail_id => guest_detail.id, :is_primary => true)        
+        
+        reservation.status = ExternalMapping.map_external_system_value(hotel.pms_type, attributes[:status], Setting.mapping_types[:reservation_status])
+        
+        [:arrival_date, :confirm_no, :dep_date, :room_no, :arrival_time, :guest_id, :cancellation_no, :cancel_date,
+          :cancel_reason, :company_id, :fixed_rate, :total_amount, :guarantee_type, :last_stay_room, :total_rooms, :party_code,
+          :preferred_room_type, :print_rate, :travel_agent_id, :is_walkin, :external_id, :upsell_amount].each do |attribute|
+          
+          reservation[attribute] = attributes[attribute] if attributes.has_key?(attribute)
+        end
+        
+        # Enable no_room_move if value is present and not equal to "N"
+        reservation.no_room_move = attributes[:no_room_move] != "N" if attributes.has_key?(:no_room_move)
+        
+        reservation.save!
+        
+        ReservationImporter.new(reservation).sync_booking_attributes!(attributes)
+      end
+      
+    rescue ActiveRecord::RecordInvalid => e
+      logger.warn "Could not save reservation with confirmation number: #{attributes[:confirm_no]}: " + e.message
+    end
+  end
+  
+  # Update reservation from booking attributes
+  def sync_booking_attributes(attributes)
+    logger.debug "Updating an existing reservation with confirmation number: #{@reservation.confirm_no}"
+
+    begin
+      Reservation.transaction do
+        @reservation.status = ExternalMapping.map_external_system_value(@reservation.hotel.pms_type, attributes[:status], Setting.mapping_types[:reservation_status])
+    
+        # Set the following attributes if the attribute exists
+        [:arrival_date, :dep_date, :arrival_time, :cancel_reason, :cancel_date, :no_room_move, :fixed_rate, :guarantee_type, :total_amount].each do |attribute|
+          @reservation[attribute] = attributes[attribute] if attributes.has_key?(attribute)
+        end
+    
+        @reservation.save!
+        
+        sync_booking_attributes!(attributes)
+      end
+    rescue ActiveRecord::RecordInvalid => e
+      logger.warn "Could not save reservation with confirmation number: #{@reservation.confirm_no}: " + e.message
+    end 
+  end
+    
+  # Creates or updates the daily instances, payment type, and membership from the booking attributes
+  def sync_booking_attributes!(attributes)    
+    # Update the daily instances for the reservation including and beyond hotel's business date
+    attributes[:daily_instances].each do |daily_instance_attributes|
+      sync_daily_instance_booking_attributes!(daily_instance_attributes)
+    end
+    
+    # Remove all daily instances outside of the arrival and departure dates
+    @reservation.daily_instances.outlying.each do |outlying_daily_instance|
+      outlying_daily_instance.destroy
+    end
+    
+    # Sync user with guest attributes
+    GuestImporter.new(@guest).sync_guest_attributes!(attributes[:guest], @reservation.hotel) if attributes[:guest] 
+    
+    # Update payment types
+    sync_payment_type_booking_attributes!(attributes[:payment_type]) if attributes[:payment_type]
+    
+    # Update memberships
+    sync_membership_booking_attributes!(attributes[:membership]) if attributes[:membership]
+
+    # Update features
+    sync_feature_booking_attributes!(attributes[:features]) if attributes[:features]
+    
+    # Update addon packages
+<<<<<<< HEAD
+    sync_addon_packages(attributes[:packages]) if attributes[:packages]
+    # Create or update routings for reservation 
+    sync_routing_booking_attributes!(attributes[:routings]) if attributes[:routings]
+    
+=======
+    sync_addon_packages(attributes[:packages])
+>>>>>>> 9ecb8939b52e90bd17be5bda742f3b3ff04183c2
+  end
+  
+  private
+  
+  # Creates a daily instance for the reservation from the booking attributes
+  def sync_daily_instance_booking_attributes!(attributes)
+    currency_code = ExternalMapping.map_external_system_value(@reservation.hotel.pms_type, attributes[:currency_code], Setting.mapping_types[:currency_code])
+    
+    daily_instance_attributes = {
+      :reservation_date => attributes[:reservation_date],
+      :status => @reservation.status,
+      :currency_code => currency_code
+    }
+    
+    room_type = room_type_for_booking_attributes(attributes[:room_type_info]) if attributes.has_key?(:room_type_info)
+    room = Room.find_by_room_no_and_hotel_id(attributes[:room], @reservation.hotel_id)
+      
+    daily_instance_attributes[:rate] = rate_for_booking_attributes(attributes[:rate_info]) if attributes.has_key?(:rate_info)
+    daily_instance_attributes[:group] = group_for_booking_attributes(attributes[:group_info]) if attributes.has_key?(:group_info)
+    daily_instance_attributes[:room_type] = room_type
+    daily_instance_attributes[:room] = room
+
+    if room_type && room && room.room_type != room_type
+      logger.warn "Room #{room.room_no} room type of #{room.room_type.room_type} does not match #{room_type.room_type}"
+    end
+
+
+    [:rate_amount, :market_segment, :adults, :children, :company_id, :travel_agent_id].each do |attribute|
+      daily_instance_attributes[attribute] = attributes[attribute] if attributes.has_key?(attribute)
+    end    
+    
+    # Get the daily instance for this day
+    daily_instance = @reservation.daily_instances.where(:reservation_date => daily_instance_attributes[:reservation_date]).first
+    
+    # Update daily instance if it exists and its date has not passed, otherwise create it
+    if daily_instance
+      daily_instance.update_attributes!(daily_instance_attributes)
+    else  
+      @reservation.daily_instances.create!(daily_instance_attributes)                  
+    end
+  end
+  
+  # Creates or updates the payment type from the booking attributes
+  def sync_payment_type_booking_attributes!(attributes)
+    if attributes[:mli_token] && attributes[:card_expiry] && attributes[:credit_card_type]    
+      mapped_card_type = ExternalMapping.map_external_value(@reservation.hotel_id, attributes[:credit_card_type], Setting.mapping_types[:credit_card_type])
+      
+      guest_payment_type = @guest.payment_types.where(:mli_token  => attributes[:mli_token]).first
+      
+      # If the payment type is not saved to the user, create it
+      if !guest_payment_type
+        guest_payment_type = @guest.payment_types.create(
+          :payment_type => :CC, 
+          :credit_card_type => mapped_card_type,
+          :card_expiry => attributes[:card_expiry], 
+          :mli_token => attributes[:mli_token],
+          :card_name => attributes[:card_name],
+          :is_on_guest_card => false,
+          :is_primary => false,
+          :is_swiped => false
+        )
+        
+        logger.warn "Could not create credit card for #{@reservation.confirm_no}: #{guest_payment_type.errors.full_messages}" if !guest_payment_type.persisted?
+      
+      else
+        # If new card expiry is not masked, then update the card expiry
+        guest_payment_type.card_expiry = attributes[:card_expiry] if attributes[:card_expiry].to_s.downcase.count('x') == 0        
+        
+        # If card name is present, then update it
+        guest_payment_type.card_name = attributes[:card_name] if attributes.has_key?(:card_name)
+        
+        if !guest_payment_type.save
+          logger.warn "Could not update credit card for #{@reservation.confirm_no}: #{guest_payment_type.errors.full_messages}"
+        end
+      end
+      
+      # Clear and set the reservation payment type if it saved and doesn't already exist
+      if guest_payment_type.persisted? && !@reservation.primary_payment_types.include?(guest_payment_type)
+        @reservation.primary_payment_types = [guest_payment_type]
+        @reservation.save
+      end
+    end
+  end
+  
+  # Creates or updates the membership from the booking attributes
+  def sync_membership_booking_attributes!(attributes)
+    if attributes[:membership_type] && attributes[:membership_card_number]
+      mapped_membership_type = ExternalMapping.map_external_value(@reservation.hotel_id, attributes[:membership_type], Setting.mapping_types[:membership_type])      
+      
+      if attributes[:membership_class]
+        mapped_membership_class = ExternalMapping.map_external_value(@reservation.hotel_id, attributes[:membership_class], Setting.mapping_types[:membership_class])          
+      end
+      
+      guest_membership_type = mapped_membership_type ? mapped_membership_type : attributes[:membership_type]
+      p mapped_membership_class
+      if mapped_membership_class && Ref::MembershipClass[mapped_membership_class] && Ref::MembershipClass[mapped_membership_class].is_system_only
+        membership_type = MembershipType.where("value = ? AND property_id = NULL", guest_membership_type).first
+      else
+        membership_type = MembershipType.where("value = ? AND (property_id = ? AND property_type = 'HotelChain' OR property_id = ? AND property_type = 'Hotel')", guest_membership_type, @reservation.hotel.hotel_chain.id, @reservation.hotel.id).first
+      end
+      
+      if !membership_type
+        membership_class = mapped_membership_class ? mapped_membership_class : nil
+        membership_class_id = membership_class ? membership_class.id : nil
+        membership_type = MembershipType.create(:property_id => @reservation.hotel.id, :value => guest_membership_type, :property_type => "Hotel", :membership_class_id => membership_class_id)
+        ExternalMapping.create(
+          :mapping_type => Setting.mapping_types[:membership_type],
+          :external_value => membership_type.value,
+          :value => membership_type.value,
+          :hotel_id => @reservation.hotel.id,
+          :pms_type_id => @reservation.hotel.pms_type.id
+        )
+      end
+      
+      guest_membership = nil
+      # Lookup payment type on user
+      if @guest.memberships.count
+        guest_membership = @guest.memberships.joins(:membership_type).where("membership_types.value = ? ", membership_type.value).where(:membership_card_number => attributes[:membership_card_number]).first
+      end
+      # Link the membership to the reservation if it does not exist, otherwise create it
+      if !guest_membership
+        guest_membership = @guest.memberships.create(
+          :membership_type_id => membership_type.id, 
+          :membership_card_number => attributes[:membership_card_number],
+          :membership_level_id => MembershipLevel.joins(:membership_type).where("membership_types.value = ? ", mapped_membership_type).where(:membership_level => attributes[:membership_level]).first.andand.id,
+          :name_on_card => attributes[:card_name],
+          :membership_start_date => attributes[:membership_start_date],
+          :membership_expiry_date => attributes[:membership_expiry_date],
+          :external_id => attributes[:external_id]          
+        )
+                
+        logger.warn "Could not create membership for #{@reservation.confirm_no}: #{guest_membership.errors.full_messages}" if !guest_membership.persisted?
+      end
+      # Add the reservation membership, if it saved and is not already linked
+      if guest_membership.persisted? && !@reservation.memberships.exists?(guest_membership)
+        @reservation.memberships << guest_membership
+      end
+    end
+  end
+  
+  # Creates or updates the features from the booking attributes
+  def sync_feature_booking_attributes!(features)
+    features.each do |feature_attributes|
+      if feature_attributes[:type] && feature_attributes[:value]
+        mapped_type = ExternalMapping.map_external_value(@reservation.hotel_id, feature_attributes[:type], Setting.mapping_types[:preference_type], false)
+        mapped_value = ExternalMapping.map_external_value(@reservation.hotel_id, feature_attributes[:value], Setting.mapping_types[:preference_value], false)
+
+        feature = @reservation.hotel.features.find_by_value(mapped_value) 
+            
+        if feature && !@reservation.features.exists?(feature)        
+          feature_type = feature.feature_type
+      
+          # If the selection type only allows one selection, remove the other selections
+          if feature_type.selection_type != 'checkbox'
+            existing_features = @reservation.features.with_feature_type(feature_type)
+            @reservation.features -= existing_features
+          end
+        
+          @reservation.features << feature
+        end
+      end
+    end
+  end
+
+  # Get the rate for the booking attributes (create if not found)
+  def rate_for_booking_attributes(attributes)        
+    if attributes[:rate_code]      
+      rate = @reservation.hotel.rates.find_by_rate_code(attributes[:rate_code])
+      
+      # If a rate was not found, create it
+      if !rate        
+        currency_code = ExternalMapping.map_external_system_value(@reservation.hotel.pms_type, attributes[:currency_code], Setting.mapping_types[:currency_code])
+        
+        rate = Rate.create!(
+          :hotel_id => @reservation.hotel_id, 
+          :rate_name => attributes[:rate_desc], 
+          :rate_desc => attributes[:rate_desc],
+          :rate_code => attributes[:rate_code],
+          :begin_date => Date.today,
+          :market_code => attributes[:market_segment],
+          :currency_code => currency_code
+        )        
+      end
+    end
+    
+    rate
+  end
+  
+  # Get the room type for the booking attributes.
+  def room_type_for_booking_attributes(attributes)
+    @reservation.hotel.room_types.find_by_room_type(attributes[:room_type])
+  end
+  
+  # Get the group for the booking attributes (create if not found)
+  def group_for_booking_attributes(attributes)
+    group_code = attributes[:code]
+    
+    if group_code
+      group = @reservation.hotel.groups.find_by_group_code(group_code)
+      
+      # If a group was not found, create it, and add an external mapping for it
+      if !group
+        group = Group.create!(
+          :hotel_id => @reservation.hotel_id, 
+          :name => attributes[:block_name], 
+          :group_code => group_code
+        )        
+      end      
+    end
+    
+    group
+  end
+  
+  # Sync the addon packages
+  def sync_addon_packages(packages)
+    hotel = @reservation.hotel
+    @reservation.addons = []
+    if packages.present?
+      packages.each do |addon_package|
+        addon = hotel.addons.where(:package_code => addon_package[:package_code]).first
+
+        if !addon
+        addon = Addon.create(:name => addon_package[:description], :description => addon_package[:description], :package_code => addon_package[:package_code], :hotel_id => hotel.id)
+        end
+
+        if !@reservation.reservations_addons.exists?(:addon_id => addon.id)
+         ReservationsAddon.create(:reservation_id => @reservation.id, :addon_id => addon.id, :price => addon_package[:package_amount][:amount], :is_inclusive_in_rate => (addon_package[:source] === Setting.addon_type[:rate]))
+        end
+      end
+    end
+  end
+  
+  # Sync the routings on the reservation
+  def sync_routing_booking_attributes!(routings)
+
+    routings.each do |routing| 
+
+      # if bill_id is found then create routings or create bill id
+      bill = Bill.find_or_create_by_reservation_id_and_bill_number(@reservation.id, 1)
+
+      if routing[:room_no].present?
+        room = Room.find_by_room_no(routing[:room_no])
+        routing_reservation = room.reservation_daily_instances.current_daily_instances(room.hotel.active_business_date).first.reservation
+        to_bill = Bill.find_or_create_by_reservation_id_and_bill_number(routing_reservation.id, routing[:window])
+
+      else
+        to_bill = Bill.find_or_create_by_reservation_id_and_bill_number(@reservation.id, routing[:window])
+      end     
+        
+      # Check to see if this routing already exists
+      charge_routing = ChargeRouting.find_by_bill_id_and_to_bill_id(bill.id, to_bill.id)
+      if charge_routing
+        charge_routing.update_attributes(:owner_name => routing[:owner], :external_routing_instructions => routing[:routing_instruction])
+      else
+        ChargeRouting.create!(:bill_id => bill.id, :to_bill_id => to_bill.id, :owner_name => routing[:owner], :room_id => room ? room.id : "", :external_routing_instructions => routing[:routing_instruction])
+      end
+    end    
+
+  end # sync_routing_booking_attributes!
+  
+  # Find guest detail from external_id or from membership number
+  def self.guest_for_booking_details(hotel, attributes)
+    guest_detail = GuestDetail.where(:external_id => attributes[:guest_id], :hotel_chain_id => hotel.hotel_chain_id).first
+
+    # If no guest is found, lookup by matching membership card number, type, and chain_id
+    if !guest_detail
+      membership = attributes[:membership]
+      mapped_membership_type = ExternalMapping.map_external_value(hotel.id, membership[:membership_type], Setting.mapping_types[:membership_type])
+      
+      guest_detail = GuestMembership.includes(:guest_detail).joins(:membership_type).where('membership_types.value = ? AND membership_card_number = ? AND guest_details.hotel_chain_id = ? AND guest_details.external_id IS NULL', mapped_membership_type, membership[:membership_card_number], hotel.hotel_chain_id).first.andand.guest_detail
+    end
+    
+    # Set the external id if the guest detail was found
+    if guest_detail
+      guest_detail.external_id = attributes[:guest_id]
+      guest_detail.save!
+    end
+
+    guest_detail
+  end
+  
+end

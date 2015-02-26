@@ -1,0 +1,86 @@
+{
+    "status": "success",
+    "data": {
+        "upsell_setup": {
+            "created_at": "2013-11-29 07:16:12 UTC",
+            "currency_code": "USD",
+            "hotel_id": "1",
+            "id": "1",
+            "is_force_upsell": "true",
+            "is_one_night_only": "false",
+            "is_upsell_on": "true",
+            "total_upsell_target_amount": "1000.0",
+            "total_upsell_target_rooms": "200",
+            "updated_at": "2013-11-29 07:16:12 UTC"
+        },
+        "upsell_amounts": [
+            {
+                "amount": "100.0",
+                "hotel_id": "1",
+                "id": "1",
+                "level_from": "1",
+                "level_to": "2"
+            },
+            {
+                "amount": "300.0",
+                "hotel_id": "1",
+                "id": "2",
+                "level_from": "1",
+                "level_to": "3"
+            },
+            {
+                "amount": "150.0",
+                "hotel_id": "1",
+                "id": "3",
+                "level_from": "2",
+                "level_to": "3"
+            }
+        ],
+        "upsell_room_levels": [
+            {
+                "level_id": 1,
+                "room_types": [
+                    {
+                        "room_type_id": "7",
+                        "room_type_name": "Posting Master1"
+                    },
+                    {
+                        "room_type_id": "1",
+                        "room_type_name": "Posting Master2"
+                    }
+                ]
+            },
+            {
+                "level_id": 2,
+                "room_types": [
+                    {
+                        "room_type_id": "4",
+                        "room_type_name": "Posting Master3"
+                    },
+                    {
+                        "room_type_id": "5",
+                        "room_type_name": "Posting Master4"
+                    },
+                    {
+                        "room_type_id": "6",
+                        "room_type_name": "Posting Master5"
+                    },
+                    {
+                        "room_type_id": "2",
+                        "room_type_name": "Posting Master6"
+                    }
+                ]
+            },
+            {
+                "level_id": 3,
+                "room_types": [
+                    {
+                        "room_type_id": "3",
+                        "room_type_name": "Posting Master7"
+                    }
+                ]
+            }
+        ]
+    },
+    "errors": []
+}

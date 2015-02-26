@@ -1,0 +1,264 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+de:
+  admin_access_denied: "Sie haben keine ausreichenden Rechte, um die Verwaltungskonsole zugreifen."
+  missing_access_tocken: Fehlende Zugriffstoken"
+  account_user: "Konto & Benutzer"
+  reservation_not_found: "Reservierung nicht gefunden Für Parameter : %{message}"
+  authorization_failed: "%{provider} authorization failed"
+  invalid_activation_code: "Invalid or non-existent activation code"
+  invalid_api_key: "Invalid or non-existent API key"
+  authentication_failed: "Authentication failed"
+  no_interests_found: "No interests were found for this user"
+  invalid_user: "Invalid user"
+  missing_attribute: "Missing Attribute %{attribute}"
+  unable_to_update_wakeup: "Unable To Update Wakeup Call"
+  already_linked_reservation: "Reservation Already Linked to User"
+  reservation_linked_to_user: "Reservation Linked to User"
+  inactive_user: "User not active or checked in"
+  no_matching_interest_found: "No matching interest found"
+  created_interest: "Created Interest successfully"
+  interest_already_exists: "Interest already exists"
+  user_already_exists: "User Already Exists"
+  profile_updated: "Profile updated successfully"
+  posts_disabled: "Posts have been temporarily disabled"
+  post_created: "Post created successfully"
+  delete_system_feature: "System Feature can't be deleted"
+  feature_delete_unallowed: "Cannot delete active feature"
+  #your_account_has_been_activated: "You have been successfully checked in to the ${site}!"
+  your_account_has_been_activated: "You have been successfully checked in to the %{site}!"
+  #invalid_hotel: Invalid hotel ID specified
+  invalid_hotel: "Invalid hotel ID specified"
+  invalid_hotel_code: "Invalid Hotel Code - %{hotel_code}"
+  hotel_id_or_chain_code_required: "Hotel ID or Chain Code Required"
+  invalid_hotel_chain: "Invalid hotel chain ID specified"
+  missing_hotel_chain: "Missing Hotel Chain"
+  checked_in_to_hotel: "Just checked in!"
+  successfully_activated: "Successfully activated %{user}"
+  successfully_deactivated: "Successfully deactivated %{user}"
+  the_team: "The %{site} Team <%{email}>"
+  comment_was_successfully_created: "The comment was successfully created"
+  no_commentable_found: "No commentable record found"
+  event_created: "Event created successfully"
+  role_permission_not_saved: "Role permission is not saved"
+  not_found_hotel_config: "Could not fetch hotel specific configuration"
+  not_found_global_config: "Could not fetch global configuration"
+  invalid_group: "Invalid group ID specified"
+  not_found_hotels: "Please Check in to our Social Lobby when you are within 20 miles of the hotel, we are looking forward to seeing you!"
+  review_created: "Review created successfully"
+  invalid_reservation: "Invalid reservation ID specified"
+  invalid_review_category: "Invalid review category specified"
+  review_approved: "Review approved by staff"
+  insufficient_rights: "You do not have sufficient rights to perform this action"
+  message_created: "Message created successfully"
+  message_deleted: "Message deleted successfully"
+  message_missing: "Message not found"
+  invalid_room_extension: "No InRoomFone extension record found in database for %{extn}"
+  invalid_inroomfone: "No InRoomFone record found in database for hotel %{name}"
+  user_options_updated: "Updated user options successfully"
+  invite_other: "Invitation to join Social Lobby from %{first_name} %{last_name}"
+  invite_other_android_url: "%{server}/downloads/sl-android.apk"
+  invite_other_ios_url: "%{server}/downloads/sl-ios.ipa"
+  invites_sent: "Sent invitations successfully."
+  invalid_event: "Invalid event"
+  event_deleted: "Event deleted successfully"
+  user_information: "%{site} User information"
+  missing_reservation: "Missing reservation for %{guest_name}"
+  notification_successful: "The Hotel staff has been notified successfully."
+  invalid_parameters: "Invalid Parameters - %{attribute}"
+  lobby_status_missing: "Please Provide Lobby Status"
+  thank_you: "Thank You"
+  invalid_login: "Email or password is not valid, please enter valid account information"
+  invalid_guest: "E-mail address is invalid. Please use another email address to login."
+  no_options_error: "Must add at least one option"
+  # Admin/Charge_code
+  charge_code_in_use: "Charge code already used in Financials"
+  missing_parameters: "Missing parameters - %{attribute}"
+  missing_email: "Please Enter Email Address"
+  missing_password: "Please Enter Password"
+  invalid_options: "Invalid Options"
+  is_required: "is required"
+  no_levels_error: "Must add at least one level"
+  no_roles_assigned: "Please assign role to the user"
+  is_invalid: "Field is Invalid"
+  do_not_move_flag_set: "Room is set to not be moved. New room number can not be assigned"
+  reservation_found: "Reservation Found"
+  no_matching_reservation: "Reservation doesnot match with user details"
+
+  already_linked_reservation: "Reservation already linked to user"
+  reservation_not_found: "Could not find the Reservation"
+  invalid_reservation_status: "Invalid Reservation Status"
+  checkout_failure: "Unable to Checkout at this time."
+  invalid_dep_date: "Invalid Departure Date"
+  invalid_origin_id: "Invalid Booking Origin ID"
+  # Link existing user
+  user_not_found: "Unable to find existing user"
+  user_not_hotel_admin: "Only hotel admin users may be linked"
+  user_already_linked: "User is already linked"
+  message_exceeded_limit: "Message Exceeded Limit"
+  checkout_email_success_message: "Email sent to %{Y} out of %{X} guests qualifying for web check out."
+  checkin_email_success_message: "Email sent to %{Y} out of %{X} guests qualifying for web check in."
+  checkin_cc_swipe_required: "Credit card swipe required to check in"
+
+  # Admin/Charge_group_code
+  cannot_delete_charge_code_associated: "Cannot be deleted. Charge group has associated with charge codes."
+
+  # Admin/Sources
+  invalid_source_id: "Invalid Source ID"
+
+  # Admin/Departments
+  cannot_delete_dep_mapped_users: "Department already mapped to some users"
+
+  #privacy_policy: Privacy policy
+  login: "Login"
+  privacy_policy: ""
+  showing: "Zeigen"
+  none: "NONE"
+
+  # Hotel Setting Errors
+  invalid_time_setting: "Valid HH, MM, and AM/PM values should be provided"
+
+  # External PMS Errors
+  external_pms_failed: "Unable to update external PMS"
+  external_pms_invalid_membership_code: Code is invalid
+  external_pms_not_configured : "External PMS is not configured for the Hotel"
+
+  # Ows Business Date
+  sync_with_ows_business_date: PMS Business Date updated in SNT
+  business_date_uptodate: Business date Already uptodate
+
+  # Guest/Access Token
+  invalid_access_token: "Invalid Access Token"
+  feature_type_off: "Please enable feature type before editing"
+  invalid_credit_card: "Invalid Credit Card"
+
+  credit_card_authorization_failed: "Credit card authorization was declined, please try another card."
+
+  access_denied: "Access Denied"
+  destroy_unallowed: "Record in use, cannot destroy"
+  rate_date_range_overlap: Date ranges cannot overlap for a rate
+  rate_set_overlap: Rate set days must be unique for a date range
+  activation_period_expired: "The activation period has expired. Please contact the system administrator to activate your account."
+  
+  # Beacons
+  chain_not_found: "Hotel Chain not found"
+  
+  # Room Unassignment
+  allowed_for_standalone_hotels_only: "Allowed only for Stand-alone hotels"
+  room_not_found: "Unable to find room for selected reservation"
+  allowed_for_duein_and_reserved_only: "Room unassignment possible only for duein/reserved reservations"
+  
+  # Cancel Reservation
+  reservation_cancellation_error: "Problem with cancelling reservation"
+  cancellation_not_allowed: "Reservation cancellation not possible"
+  
+  # Message displayed when user tries to enter a duplicate worksheet
+  work_sheet_already_exists: "Worksheet for this user already exists in specified date"
+  
+  # Message displayed when an already reserved room is assigned to another reservation while creating a reservation.
+  room_not_available: "Room not available for the selected number of hours. Please choose another room"
+  
+  # Message displayed when a pre-reserved room is assigned to another reservation while updating a reservation.
+  locked_room_not_available: "Room is locked by another user via Web Booking. Please choose another room or try after some time"
+  
+  # Reports
+  date: 'Date'
+  guest_name: 'Guest Name'
+  late_check_out_time: 'Late Check Out Time'
+  late_check_out_charge: 'Late Check Out Charge'
+  late_check_out_rooms: 'Late Check Out Rooms'
+  late_check_out_revenue: 'Late Check Out Revenue'
+  from_room_type: 'From Room Type'
+  to_room_type: 'To Room Type'
+  from_level: 'From Level'
+  to_level: 'To Level'
+  original_rate_price: 'Original Rate Price'
+  upsell_amount: 'Upsell Amount'
+  rooms_upsold: 'Rooms Upsold'
+  upsell_revenue: 'Upsell Revenue'
+  total_check_ins: 'Total Check Ins'
+  total_check_outs: 'Total Check Outs'
+  via_rover: 'Via Rover'
+  via_web: 'Via web'
+  via_zest: 'Via Zest'
+
+  # Reservation
+  reservation:
+    mandatory_parameters_missing: 'Mandatory parameters are missing for reservation'
+    external_pms:
+      cannot_assign_old_room: 'Unable to assign old room in External PMS'
+      cannot_assign_old_room_type: 'Unable to update old room type in External PMS'
+      cannot_assign_old_rate: 'Unable to update old rate amount in External PMS'
+      cannot_assign_new_rate: 'Unable to update rate amount in External PMS'
+      cannot_assign_new_room: 'Unable to assign new room in External PMS'
+      cannot_assign_new_room_type: 'Unable to update room type in External PMS'
+      cannot_release_room: 'Unable to release room in External PMS'
+
+  # ACTIVE RECORD MESSAGES (See http://guides.rubyonrails.org/i18n.html#translations-for-active-record-models)
+  activerecord:
+    attributes:
+      contacts:
+        value: ''
+      feature_type:
+        features: ''
+      guest_payment_type:
+        mli_token: "Card Number"
+      hotel:
+        tz_info: "Time Zone"
+      hotel_chain:
+        name: "Chain Name"
+        code: "Chain Code"
+      membership_type:
+        description: "Program Name"
+        value: "Program Code"
+      admin_reviews_setup:
+        rating_for_auto_publish: "Rating Limit"
+        reviews_per_page: "Number of Reviews"
+    errors:
+      models:
+        addon:
+          attributes:
+            end_date:
+              less_than_begin: "cannot be less than begin date"
+        guest_additional_contact:
+          attributes:
+            value:
+              email: "Email is Invalid"
+        guest_payment_type:
+          attributes:
+            mli_token:
+              blank: "is invalid"
+        hotel:
+          attributes:
+            tz_info:
+              blank: "cannot be blank"
+        membership_type:
+          attributes:
+            value:
+              uniqueness: "has already been taken"
+        rate_type:
+          attributes:
+            name:
+              uniqueness: "has already been taken"
+        rate_date_range:
+          attributes:
+            begin_date:
+              uniqueness: "and end date are already taken"
+              less_than_end: "must be less than or equal to end date"
+          not_subset: 'Date range must be a subset of the based on rate'
+        rate_set:
+          not_same: 'Set be a equal to the based on set'
+        rate:
+          attributes:
+            room_types:
+              too_short: "must be selected"
+              not_subset: 'must be a subset of the based on rate'
+            based_on_rate_id:
+              self_reference: "cannot reference itself"
+          active_reservations_exist: 'Rate cannot be associated with active reservations'
+        room_rate:
+          not_same: 'Rate must be a equal to the based on rate'
+        feature_type:
+          attributes:
+            value:
+              uniqueness: "has already been taken"

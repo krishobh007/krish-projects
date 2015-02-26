@@ -1,0 +1,83 @@
+!!!
+<!--[if IE 9 ]><html lang="en" class="no-js ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><html lang="en" class="no-js"><![endif]-->
+%html.no-js{:lang => "en", "ng-app" => "snt"}
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:name=>"robots", :content=>"noindex, nofollow"}
+    %meta{:name=>"viewport", :content=>"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes"}
+    %meta{:name=>"apple-mobile-web-app-capable", :content=>"yes"}
+    %meta{:name=>"apple-mobile-web-app-status-bar-style", :content=>"black"}
+    %meta{:name=>"apple-mobile-web-app-title", :content=>"StayNTouch"}
+    =csrf_meta_tag
+    -if @meta
+      -@meta.each do |key|
+        %meta{:name=>key[0], :content=>key[1]}
+
+    %title{"ng-bind" => "$root.title"} Guest Checkin Checkout
+    :css
+  
+      html, body {
+        width: 100%;
+        height: 100%;
+      }
+
+      .loading-container {
+        /*background: linear-gradient(to bottom, #D5B675, #7B6137) repeat-x scroll 0 0 #7A613A;*/
+        position: absolute;
+        width: 100%;
+        z-index: 9999;
+        height: 100%;
+      }
+      
+      .loading-text {
+        font-size: 30px;
+      }
+
+      @media screen and (max-width: 420px) {
+        .loading-text {
+          font-size: 20px;
+        }
+      }
+
+      body {
+        height:100%;  
+        /*background-image: linear-gradient(to bottom, #d5b675, #7b6137);*/
+      }
+
+      .loading-wrapper {
+        /*color: #FFFFFF;*/
+        font-family: Arial;
+        font-weight: 200;
+        line-height: 100%;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+        -moz-transform: translateX(-50%) translateY(-50%);
+        position: absolute;
+        z-index: 2;
+      }
+      
+
+  - if !logged_in?
+    %body#login-page{:data => {:theme => @current_theme}}
+      .loading-container
+        .loading-wrapper.loading-text
+          Collecting your details, this may take a few seconds!
+      .main-container
+        = yield
+    = javascript_include_tag ('https://cnp.merchantlink.com/form/v2.1/hpf.js')
+    = javascript_include_tag "#{@current_theme}"
+  - else 
+    %body#app-page{"ng-controller" => "rootController",:data => {:theme => @current_theme}}
+      .loading-container
+        .loading-wrapper.loading-text
+          Collecting your details, this may take a few seconds!
+      .main-container
+        = yield
+    = javascript_include_tag ('https://cnp.merchantlink.com/form/v2.1/hpf.js')
+    = javascript_include_tag "#{@current_theme}"
+  = yield :end_javascript

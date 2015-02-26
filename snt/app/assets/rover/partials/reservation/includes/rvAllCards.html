@@ -1,0 +1,23 @@
+<div id="guest-card" class="guest-card cards"  ng-class="cardCls()" ng-controller="RVReservationAllCardsCtrl" style="height: {{guestCardHeight}}px;" ui-jq="resizable" ui-options="resizableOptions" ng-click="guestCardClick($event);clickedOnGuestCard($event)" resize>
+    <div class="cards-wrapper">
+        <!-- Cards Header -->
+        <header class="cards-header">
+            <!-- Guest Card Header -->
+            <section ng-include="'/assets/partials/cards/header/guestCardHeader.html'"></section>
+            <!-- Company Card Header-->
+            <section ng-include="'/assets/partials/cards/header/companyCardHeader.html'"></section>
+            <!-- Travel Agent Card Header-->
+            <section ng-include="'/assets/partials/cards/header/travelAgentCardHeader.html'"></section>
+        </header>
+
+        <!-- Cards Content -->
+        <div class="cards-content">       
+            <!-- Guest Card Content-->
+            <section ng-include="'/assets/partials/cards/guestCardContent.html'"></section>
+            <!-- Company Card Content-->
+            <section ng-include="'/assets/partials/cards/companyCardContent.html'"></section>
+            <!-- TA Card Content-->
+            <section ng-include="'/assets/partials/cards/travelAgentCardContent.html'"></section>
+        </div>
+    </div>
+</div>

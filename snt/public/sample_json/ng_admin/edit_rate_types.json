@@ -1,0 +1,12 @@
+{
+	"status": "success",
+	"data": {
+
+		"id": 9,
+		"name": "dfgdfg",
+		"description": "fghfghfgh",
+		"rate_count": 0,
+		"activated": true,
+		"system_defined": false
+	}
+}

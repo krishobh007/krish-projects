@@ -1,0 +1,13 @@
+{
+"results":
+[
+    {
+        "name": "IMMEDIATE",
+        "value": "0"
+    },
+    {
+        "name": "FAR",
+        "value":"1"
+    }
+]
+}

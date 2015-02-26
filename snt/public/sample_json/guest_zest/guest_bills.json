@@ -1,0 +1,74 @@
+{
+    "average_per_night": {
+        "total": "2000",
+        "currency": "$",
+        "rate_type": "Best Available Rate",
+        "description": "<ul><li>First</li><li>Second</li></ul>",
+        "daily_rates": [
+            {
+                "is_checkout": "false",
+                "day": "WEDNESDAY",
+                "date": "SEPTEMBER 19",
+                "rate_amount": "24"
+            },
+            {
+                "is_checkout": "false",
+                "day": "THURSDAY",
+                "date": "SEPTEMBER 20",
+                "rate_amount": "34"
+            },
+            {
+                "is_checkout": "true",
+                "day": "FRIDAY",
+                "date": "SEPTEMBER 21",
+                "rate_amount": "25"
+            }
+        ]
+    },
+    "bill_details": {
+        "balance": "2000",
+        "total_fees": "3000",
+        "credits": "1000",
+        "currency": "$",
+        "fee_details": [
+            {
+                "date": "12-12-2012",
+                "guest_room_description": "Best Available Rate",
+                "guest_room_fees": "1000",
+                "guest_room_text": "Guest Room",
+                "charge_details": [
+                    {
+                        "description": "MD SALES TAX",
+                        "amount": "200"
+                    },
+                    {
+                        "description": "OCCUPANCY TAX",
+                        "amount": "400"
+                    }
+                ]
+            },
+            {
+                "guest_room_description": "Best Available Rate",
+                "guest_room_text": "Guest Room",
+                "guest_room_fees": "1000",
+                "date": "12-13-2012",
+                "charge_details": [
+                    {
+                        "description": "MD SALES TAX",
+                        "amount": "100"
+                    },
+                    {
+                        "description": "OCCUPANCY TAX",
+                        "amount": "300"
+                    }
+                ]
+            }
+        ]
+    },
+    "payment_details": {
+        "currency" : "$",
+        "balance": "600",
+        "image_url": "http://localhost:3000/assets/ax.png",
+        "card_number": "2323 "
+    }
+}

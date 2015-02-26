@@ -1,0 +1,7 @@
+-if Setting.DISABLE_MANUAL_CC_ENTRY == true
+  -if @payments_hash[:card_action] == "swipe"
+    = render :partial => "modals/payment_modal"
+  -elsif @payments_hash[:card_action] == "manual_entry"
+    = render :partial => "modals/no_manual_payment"
+-else
+  = render :partial => "modals/payment_modal"

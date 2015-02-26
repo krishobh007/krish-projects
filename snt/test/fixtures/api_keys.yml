@@ -1,0 +1,6 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+admin:
+  email: admin@stayntouch.com
+  key: <%= Digest::MD5.hexdigest("wizards#{Time.now}:killed:admin@stayntouch.com:my_family:#{rand(15562)}") %>
+  expiry_date: <%= 5.days.from_now.iso8601 %>

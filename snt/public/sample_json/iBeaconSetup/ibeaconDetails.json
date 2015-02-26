@@ -1,0 +1,11 @@
+{
+    "location": "bar",
+    "id": "008",
+    "type": "0",
+    "trigger": "0",
+    "status": false,
+    "icon":"url",
+    "picture":"http://9febeb11de6bb5e0ee62-821329d308ba0768463def967ad6e6e5.r41.cf2.rackcdn.com/CHA/DOZERQA/room_types/1/images/thumb/image20140717175651.png?1405600023",
+    "title":"Title",    
+    "description": "this iBeacon will be triggered when you wil reach near the bar"
+}

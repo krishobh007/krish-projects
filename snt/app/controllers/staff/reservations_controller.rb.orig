@@ -1,0 +1,495 @@
+require 'RMagick'
+
+class Staff::ReservationsController < ApplicationController
+  before_filter :check_session, except: [:qr_code_image]
+
+  def save_payment
+    reservation = Reservation.find(params[:reservation_id])
+
+    attributes = ViewMappings::PaymentTypeMapping.map_payment_type(params)
+    add_to_guest_card = params[:add_to_guest_card] == 'true'
+
+    process_payment_type = lambda do |new_payment_type|
+      process_errors = new_payment_type.sync_with_external_pms_reservation(reservation, params[:bill_number])
+
+      # TODO: Opera is automatically adding to profile, so this results in an error
+      # process_errors += new_payment_type.sync_with_external_pms_profile(current_hotel) if add_to_guest_card
+
+      process_errors
+    end
+
+    result = GuestPaymentType.create_and_process(current_hotel, reservation.primary_guest, attributes, add_to_guest_card, process_payment_type)
+
+    errors = result[:errors]
+
+    if errors.empty?
+      render json: { status: SUCCESS, data: { id: result[:guest_payment_type].id }, errors: [] }
+    else
+      render json: { status: FAILURE, data: nil, errors: errors }
+    end
+  end
+
+  def link_payment
+    reservation = Reservation.find(params[:reservation_id])
+    guest_payment_type = GuestPaymentType.find(params[:user_payment_type_id])
+
+    errors = guest_payment_type.sync_with_external_pms_reservation(reservation, params[:bill_number])
+
+    if errors.empty?
+      render json: { status: SUCCESS, data: { id: params[:user_payment_type_id] }, errors: [] }
+    else
+      render json: { status: FAILURE, data: [], errors: errors }
+    end
+  end
+
+  def reservation_room_upsell_options
+    reservation = Reservation.find(params[:reservation_id])
+    if reservation.current_daily_instance && reservation.current_daily_instance.room_type
+      upsell_options = ViewMappings::RoomTypesMapping.upsell_options(reservation)
+
+      active_business_date = current_hotel.active_business_date
+      header_details = ViewMappings::StayCardMapping.get_reservation_header(reservation, active_business_date)
+    else
+      upsell_options = []
+      header_details = {}
+    end
+    respond_to do |format|
+      format.html { render partial:  'staff/room_upgrades/upgrades', locals: { upsell_data: upsell_options, header_details: header_details } }
+      format.json { render json: { status: SUCCESS, data: { upsell_data: upsell_options, header_details: header_details }, errors: [] } }
+    end
+  end
+
+  # print keys for reservation
+  def print_key
+    reservation = Reservation.find(params[:reservation_id])
+    email = params[:email]
+    status, data, errors = SUCCESS, {}, []
+
+    # Save QR Code after deleting previous
+    unless params[:key].present?
+      status, data, errors = FAILURE, [], 'Invalid number of keys'
+    end
+
+    begin
+      new_key = reservation.create_reservation_key(params[:is_additional], params[:key])
+    rescue ActiveRecord::RecordInvalid => ex
+      status, data = FAILURE, []
+      errors << ex.message
+    end
+
+    options = {
+      is_additional: params[:is_additional] == 'true',
+      uid: params[:uid]
+    }
+
+    key_api = KeyApi.new(reservation.hotel_id, true)
+    result = key_api.create_key(reservation, new_key, email, request.host_with_port, options)
+
+    if result[:status]
+      status, data, errors = SUCCESS, result[:data], []
+    else
+      status, data, errors = FAILURE, [], result[:errors]
+    end
+
+    render json: { status: status, data: data, errors: errors }
+  end
+
+  def qr_code_image
+    reservation_key = ReservationKey.find(params[:key_id])
+    send_data reservation_key.qr_data, type: 'image/png', disposition: 'inline'
+  end
+
+  # Modify Reservation
+  def modify_reservation
+    errors = []
+    not_had_ready_room = true
+    begin
+      if !params.key?('reservation_id')
+        errors = ['Parameter missing']
+      else
+        reservation = Reservation.find(params[:reservation_id])
+        previous_room =  reservation.current_daily_instance.room
+        if previous_room.present?
+          if !previous_room.is_occupied && previous_room.is_ready?
+            not_had_ready_room = false
+          end
+        end
+        if reservation && params.key?('room_number')
+          room = reservation.hotel.rooms.where(room_no: params[:room_number]).first
+
+          if room
+            logger.debug 'update room number for reservation'
+            upcoming_reservation_daily_instances = reservation.daily_instances.upcoming_daily_instances(reservation.hotel.active_business_date)
+            preassigned_reservation = room.preassigned_reservation
+
+            if upcoming_reservation_daily_instances.count > 0
+              pms_error = false
+
+              # check whether an external PMS is configured
+              if reservation.hotel.is_third_party_pms_configured?
+
+                # If room is preassigned, release room from other reservation prior to assigning
+                pms_error = !preassigned_reservation.release_room_with_external_pms[:status] if preassigned_reservation
+
+                # Assign room to this reservation
+
+                pms_response = reservation.assign_room_with_external_pms(room.room_no)
+                pms_error = !pms_response[:status] if !pms_error
+
+              end
+
+              if pms_error
+                errors = [I18n.t(:do_not_move_flag_set)]
+              else
+                # Update all upcoming daily instance's rooms to new room number
+                # Since certain cases 3rdparty PMS not assign requested room number, return the random room number
+                # Update the pms response room number with SNT CICO - 5987
+
+                room = reservation.hotel.rooms.find_by_room_no(pms_response[:room_no]) if pms_response[:room_no]
+
+                upcoming_reservation_daily_instances.update_all(room_id: room.id)
+
+                current_room =  reservation.current_daily_instance.room
+                is_current_room_ready_and_vacant = (!current_room.is_occupied && current_room.is_ready?)
+                if (reservation.arrival_date == reservation.hotel.active_business_date) && not_had_ready_room && is_current_room_ready_and_vacant
+                  begin
+                    if reservation.hotel.settings.checkin_alert_is_on && reservation.hotel.settings.checkin_alert_on_room_ready
+                      create_checkin_room_ready_notification(reservation)
+                    end
+                  rescue Exception => ex
+                    logger.debug "*********** error in creating notification for checkin reservation on room assignment : #{reservation.confirm_no}"
+                    logger.debug "#{ex.message}"
+                  end
+                end
+                # Set all daily instance's rooms to nil on preassigned reservation, if one exists
+                preassigned_reservation.daily_instances.update_all(room_id: nil) if preassigned_reservation
+              end
+            else
+              errors = ['Sorry you cannot update room number']
+            end
+          else
+            errors = ['Room number does not exist']
+          end
+        else
+          logger.debug 'NO ACTIONS in modify reservation'
+          errors = ['Parameter missing']
+        end
+      end
+    rescue ActiveRecord::RecordNotFound => e
+      errors = [e.message]
+    end
+    if errors.count > 0
+      render json: { status: FAILURE, errors: errors }
+    else
+      render json: { status: SUCCESS, errors: [] }
+    end
+  end
+
+  def checkin
+    errors = []
+    reservation = Reservation.find(params[:reservation_id])
+    reservation.primary_guest.update_attributes(is_opted_promotion_email: params[:is_promotions_and_email_set]) if reservation.primary_guest
+    Time.zone = reservation.hotel.tz_info
+
+    signature_image = nil
+    if reservation.hotel.settings.require_signature_at === Setting.signature_display[:checkin]
+      # Parse the JSON data, create image and return as blob data
+      signature_image = reservation.create_image(params[:signature])
+    end
+
+    send_email = params[:is_promotions_and_email_set]
+    wakeup = reservation.wakeups.first
+
+    payment_type_attrs = ViewMappings::PaymentTypeMapping.map_payment_type(params)
+
+    errors << I18n.t(:checkin_cc_swipe_required) if payment_type_attrs[:mli_token].nil? && reservation.is_cc_attached
+
+    if errors.empty?
+      result = reservation.checkin(signature_image, :ROVER, payment_type_attrs)
+
+      if result[:success]
+        reservation.sync_booking_with_external_pms
+
+        if wakeup.present?
+          room_no = reservation.current_daily_instance.andand.room.andand.room_no
+
+          if wakeup.room_no != room_no
+            wakeup.update_attributes(room_no: room_no)
+          end
+
+          data_hash = { room_no: room_no, hotel_id: wakeup.hotel_id, start_date: wakeup.start_date, end_date: wakeup.end_date }
+
+          data_hash[:time] = wakeup.time.strftime('%H:%M:%S') + Time.zone.now.formatted_offset
+          data_hash[:external_id] = reservation.external_id
+          reservation.sync_wakeups_with_external_pms(data_hash, action)
+        end
+
+        room_key_setup = reservation.hotel.settings.room_key_delivery_for_rover_check_in
+
+        if room_key_setup == 'email'
+          new_key = reservation.reservation_keys.empty? ? reservation.create_reservation_key(false, 1) : reservation.reservation_keys.first
+          ReservationMailer.staff_send_reservation_key(new_key.id, ReservationMailer.default_url_options[:host], reservation,
+                                                       reservation.primary_guest.email).deliver! if reservation.primary_guest.andand.email.present?
+        end
+      else
+        if result[:message].include?('resource busy and acquire with NOWAIT specified')
+          errors << 'Reservation currently accessed in PMS, cannot update!'
+        elsif result[:message] =~ /Authorize Failed/
+          errors << I18n.t(:credit_card_authorization_failed)
+        else
+          errors << 'Unable to check-in'
+        end
+
+        logger.error "Could not check-in reservation: #{reservation.id}"
+      end
+    end
+
+    if errors.empty?
+      render json: { status: SUCCESS, data: { check_in_status: 'Success' }, errors: [] }
+    else
+      render json: { status: FAILURE, data: {}, errors: errors }
+    end
+  end
+
+  def bill_card
+    errors = []
+    logger.debug '*' * 30 + 'bill_card' + '*' * 30
+    if params.key?('reservation_id')
+      begin
+        reservation = Reservation.find(params[:reservation_id])
+
+        if reservation
+          # sync invoice with external pms and insert into local tables
+          reservation.sync_bills_with_external_pms
+
+          # call bill_card_mapping to return transaction details from local tables
+          bill_card = ViewMappings::BillCardMapping.map_bill_card(reservation, current_hotel)
+        end
+      rescue ActiveRecord::RecordNotFound => e
+        errors = [e.message]
+      end
+    else
+      errors = ['Parameter Missing']
+    end
+
+<<<<<<< HEAD
+    # bill_card = json2hash("registration_card/registration_card.json")
+
+    render layout: false, locals: { data: bill_card, errors: errors }
+=======
+    #bill_card = json2hash("registration_card/registration_card.json")
+
+    
+    respond_to do |format|
+      format.html { render :layout => false, :locals => {:data => bill_card, :errors => errors} }
+      format.json { render json: bill_card }
+    end
+>>>>>>> 02374d2f759f91ec4ddc98eee6ca291500668c6b
+  end
+
+  def get_key_setup_popup
+    reservation = Reservation.find(params[:id])
+    room_key_setup = reservation.hotel.settings.room_key_delivery_for_rover_check_in
+    partial_file = 'modals/keys/keyEmailModal'
+    if room_key_setup != 'email'
+      partial_file = 'modals/keys/key_encode_modal'
+    end
+    data = ViewMappings::StayCardMapping.map_key_setup(reservation)
+    respond_to do |format|
+      format.html { render partial: partial_file, locals: { status: SUCCESS, data: data, errors: [] } }
+    end
+  end
+
+  # upsell room
+  def upgrade_room
+    # Test Data
+    # params = Hash.new
+    # params[:reservation_id] = "270"
+    # params[:upsell_amount_id] = "1"
+    # params[:room_no] = "4002"
+    result = { status: false, errors: [] }
+    # check to see if mandatory parameters exist
+    if params[:reservation_id] && params[:upsell_amount_id] && params[:room_no]
+      reservation = Reservation.find(params[:reservation_id])
+
+      # call upgrade room method in reservation
+      result = reservation.upgrade_room(params[:upsell_amount_id], params[:room_no], :ROVER)
+
+      if result[:status] && result[:errors].blank?
+        render json: { status: SUCCESS, data: [], errors: [] }
+      else
+        errors = result[:errors]
+        render json: { status: FAILURE, data: [], errors: errors }
+      end
+    else
+      logger.debug "Mandatory parameters are missing for reservation: #{params[:reservation_id]}"
+      errors = ['Mandatory parameters are missing for reservation']
+      render json: { status: FAILURE, data: [], errors: errors }
+    end
+  end # end of upgrade room
+
+  # Checkout
+  def checkout
+    data = ''
+    status = FAILURE
+    errors = []
+    result = {}
+
+    begin
+      email_address = params[:email]
+      reservation =  Reservation.find(params[:reservation_id])
+    rescue ActiveRecord::RecordNotFound => ex
+      logger.error "Could not find reservation: #{params[:reservation_id]}"
+      errors << ex.message
+    end
+    if reservation.present?
+      hotel = reservation.hotel
+      if reservation.status === :CHECKEDIN &&  hotel.active_business_date <= reservation.dep_date
+
+        # For Sending invoice, email is mandatory information.
+        if email_address
+          result = reservation.checkout_with_external_pms(:ROVER)
+          logger.debug "checkout for reservation: #{reservation.id} in StayNTouch : #{email_address} "
+        else
+
+          result = reservation.checkout_with_external_pms(:ROVER)
+          logger.debug "checkout for reservation: #{reservation.id} in StayNTouch :Email is not present"
+
+        end
+
+        if result[:status]
+          data = "#{reservation.primary_guest.full_name.upcase} HAS CHECKED OUT"
+          if reservation.hotel.settings.require_signature_at === Setting.signature_display[:checkout]
+            signature_image = reservation.create_image(params[:signature])
+            reservation.signature.destroy if reservation.signature
+            reservation.build_signature(base64_data: signature_image)
+            reservation.save!
+          end
+          if reservation.update_checkout_details
+            status = SUCCESS
+          else
+            logger.error "Could not update checkout for reservation: #{reservation.id} in StayNTouch"
+            errors << 'Unable to update checkout details in StayNTouch'
+          end
+        else
+          logger.error "Could not checkout reservation: #{reservation.id} in External PMS"
+          if result[:message].include?('resource busy and acquire with NOWAIT specified')
+            errors << 'Reservation currently accessed in PMS, cannot update!'
+          else
+            errors << "External PMS Checkout error Confirm Number - #{reservation.confirm_no}- " + result[:message] if reservation
+          end
+        end
+      else
+        logger.error "Invalid Reservation status/departure date for checkout in reservation: #{reservation.id}"
+        errors << 'Invalid Reservation status/departure date'
+        data = "#{reservation.primary_guest.full_name.upcase} WAS NOT CHECKED OUT"
+      end
+    end
+    render json: { status: status, data: data, errors: errors }
+  end
+
+  def post_payment
+    data = {}
+    status = FAILURE
+    errors = []
+    bill_number = params[:bill_number]
+    amount = params[:amount]
+    begin
+      reservation =  Reservation.find(params[:reservation_id])
+    rescue ActiveRecord::RecordNotFound => ex
+      logger.error "Could not find reservation: #{params[:reservation_id]}"
+      errors << ex.message
+    end
+    if reservation.present?
+      if bill_number.present? && amount.present?
+        card_data = reservation.bill_payment_type(bill_number)
+        result = reservation.make_reservation_payment(card_data, bill_number, amount)
+        if result[:status]
+          status = SUCCESS
+          data = 'Payment Completed'
+        else
+          data, errors = {}, 'Unable to make payment ' + result[:message]
+        end
+      else
+        errors << 'Invalid Parameters'
+      end
+    end
+    render json: { status: status, data: data, errors: errors }
+  end
+
+  def get_pay_bill_details
+    @data = {}
+    status = FAILURE
+    errors = []
+    begin
+      reservation =  Reservation.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => ex
+      logger.error "Could not find reservation: #{params[:reservation_id]}"
+      errors << ex.message
+    end
+    if reservation.present?
+
+      # Use bill #1, unless a bill number is sent
+      bill_number = params[:bill_number] || 1
+
+      guest_payment_type = reservation.bill_payment_type(bill_number)
+      @data['card_number'] = guest_payment_type.andand.mli_token_display || ''
+      @data['cardcode'] = guest_payment_type.andand.credit_card_type.to_s
+      @data['amount'] = reservation.current_balance || '0.00'
+      @data['currency_code'] = reservation.hotel.default_currency.to_s
+      status = SUCCESS
+    end
+    respond_to do |format|
+      format.html { render partial: 'modals/billCardPayment', locals: { data: @data } } ## TODO replace with actual partial file from UI story
+      format.json { render json: { status: status, data: @data, errors: errors } }
+    end
+  end
+
+  def get_key_on_tablet
+    data = {}
+    status = FAILURE
+    errors = []
+    reservation = Reservation.find(params[:id])
+    unless  reservation.reservation_keys.present?
+      reservation.create_reservation_key('false', '1')
+    end
+    key_data = reservation.reservation_keys.first
+    data = {
+      reservation_status: ViewMappings::StayCardMapping.map_view_status(reservation, current_hotel.active_business_date),
+      qr_code_image: key_data.present? ? "data:image/jpeg;base64, #{Base64.encode64(key_data.qr_data)}" : '' ,
+      room_number: reservation.current_daily_instance.room ? reservation.current_daily_instance.room.room_no : '' ,
+      confirmation_number: reservation.confirm_no,
+      email: reservation.primary_guest.email,
+      is_late_checkout: reservation.is_opted_late_checkout.to_s,
+      late_checkout_time: reservation.late_checkout_time ? reservation.late_checkout_time.strftime('%I:%M %p') : '',
+      user_name: " #{reservation.andand.primary_guest.andand.first_name}  #{reservation.andand.primary_guest.andand.last_name}"
+    }
+    status = SUCCESS
+    respond_to do |format|
+      format.html { render partial: 'modals/keys/keyQrCodeModal', locals: { data: data } }
+      format.json { render json: { status: status, data: data, errors: errors } }
+    end
+  end
+
+  def show_key_delivery
+    data = {}
+    status = FAILURE
+    errors = []
+    reservation = Reservation.find(params[:id])
+    key_data = reservation.reservation_keys.first
+    data[:room_number] = reservation.current_daily_instance.room ?  reservation.current_daily_instance.room.room_no : ''
+    status = SUCCESS
+    respond_to do |format|
+      format.html { render partial: 'modals/selectKeyModal', locals: { data: data } }
+      format.json { render json: { status: status, data: data, errors: errors } }
+    end
+  end
+
+  private
+
+  def create_checkin_room_ready_notification(reservation)
+    notification = NotificationDetail.find_by_notification_id_and_notification_type_and_notification_section(reservation.id, Setting.notification_type[:reservation], Setting.notification_section_text[:check_in])
+    NotificationDetail.create_reservation_notification(reservation, Setting.notification_section_text[:check_in], nil) unless notification
+    reservation.send_checkin_email
+  end
+end

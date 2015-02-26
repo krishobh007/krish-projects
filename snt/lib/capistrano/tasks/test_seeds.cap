@@ -1,0 +1,13 @@
+desc "reload the database with test seed data"
+task :test_seed do
+  on roles(:db) do |host|
+    within current_path do
+      with rails_env: fetch(:rails_env) do
+        execute :rake, "db_test:seed"
+      end
+    end
+  end
+end
+
+before :test_seed, 'rvm:hook'
+

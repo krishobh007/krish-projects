@@ -1,0 +1,34 @@
+{
+  "open_guest_bills": 23,
+  "amount_owing": 122.00,
+  "currency_code": "$",
+  "available_credit": 100.00,
+  "ar_transactions": [
+    {
+      "guest_first_name": "Smith",
+      "guest_last_name": "Aron",
+      "guest_is_vip": false,
+      "reservation_arrival_date": "2014-01-01",
+      "reservation_dep_date": "2014-01-05",
+      "reservation_confirm_no": "123456",
+      "paid": false,
+      "bill_id": 2,
+      "amount": 673.00,
+      "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+    },
+    {
+      "guest_first_name": "Akhila",
+      "guest_last_name": "Nair",
+      "guest_is_vip": false,
+      "reservation_arrival_date": "2014-01-01",
+      "reservation_dep_date": "2014-01-05",
+      "reservation_confirm_no": "123456",
+      "paid": true,
+      "bill_id": 2,
+      "amount": 673.00,
+      "guest_image": "http://localhost:3000/assets/avatar-trans.png"
+
+    }
+  ],
+  "total_count":10
+}

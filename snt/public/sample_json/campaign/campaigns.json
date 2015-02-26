@@ -1,0 +1,23 @@
+{
+    "results": [
+        {
+            "id": 1,
+            "name": "Campaign_Name1",
+            "audience": "EVERYONE",
+            "delivery": "ONE TIME",
+            "status": "ACTIVE",
+            "updated_at": "mm/dd/yyyy"
+        },
+        {
+            "id": 1,
+            "name": "Campaign_Name21",
+            "audience": "INHOUSE",
+            "delivery": "ONE TIME",
+            "status": "COMPLETED",
+            "updated_at": "mm/dd/yyyy"
+        }
+    ],
+    "total_count": 22,
+    "is_eod_in_progress": false,
+    "is_eod_manual_started": false
+}

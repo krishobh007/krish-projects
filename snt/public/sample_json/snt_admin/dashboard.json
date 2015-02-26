@@ -1,0 +1,50 @@
+[
+    {
+        "menu_id": 101,
+        "menu_name": "HOTELS",
+        "header_name": "Hotels",
+        "components": [
+            {
+                "id": 1,
+                "name": "Hotels",
+                "is_bookmarked": true,
+                "url": "URLfortheaction",
+                "type": "component",
+                "icon_url": "imageURL"   
+            },
+            {
+                "id": 2,
+                "name": "Promotions",
+                "url": "",//Whentype=Group,
+                "type": "Group",
+                "icon_url": "imageURL",
+                "is_bookmarked": "false",//Items in Type=Group cannot be bookmarked,
+                "sub_components": [
+                    {
+                        "id": 10,
+                        "name": "Aboutscreenpromotions",
+                        "icon_url": "urloficonimage",
+                        "url": "actionurl",
+                        "is_bookmarked": "True/False"
+                    }
+                ]
+            }
+            
+        ]
+    },
+    {
+        "menu_id": 102,
+        "menu_name": "DASHBOARD",
+        "header_name": "Dashboard",
+        "components": [
+            {
+                "id": 1,
+                "name": "Hotels",
+                "is_bookmarked": true,
+                "url": "URLfortheaction",
+                "type": "component",
+                "icon_url": "imageURL"   
+            }
+        ]
+    }
+]

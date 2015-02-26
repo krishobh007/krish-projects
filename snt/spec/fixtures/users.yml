@@ -1,0 +1,21 @@
+admin:
+  login: admin@stayntouch.com
+  email: admin@stayntouch.com
+  description: I am friggin awesome
+  password_salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at: <%= 5.days.ago.iso8601 %>
+  activated_at: <%= 5.days.ago.iso8601 %>
+  activation_code:
+  metro_area_id: 1
+  profile_public: true
+  login_slug: admin
+  birthday: <%= Setting.min_age.years.ago.iso8601 %>
+  activities_count: 0
+  role_id: 6
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  single_access_token: <%= Authlogic::Random.friendly_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
+  default_hotel: one
+  hotel_chain: one
+  

@@ -1,0 +1,28 @@
+{
+    "rate_types": [
+        {
+            "id":"23",
+            "description": "Rack Rates",
+	   	 	"value" : "1",
+            "is_active": "true",
+            "is_system_defined": "true",
+            "is_status_changeable": "false"
+        },
+        {
+            "id":"25",
+            "description": "Best Available Rates",
+	   	 	"value" : "2",
+            "is_active": "false",
+            "is_system_defined": "false",
+            "is_status_changeable": "true"
+        },
+        {
+            "id":"27",
+            "description": "Corporate Rates",
+	   	 	"value" : "3",
+            "is_active": "true",
+            "is_system_defined": "true",
+            "is_status_changeable": "false"
+        }
+    ]
+}

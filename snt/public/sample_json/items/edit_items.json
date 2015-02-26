@@ -1,0 +1,18 @@
+{
+	"item_id": "23",
+	"item_description": "CocaCola",
+	"unit_price": "399",
+	"currency_code": "USD",
+	"is_favorite": "true",
+	"charge_code": [
+		{
+			"value": "1"
+		}, {
+			"value": "2"
+		}, {
+			"value": "3"
+		}
+	],
+	"selected_charge_code": "1",
+	"category_name": "Bedding"
+}

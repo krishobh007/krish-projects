@@ -1,0 +1,50 @@
+{
+	"bill_numbers": ["1", "2", "3"],
+	"charge_groups": [
+		{
+			"value": "1",
+			"name": "Attractions"
+		}, {
+			"value": "2",
+			"name": "Bedding"
+		}
+	],
+	"items": [
+		{
+			"value": "23",
+			"item_name": "CocaCola",
+			"unit_price": "399",
+			"currency_code": "USD",
+			"is_favorite": "true",
+			"charge_group_value": "2"
+		}, {
+			"value": "24",
+			"item_name": "BandAid",
+			"unit_price": "200",
+			"currency_code": "USD",
+			"is_favorite": "true",
+			"charge_group_value": "2"
+		}, {
+			"value": "25",
+			"item_name": "Apple 1Kg",
+			"unit_price": "400",
+			"currency_code": "USD",
+			"is_favorite": "false",
+			"charge_group_value": "1"
+		},{
+			"value": "26",
+			"item_name": "Apple 2Kg",
+			"unit_price": "400",
+			"currency_code": "USD",
+			"is_favorite": "true",
+			"charge_group_value": "1"
+		},{
+			"value": "27",
+			"item_name": "Banana",
+			"unit_price": "400",
+			"currency_code": "USD",
+			"is_favorite": "false",
+			"charge_group_value": "1"
+		}
+	]
+}

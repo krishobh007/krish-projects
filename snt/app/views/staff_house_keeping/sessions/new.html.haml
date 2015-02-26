@@ -1,0 +1,20 @@
+.container.loading{"data-view" => "Login"}
+  #login.content
+    = image_tag "#{get_current_hotel_chain_logo}", :class=>'logo', :alt=>""
+
+    = render :partial => "shared/messages"
+
+    = form_tag staff_house_keeping_sessions_path, :name => "login-form",:autocomplete => "off", :id => "login-form", :class =>"form" do
+      .entry.float
+        %label{:for => "email"} E-mail
+        %input#email{:name => "email", :placeholder => "Enter your e-mail address", :type => "email", :value => ""}
+      .entry.float
+        %label{:for => "password"} Password
+        %input#password{:autocomplete => "off", :name => "password", :placeholder => "Enter your password", :type => "password", :value => ""}
+      .entry.float
+        %button.button.green{:name => "commit", :type => "submit", :value =>"login", :id => "loginbutton"} Login
+    %div.support
+      For questions or support please contact your hotel administrator or the StayNTouch service team at 
+      %a{:href => "mailto:support@stayntouch.com"} support@stayntouch.com
+    
+

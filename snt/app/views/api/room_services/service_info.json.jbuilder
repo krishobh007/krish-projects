@@ -1,0 +1,1 @@
+json.service_status @room_service_details

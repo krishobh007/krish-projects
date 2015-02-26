@@ -1,0 +1,24 @@
+{
+    "value": "20",
+    "hotel_code": "2206",
+    "name": "TAJ HOTELS",
+    "loyalty_program_name": "Silver",
+    "loyalty_program_code": "1",
+    "lov": [
+        {
+            "value": "23",
+            "name": "golden"
+        },
+        {
+            "value": "24",
+            "name": "silver"
+        },
+        {
+            "value": "25",
+            "name": "platinum"
+        }
+    ],
+    "terms_cond": "Sample terms and conditions",
+    "terms_cond_phone": "+1-58500",
+    "terms_cond_email": "test@re.com"
+}

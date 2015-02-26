@@ -1,0 +1,353 @@
+class ViewMappings::BillCardMapping
+  def self.map_bill_card(reservation, current_hotel)
+    bill_card = {}
+
+    active_business_date = current_hotel.active_business_date
+    is_reservation_rate_suppressed = reservation.is_rate_suppressed
+    daily_instances = reservation.daily_instances
+
+    current_daily_instance = reservation.current_daily_instance
+    room = current_daily_instance.andand.room
+    if room
+      room_status = room.is_ready? ? 'READY' : 'NOTREADY'
+    end
+    # qr_flag = (reservation.hotel.settings.room_key_delivery_for_rover_check_in == "qr_code_tablet")
+    bill_card['key_settings'] = reservation.hotel.settings.room_key_delivery_for_rover_check_in
+    bill_card['reservation_id']  = reservation.id
+    bill_card['reservation_status']  = ViewMappings::StayCardMapping.map_view_status(reservation, active_business_date)
+    bill_card['room_number']  = room ? room.room_no : ''
+    bill_card['room_status']  = room_status.to_s
+    bill_card['room_type']    = room ? room.room_type.room_type : ''
+    bill_card['room_type_name']    = room ? room.room_type.room_type_name : ''
+    bill_card['checkin_date']   =  reservation.arrival_date
+    bill_card['checkout_date']  = reservation.dep_date
+    bill_card['number_of_nights'] = reservation.total_nights
+    bill_card['fo_status']  = room.andand.mapped_fo_status
+    bill_card['currency_code']  = current_daily_instance.currency_code.andand.value
+    bill_card['is_promotions_and_email_set'] = reservation.primary_guest.is_opted_promotion_email ? 'true' : 'false'
+    bill_card['required_signature_at'] = reservation.hotel.settings.require_signature_at || ''
+
+    bill_card['is_rates_suppressed'] = is_reservation_rate_suppressed.to_s
+    bill_card['text_rates_suppressed'] = is_reservation_rate_suppressed ? 'SR' : ''
+
+    bill_card['signature_details'] = {
+      'is_signed' => reservation.signature.present? ? 'true' : 'false',
+      'signed_image' => reservation.signature.present? ? "data:image/jpeg;base64, #{Base64.encode64(reservation.signature.andand.data.to_s)}" : '',
+      'signed_date_time' => reservation.signature.present? ? reservation.signature.created_at.utc.in_time_zone(reservation.hotel.tz_info).strftime('%m-%d-%y %I:%M %p') : ''
+    }
+
+    bills = []
+    # Get bill details for given reservation
+    @days_assigned = false
+    bill_instance = Bill.where(reservation_id: reservation.id).order('bill_number ASC')
+
+    if bill_instance
+      bill_instance.each do |each_bill_instance|
+        bill_hash = Hash.new
+
+        # will return financial transactions for debits posted
+        financial_records = each_bill_instance.financial_transactions.where('financial_transactions.charge_code_id IS NOT NULL')
+        # get all the revenues or debits
+        financial_records_debits = financial_records.exclude_payment
+
+        # get all the payments or credits
+        financial_records_credits = financial_records.credit
+
+        # get total payments and debits
+        if each_bill_instance
+          bill_hash['bill_number'] = each_bill_instance.bill_number.to_s
+          bill_hash['total_amount'] = financial_records_debits.sum(:amount).round(2).to_s
+          bill_hash['total_payments'] = financial_records_credits.reduce(0) { |sum, hash| sum + hash[:amount] }.round(2).to_s
+
+          bill_hash['credit_card_details']  = map_bill_credit_card_hash(each_bill_instance.reservation, each_bill_instance.bill_number)
+          bill_hash['guest_or_company_name']  = bill_hash['credit_card_details']['card_name'].present? ? bill_hash['credit_card_details']['card_name'].to_s : ''
+        end
+
+        # get group items
+        group_items = Array.new
+
+        financial_records_groups = financial_records_debits.joins(charge_code: :charge_groups).select('charge_groups.id as id, charge_groups.description as description, sum(amount) as amount')
+        .group('charge_groups.id') if financial_records_debits
+
+        if financial_records_groups
+          group_items = financial_records_groups.map do |each_record|
+            expense_info = Array.new
+<<<<<<< HEAD
+            expense_info = financial_records_debits.joins(charge_code: :charge_groups).select('charge_codes.description as description, financial_transactions.date as date, financial_transactions.amount as amount')
+            .where('charge_groups.id = ?', each_record.id) if financial_records_debits
+=======
+            expense_info = financial_records_debits.joins(:charge_code => :charge_groups).select("charge_codes.description as description, financial_transactions.date as date, financial_transactions.amount as amount, financial_transactions.external_id as external_id")
+            .where("charge_groups.id = ?", each_record.id) if financial_records_debits
+>>>>>>> 02374d2f759f91ec4ddc98eee6ca291500668c6b
+
+            expense_details = Array.new
+
+            if expense_info
+              expense_details = expense_info.map do |expense_record|
+                {
+<<<<<<< HEAD
+                  'expense' => expense_record.amount.to_s,
+                  'location' => expense_record.description,
+                  'date' => expense_record.date
+=======
+                  "expense" => expense_record.amount.to_s,
+                  "location" => expense_record.description,
+                  "date" => expense_record.date,
+                  "transaction_id" => expense_record.external_id
+>>>>>>> 02374d2f759f91ec4ddc98eee6ca291500668c6b
+                }
+              end
+            end
+
+            {
+              'title'  => each_record.description,
+              'amount' => each_record.amount.to_s,
+              'expense_details' => expense_details
+            }
+          end
+        end
+        if bill_instance.first == each_bill_instance
+          if reservation.addons.present?
+            addons = Array.new
+            package_type = 'PACKAGES'
+            packages_amount = reservation.reservations_addons.sum(:price)
+            if reservation.addons.rate_inclusive_addons.present? && reservation.addons.rate_exclusive_addons.present?
+              package_type = 'MULTI'
+            elsif reservation.addons.rate_inclusive_addons.present?
+              package_type = 'INCL'
+            end
+
+            expense_details = reservation.addons.map do|addon|
+              reservation_addon = reservation.reservations_addons.where(addon_id: addon.id).first
+              {
+                'is_inclusive' => reservation_addon.is_inclusive_in_rate ? 'true' : 'false',
+                'price' => reservation_addon.price,
+                'package' => addon.description
+              }
+            end
+            addons << {
+              'title' => 'Packages',
+              'package_type'  => package_type,
+              'amount' => packages_amount.to_s,
+              'expense_details' => expense_details
+            }
+
+            bill_hash['addons'] = addons
+          end
+        end
+        bill_hash['group_items'] = group_items
+
+        # Get total fees
+        total_fees = Array.new
+
+        # structure the revenues to show debits
+
+        fees_details = Array.new
+        fin_fees_details = financial_records.order('date, external_id') if financial_records
+        #
+        if fin_fees_details
+          make_all_charges_suppressed = false
+          # Check if any rate is SR. If yes then make all the charges as SR
+          if is_reservation_rate_suppressed && fin_fees_details.include_room.exists?
+            make_all_charges_suppressed = true
+          end
+
+          total_fees = [
+            'total_amount' => make_all_charges_suppressed ? Setting.suppressed_rate : bill_hash['total_amount'],
+            'balance_amount' => make_all_charges_suppressed ? Setting.suppressed_rate : (bill_hash['total_amount'].to_f - bill_hash['total_payments'].to_f).to_s,
+            'fees_date' => reservation.current_daily_instance.reservation_date,
+            'fees_details' => fin_fees_details.map do|financial_transaction|
+              fin_fees_generates = Array.new
+              # fin_fees_generates = financial_records_debits.where('financial_transactions.date = ? AND financial_transactions.charge_code_id IN (SELECT charge_code_generates.generate_charge_code_id FROM charge_code_generates WHERE financial_transactions.charge_code_id = charge_code_generates.generate_charge_code_id AND charge_code_generates.charge_code_id = ?)', financial_transaction.date, financial_transaction.charge_code_id)
+              description = Array.new
+              desc_main = Array.new
+              @credits = ''
+              if !(financial_transaction.andand.charge_code.andand.charge_code_type === :PAYMENT)
+
+                desc_main = [
+                  'fees_desc' => financial_transaction.andand.charge_code.andand.description,
+                  'fees_amount' => make_all_charges_suppressed ? Setting.suppressed_rate : ('%.2f' % financial_transaction.amount).to_s
+                ]
+              else
+                desc_main = [
+                  'fees_desc' => financial_transaction.andand.charge_code.andand.description
+                ]
+                @credits = make_all_charges_suppressed ? Setting.suppressed_rate : ('%.2f' % financial_transaction.amount).to_s
+              end
+
+              #
+              if fin_fees_generates
+                desc_sub = Array.new
+                desc_sub = fin_fees_generates.map do|fees_generate|
+
+                  {
+                    'fees_desc' => fees_generate.andand.charge_code.andand.description,
+                    'fees_amount' => fees_generate.amount.to_s
+                  }
+
+                end
+                # description = desc_main + desc_sub
+              end
+              description = desc_sub ? desc_main + desc_sub : desc_main
+              {
+<<<<<<< HEAD
+                'type' => financial_transaction.charge_code.andand.charge_code_type,
+                'date' => financial_transaction.date,
+                'description' => description,
+                'credits' => @credits
+=======
+                "type" => financial_transaction.charge_code.andand.charge_code_type,
+                "date" => financial_transaction.date,
+                "description" => description,
+                "credits" => @credits,
+                "transaction_id" => financial_transaction.external_id
+>>>>>>> 02374d2f759f91ec4ddc98eee6ca291500668c6b
+              }
+            end
+
+          ]
+
+        end
+
+        bill_hash['total_amount'] = make_all_charges_suppressed ? Setting.suppressed_rate : bill_hash['total_amount']
+        bill_hash['total_payments'] = make_all_charges_suppressed ? Setting.suppressed_rate : bill_hash['total_payments']
+
+        bill_hash['total_fees'] = total_fees
+
+        days = Array.new
+        # Get daily rates for the reservation
+        if each_bill_instance.bill_number.to_s == '1'
+          @days_assigned = true
+          if daily_instances
+            days = daily_instances.map do|daily_instance|
+              {
+<<<<<<< HEAD
+                'date' => daily_instance.reservation_date,
+                'amount' => is_reservation_rate_suppressed ? Setting.suppressed_rate : daily_instance.rate_amount,
+                'rate_name' => daily_instance.rate.andand.rate_name,
+                'rate_description' => daily_instance.rate.andand.rate_desc,
+                'room_type_name' => daily_instance.room_type.room_type_name,
+                'room_type_description' => daily_instance.room_type.description
+=======
+                "date" => daily_instance.reservation_date,
+                "amount" => is_reservation_rate_suppressed ? Setting.suppressed_rate : daily_instance.rate_amount,
+                "rate_name" => daily_instance.rate.andand.rate_name,
+                "rate_description" => daily_instance.rate.andand.rate_desc,
+                "room_type_name" => daily_instance.room_type.room_type_name,
+                "room_type_description" => daily_instance.room_type.description    
+>>>>>>> 02374d2f759f91ec4ddc98eee6ca291500668c6b
+              }
+            end
+          end
+        end
+        bill_hash['days'] = days
+
+        bills.push(bill_hash)
+      end
+    end
+
+    # if there are no bills then assign days to default bill number 1
+    unless @days_assigned
+      bill_hash = {}
+      group_items = []
+      bill_hash['group_items'] = group_items
+      total_fees = []
+      bill_hash['total_fees'] = total_fees
+      bill_hash['bill_number'] = '1'
+      bill_hash['total_amount'] = '0.00'
+      bill_hash['total_payments'] = '0.00'
+      @days_assigned = true
+      days = []
+      if daily_instances
+        days = daily_instances.map do |daily_instance|
+          {
+            'date' => daily_instance.reservation_date,
+            'amount' => is_reservation_rate_suppressed ? Setting.suppressed_rate : daily_instance.rate_amount,
+            'rate_name' => daily_instance.rate.andand.rate_name,
+            'rate_description' => daily_instance.rate.andand.rate_desc,
+            'room_type_name' => daily_instance.room_type.room_type_name,
+            'room_type_description' => daily_instance.room_type.description
+          }
+        end
+      end
+      bill_hash['days'] = days
+
+      # Add CC details for bill 1 if no bills present
+      bill_hash['credit_card_details']  = map_bill_credit_card_hash(reservation, '1')
+      bill_hash['guest_or_company_name']  = bill_hash['credit_card_details']['card_name'].present? ? bill_hash['credit_card_details']['card_name'].to_s : ''
+
+      if reservation.addons.present?
+        addons = []
+        package_type = 'PACKAGES'
+        packages_amount = reservation.reservations_addons.sum(:price)
+        if reservation.addons.rate_inclusive_addons.present? && reservation.addons.rate_exclusive_addons.present?
+          package_type = 'MULTI'
+        elsif reservation.addons.rate_inclusive_addons.present?
+          package_type = 'INCL'
+        end
+
+        expense_details = reservation.addons.map do|addon|
+          reservation_addon = reservation.reservations_addons.where(addon_id: addon.id).first
+          {
+            'is_inclusive' => reservation_addon.is_inclusive_in_rate ? 'true' : 'false',
+            'price' => reservation_addon.price,
+            'package' => addon.description
+          }
+        end
+        addons << {
+          'title' => 'Packages',
+          'package_type'  => package_type,
+          'amount' => packages_amount.to_s,
+          'expense_details' => expense_details
+        }
+
+        bill_hash['addons'] = addons
+      end
+
+      bills.push(bill_hash)
+    end
+
+    bill_card['bills']  = bills
+    bill_card['number_of_bills'] = bills.count
+    # To get all routing information for a reservation
+    bill_card['routing_array'] = map_bill_routings_array(reservation)
+    bill_card
+  end
+
+  # Iterate each routing entry for a reservation
+  def self.map_bill_routings_array(reservation)
+    routings = reservation.charge_routings.map do |routing|
+      map_bill_routings_hash(routing)
+    end
+    routings
+  end
+
+  # Hash for routing
+  def self.map_bill_routings_hash(routing)
+    routing_hash = {}
+    routing_hash['routing_id'] = routing.id
+    routing_hash['bill_number'] = routing.bill.bill_number.to_s
+    routing_hash['details'] = routing.external_routing_instructions
+    routing_hash['guest_or_company'] = routing.owner_name.to_s
+    routing_hash['room_no'] = routing.room.andand.room_no.to_s
+
+    routing_hash
+  end
+
+  def self.map_bill_credit_card_hash(reservation, bill_number)
+    reservation_credit_card_hash = {}
+    bill_payment_type = reservation.bill_payment_type(bill_number)
+
+    if bill_payment_type
+      reservation_credit_card_hash['payment_type'] = bill_payment_type.payment_type.to_s
+      reservation_credit_card_hash['payment_type_description'] = bill_payment_type.payment_type.description
+      reservation_credit_card_hash['card_code'] = bill_payment_type.credit_card_type.to_s
+      reservation_credit_card_hash['card_number'] = bill_payment_type.mli_token_display.to_s
+      reservation_credit_card_hash['card_expiry'] = bill_payment_type.card_expiry ? bill_payment_type.card_expiry_display : ''
+      reservation_credit_card_hash['payment_id'] = bill_payment_type.id
+      reservation_credit_card_hash['card_name'] = bill_payment_type.card_name
+    end
+
+    reservation_credit_card_hash
+  end
+end

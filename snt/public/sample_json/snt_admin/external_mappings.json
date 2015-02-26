@@ -1,0 +1,85 @@
+{
+    "hotel_id": "25",
+    "mapping": [
+        {
+            "mapping_type": "Address Types",
+            "mapping_values": [
+                {
+                    "value": "24",
+                    "snt_value": "Home",
+                    "external_value": "H"
+                },
+                {
+                    "value": "25",
+                    "snt_value": "Business",
+                    "external_value": "B"
+                },
+                {
+                    "value": "26",
+                    "snt_value": "ResidentialAssociation",
+                    "external_value": "R"
+                },
+                {
+                    "value": "27",
+                    "snt_value": "Family",
+                    "external_value": "F"
+                }
+            ]
+        },
+        {
+            "mapping_type": "Email Type",
+            "mapping_values": [
+                {
+                    "value": "28",
+                    "snt_value": "personal",
+                    "external_value": "P"
+                },
+                {
+                    "value": "29",
+                    "snt_value": "official",
+                    "external_value": "O"
+                }
+            ]
+        },
+        {
+            "mapping_type": "Likes",
+            "mapping_values": [
+                {
+                    "value": "39",
+                    "snt_value": "Smoking",
+                    "external_value": "S"
+                },
+                {
+                    "value": "40",
+                    "snt_value": "Non Smoking",
+                    "external_value": "N"
+                },
+                {
+                    "value": "41",
+                    "snt_value": "Low Floor",
+                    "external_value": "LF"
+                }
+            ]
+        },
+        {
+            "mapping_type": "Features",
+            "mapping_values": [
+                {
+                    "value": "42",
+                    "snt_value": "f1",
+                    "external_value": "F"
+                },
+                {
+                    "value": "42",
+                    "snt_value": "f2",
+                    "external_value": "T"
+                },
+                {
+                    "value": "46",
+                    "snt_value": "f3",
+                    "external_value": "FT"
+                }
+            ]
+        }
+    ]
+}

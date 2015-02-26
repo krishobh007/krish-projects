@@ -1,0 +1,1241 @@
+class Reservation < ActiveRecord::Base
+  attr_accessible :arrival_date, :confirm_no, :dep_date, :status_id, :status,
+                  :hotel_id, :hotel, :arrival_time, :guest_id, :cancellation_no, :cancel_date, :cancel_reason,
+                  :company_id, :no_room_move, :fixed_rate, :total_amount, :guarantee_type, :last_stay_room, :market_segment,
+                  :total_rooms, :party_code, :preferred_room_type, :print_rate, :source_code, :travel_agent_id, :is_walkin,
+                  :external_id, :upsell_amount, :original_arrival_date, :original_departure_date, :checkin_time,
+                  :checkout_time, :waitlist_reason, :discount_type_id, :discount_type, :discount_amount, :discount_reason, :is_posting_restricted,
+                  :is_remote_co_allowed, :is_day_use, :lobby_status, :is_upsell_applied, :is_first_time_checkin, :is_opted_late_checkout,
+                  :late_checkout_time, :is_rate_suppressed, :promotion_code, :last_upsell_posted_date, :departure_time
+
+  belongs_to :hotel, :inverse_of => :guests, :counter_cache => :guests_count
+  has_many :reviews, :dependent => :destroy
+  has_many :daily_instances, :class_name => 'ReservationDailyInstance', :dependent => :destroy
+  has_many :wakeups, :dependent => :destroy
+  has_many :notes, :class_name => 'ReservationNote', :dependent => :destroy
+  has_many :guest_web_tokens, :class_name =>'GuestWebToken'
+
+  has_many :reservations_guest_payment_types, :dependent => :destroy
+  has_many :guest_payment_types, :through => :reservations_guest_payment_types
+  has_many :primary_payment_types, :through => :reservations_guest_payment_types, :source => :guest_payment_type, :conditions => { 'reservations_guest_payment_types.bill_number' => 1 }
+
+  has_many :reservations_addons,  :class_name => 'ReservationsAddon', :dependent => :destroy
+  has_many :addons, :through => :reservations_addons
+  # has_and_belongs_to_many :addons, :class_name => 'Addon' ,:uniq=>true,:join_table=>'reservations_addons',:association_foreign_key => 'addon_id'
+  has_and_belongs_to_many :memberships, :class_name => 'GuestMembership', :uniq => true, :join_table => 'reservations_memberships', :association_foreign_key => 'membership_id'
+  has_and_belongs_to_many :features, :uniq => true, :class_name => 'Feature', :join_table => 'reservations_features', :association_foreign_key => 'feature_id'
+  has_many :reservation_keys, :dependent => :destroy
+  has_many :bills, :dependent => :destroy
+  has_many :charge_routings, :through => :bills
+  has_many :financial_transactions, :through => :bills
+
+  has_one :signature, :class_name => 'ReservationSignature', :dependent => :destroy
+
+  has_enumerated :status, :class_name => 'Ref::ReservationStatus'
+  has_enumerated :discount_type, :class_name => 'Ref::DiscountType'
+
+  has_many :reservations_guest_details, :dependent => :destroy
+
+  has_many :guest_details, through: :reservations_guest_details
+
+  has_many :actions, as: :object
+
+  validates :arrival_date, :dep_date, :hotel, :status_id, presence: true
+  validates :confirm_no, presence: true, uniqueness: { scope: :hotel_id }
+  validate :dep_date_not_less_than_arrival_date
+
+  def dep_date_not_less_than_arrival_date
+    dep_date < arrival_date && errors.add(:dep_date, "can't be less than arrival_date")
+  end
+
+  before_destroy do
+    memberships.clear
+    features.clear
+  end
+
+  scope :asc, -> { order('rv.created_at ASC') }
+  scope :desc, -> { order('rv.created_at DESC') }
+
+  scope :current_reservations, proc { |business_date| where('arrival_date <= ? AND dep_date >= ?', business_date, business_date) }
+  scope :upcoming_reservations, proc { |business_date| with_status(:RESERVED).where('arrival_date > ?', business_date) }
+  scope :history_reservations, proc { |business_date| where('dep_date < ?', business_date) }
+
+  scope :due_in, proc { |request_date|
+    with_status(:RESERVED).where(arrival_date: request_date)
+  }
+
+  scope :in_house, proc { |request_date|
+    with_status(:CHECKEDIN).where('dep_date > ?', request_date)
+  }
+
+  scope :due_out, proc { |request_date|
+    with_status(:CHECKEDIN).where(dep_date: request_date)
+  }
+
+  scope :is_late_checkout, proc { |request_date|
+    current_reservations(request_date).where(is_opted_late_checkout: true)
+  }
+
+  scope :due_in_list, proc { |hotel_id|
+    select('rs.*').from('reservations as rs')
+    .joins("inner join hotel_business_dates as hbd on rs.hotel_id=hbd.hotel_id AND hbd.status='OPEN'")
+    .where('rs.hotel_id = ? AND rs.status_id = ? AND rs.arrival_date=hbd.business_date', hotel_id, Ref::ReservationStatus[:RESERVED])
+  }
+
+  scope :due_out_list, proc { |hotel_id|
+    select('rs.*').from('reservations as rs')
+    .joins("inner join hotel_business_dates as hbd on rs.hotel_id=hbd.hotel_id AND hbd.status='OPEN'")
+    .where('rs.hotel_id = ? AND rs.status_id = ? AND rs.dep_date=hbd.business_date', hotel_id, Ref::ReservationStatus[:CHECKEDIN])
+  }
+
+  scope :inhouse_list, proc { |hotel_id|
+    select('rs.*').from('reservations as rs')
+    .joins("inner join hotel_business_dates as hbd on rs.hotel_id=hbd.hotel_id AND hbd.status='OPEN'")
+    .where('rs.hotel_id = ? AND rs.status_id = ? AND rs.dep_date>hbd.business_date', hotel_id, Ref::ReservationStatus[:CHECKEDIN])
+  }
+
+  # Scope used by search page and API to get list of reservations per query, status, hotel_id and request date
+  scope :search_by_hotel, proc { |query, status, hotel_id, request_date, is_late_checkout_only|
+    # Make sure search results only are for provided hotel
+    results = where(hotel_id: hotel_id)
+
+    # If query provided, search field list for matches
+    if query.present?
+      # Define fields to search for query string and build search condition
+      search_fields = ['guest_details.first_name', 'guest_details.last_name', 'confirm_no', 'room_no', 'name']
+      search_conditions = search_fields.map { |field| "upper(#{field}) like :query" }.join(' OR ')
+
+      # Filter the results by the search conditions
+      results = results.where(search_conditions, query: "%#{query.upcase}%")
+    end
+
+    # If logical status and request_date provided, filter by database status
+    if status && request_date
+      if status == Setting.reservation_input_status[:due_in]
+        # Match the "DUE IN" status ("RESERVED" arriving on request date)
+        results = results.due_in(request_date)
+      elsif status == Setting.reservation_input_status[:due_out]
+        # Match the "DUE OUT" status ("CHECKED IN" status and departing on request date)
+        results = results.due_out(request_date)
+      elsif status == Setting.reservation_input_status[:in_house]
+        # Match the "IN HOUSE" status ("CHECKED IN" status and depart date > request date)
+        results = results.in_house(request_date)
+      end
+    end
+
+    # If only showing late checkout, filter by late checkout on request date
+    results = results.is_late_checkout(request_date) if is_late_checkout_only
+
+    # get reservation only one record from daily elements for particular reservation date
+    results.where('reservation_date =  greatest(arrival_date, (least(dep_date, ?)))', request_date)
+  }
+
+  # Search by user/email and hotel/chain
+  scope :by_user_and_hotel, proc { |user_id, email, hotel_id, chain_id|
+    results = scoped
+
+    if user_id
+      results = results.includes(:guest_details).where('guest_details.user_id = ?', user_id)
+    elsif email
+      results = results.includes(guest_details: :emails).where('guest_additional_contacts.value = ?', email)
+      if hotel_id
+        results = results.where(hotel_id: hotel_id)
+      else
+        results = results.includes(:hotel).where('hotels.hotel_chain_id' => chain_id)
+      end
+    end
+
+    # Order by confirmation number
+    results.order(:confirm_no)
+  }
+
+  # get daily instance record for particular reservation
+  scope :daily_instance_for_date, proc { |date|
+    joins(:daily_instances).where('reservation_date =  greatest(arrival_date, (least(dep_date, ?)))', date)
+  }
+
+  # Include reservations that were checked out up to n-days before request date.
+  scope :checked_out_before_n_days_from, ->(req_date, n) { with_status(:CHECKEDOUT).where('dep_date between ? and ?', req_date - n.days, req_date) }
+
+  # Limit to reservations that have a status of (Reserved or Checked In) and an arrival date equal to the request date
+  scope :checking_in_on_date, ->(req_date) { with_status(:RESERVED, :CHECKEDIN).where('arrival_date=?', req_date) }
+
+  # Limit to reservations that have a status of Checked In and an arrival date equal to the request date
+  scope :checked_in_on_date, ->(req_date) { with_status(:CHECKEDIN).where('arrival_date=?', req_date) }
+
+  # Limit to reservation users that are VIP
+  scope :vip_only, -> { includes(:guest_details).where('guest_details.is_vip = true') }
+
+  def get_review(rev_id)
+    reviews.where(review_category_id: rev_id).first
+  end
+
+  def update_will_change?(attrs)
+    attrs.each do |key, value|
+      send("#{key}=", value)
+      return true if send("#{key}_changed?")
+    end
+    false
+  end
+
+  # Returns the UTC time  for arrival after accounting for grace period
+  def get_arr_time
+    hotel.arr_grace_period ? (arrival_date.to_time - (hotel.arr_grace_period).hours).to_datetime.utc : arrival_date.to_time
+  end
+
+  # Returns the UTC time  for departure after accounting for grace period
+  def get_dep_time
+    hotel.dep_grace_period ? (dep_date.to_time + (hotel.dep_grace_period).hours).to_datetime.utc : dep_date.to_time
+  end
+
+  def add_or_update_wakeup(data, current_hotel)
+    wakeup_call = nil
+
+    result = {}
+    hotel_date = current_hotel.current_date
+    Time.zone = current_hotel.tz_info
+
+    # Start and End date should be system date not business date
+    start_date = ((data[:day] ? data[:day].upcase : '') == Setting.wakeup_day[:today] ? hotel_date : hotel_date + 1.day)
+
+    end_date = start_date
+    # status needs to be set
+    status = data[:day] ? :REQUESTED : :CANCEL
+
+    # get room_no from daily instance
+    room_no = current_daily_instance.andand.room.andand.room_no
+    data_hash = { time: data[:wake_up_time], room_no: room_no, status: Ref::WakeupStatus[status].value,
+                  hotel_id: data[:hotel_id], reservation_id: data[:reservation_id], start_date: start_date.to_date,
+                  end_date: end_date.to_date }
+
+    wakeup_data_hash_external = Hash[:external_id, external_id].merge!(data_hash)
+    wakeup_call_old_data = Hash[:external_id, external_id].merge!(data_hash)
+
+    external_time = Time.strptime(data[:wake_up_time], '%I:%M %P').strftime('%H:%M:%S') + Time.zone.now.formatted_offset if data[:wake_up_time]
+
+    wakeup_data_hash_external[:time] = external_time
+    # if id found then either delete or update depending on the status
+    if data[:id]
+      wakeup_call = wakeups.find(data[:id]) # For updating existing wakeup
+      # call to update wake up in external pms -- If id is found then its either update or delete. For update we need to first delete and then add
+      if wakeup_call
+
+        wakeup_call_old_data[:time] = wakeup_call.time.strftime('%H:%M:%S') + Time.zone.now.formatted_offset
+        wakeup_call_old_data[:start_date] = wakeup_call.start_date
+        wakeup_call_old_data[:end_date] = wakeup_call.end_date
+
+        if self.status == Ref::ReservationStatus[:CHECKEDIN]
+          # send old data from table to delete old wake up call in external pms
+          result = sync_wakeups_with_external_pms(wakeup_call_old_data, 'DELETE')
+        else
+          result[:success] = true
+        end
+        # if success then update SNT tables
+        if result && result[:success]
+          if status == :REQUESTED
+            if self.status == Ref::ReservationStatus[:CHECKEDIN]
+              # send new data to set new wake up call
+              result = sync_wakeups_with_external_pms(wakeup_data_hash_external, 'ADD')
+            else
+              result[:success] = true
+            end
+
+            wakeup_call.update_attributes(data_hash) if result && result[:success]
+          else
+            # if its not requested then delete the wake up call
+            wakeups.destroy_all
+          end
+        else
+          wakeup_call = nil
+        end
+      end
+
+    else # if there is no id then its a call to create new wake up call
+      wakeups.destroy_all
+
+      # send new record to add wake up call in external pms
+
+      if self.status == Ref::ReservationStatus[:CHECKEDIN]
+        result = sync_wakeups_with_external_pms(wakeup_data_hash_external, 'ADD')
+        if result && result[:success]
+          wakeup_call = Wakeup.new(data_hash)
+          wakeups << wakeup_call
+          self.save!
+        end
+      else
+        wakeup_call = Wakeup.new(data_hash)
+        wakeups << wakeup_call
+        self.save!
+      end
+
+    end
+    wakeup_call
+  end
+
+  # call external pms wakeup call methods
+  def sync_wakeups_with_external_pms(wakeup_calls_data, action)
+    result = { success: false }
+    wakeup_attributes = {}
+    if wakeup_calls_data[:room_no]
+      wake_up_api = ReservationApi.new(wakeup_calls_data[:hotel_id])
+      wakeup_attributes = wake_up_api.add_wakeup_calls(wakeup_calls_data, action)
+
+      if wakeup_attributes[:status] == 'SUCCESS'
+        result[:success] = true
+      else
+        result[:success] = false
+        logger.error "Error in Wakeup call: #{wakeup_attributes[:message]}"
+      end
+      result
+    end
+  end
+
+  def get_wakeup_time
+    reservation_wakeup = wakeups.first
+    hotel_date = hotel.current_date
+
+    wakeup_hash = {
+      'today_date' => hotel_date.strftime('%m-%d-%y'),
+      'tomorrow_date' => (hotel_date + 1.day).strftime('%m-%d-%y')
+    }
+
+    if reservation_wakeup
+      wakeup_hash['id'] = reservation_wakeup.id
+      wakeup_hash['wake_up_time'] = reservation_wakeup.time.strftime('%I:%M %p')
+      wakeup_hash['day'] = reservation_wakeup.start_date == hotel_date.to_date ? Setting.wakeup_day[:today] : Setting.wakeup_day[:tomorrow]
+    end
+
+    wakeup_hash
+  end
+
+  def get_ffps
+    primary_guest.get_ffps
+  end
+
+  def get_hlps
+    primary_guest.get_hlps(hotel)
+  end
+
+  def primary_guest
+    ReservationsGuestDetail.find_by_reservation_id_and_is_primary(id, true).guest_detail
+  end
+
+  # Sync the booking with the external PMS using the confirmation number. Gets the booking information from the 3rd party PMS and updates the
+  # database.
+  def sync_booking_with_external_pms
+    reservation_api = ReservationApi.new(hotel_id)
+    booking_attributes = reservation_api.get_booking(confirm_no)
+
+    ReservationImporter.new(self, ignore_vip: true).sync_booking_attributes(booking_attributes[:data]) if booking_attributes[:status] == 'SUCCESS'
+
+    # sync notes whenever sync booking is done
+    sync_notes_with_external_pms
+  end
+
+  # Sync the guest with the external PMS using the guest id. Gets the guest information from the 3rd party PMS and updates the database.
+  def sync_guest_with_external_pms
+    if guest_details
+      guest_api = GuestApi.new(hotel_id)
+      guest_attributes = guest_api.fetch_guest(primary_guest.external_id)
+
+      if guest_attributes[:status] == 'SUCCESS'
+        # Update user with fetch guest response details, only if those properties are not already set
+        GuestImporter.new(primary_guest).sync_guest_attributes(guest_attributes[:data], hotel)
+      end
+    end
+  end
+
+  # Sync notes with externl pms
+  def sync_notes_with_external_pms
+    if hotel.is_third_party_pms_configured?
+      comments = []
+      result = modify_notes_of_external_pms('FETCH', comments)
+
+      # if result is success then create, update, or delete reservation notes
+      if result[:status]
+        # Delete all notes not returned by by external PMS
+        notes_to_destroy = result[:data].empty? ? notes : notes.where('external_id not in (?)', result[:data].map { |n| n[:external_id] })
+        notes_to_destroy.destroy_all
+
+        result[:data].each do |comment|
+          if !notes.exists?(external_id: comment[:external_id])
+            reservation_note = ReservationNote.new
+
+            reservation_note.reservation_id = id
+            reservation_note.external_id = comment[:external_id]
+            reservation_note.description = comment[:description]
+            reservation_note.is_guest_viewable = comment[:is_guest_viewable]
+            reservation_note.note_type = :GENERAL
+            reservation_note.is_from_external_system = true
+
+            reservation_note.save
+          else
+            reservation_note = notes.find_by_external_id(comment[:external_id])
+            reservation_note.update_attributes(description: comment[:description]) if comment[:description] != reservation_note.description
+          end
+        end
+      end
+    end
+  end
+
+  # Checkin the reservation, both in SNT and in external PMS. Save the signature image, set the status to CHECKEDIN, and update the room number.
+  def checkin(signature_image, application, payment_type_attrs = nil)
+    success = false
+
+    # Checkin with the external PMS and get the room
+    result = checkin_with_external_pms(payment_type_attrs)
+
+    if result[:success]
+      begin
+        Reservation.transaction do
+          self.status = :CHECKEDIN
+
+          if signature_image
+            # If there is already a signature saved, remove it before adding the new one
+            signature.destroy if signature
+
+            # Save the signature image to a BLOB in the database
+            build_signature(base64_data: signature_image)
+          end
+
+          self.save!
+
+          daily_instances.each do |daily_instance|
+            # TODO: Once daily instance has room_id, set that instead:
+            # daily_instance.room_id = result[:room].id
+            daily_instance.room_id = result[:room].id
+            daily_instance.status = :CHECKEDIN
+            daily_instance.save!
+          end
+
+          # If credit card information is provided, then add it to the reservation for bill #1
+          if payment_type_attrs.andand[:payment_type] === Ref::PaymentType[:CC]
+            add_process = ->(new_payment_type) { update_bill_payment_type!(1, new_payment_type) }
+            add_to_guest_card = payment_type_attrs[:add_to_guest_card] == 'true'
+            GuestPaymentType.create_and_process(hotel, primary_guest, payment_type_attrs, add_to_guest_card, add_process)
+          end
+
+          # MLI original authorize reservation cards for $1
+          guest_payment_types.needs_original_auth.each do |guest_payment_type|
+            # If card was swiped, MLI original authorize card for $1
+            guest_payment_type.mli_transaction_id = Mli.new(hotel).original_authorization(self, guest_payment_type.mli_token,
+                                                                                          guest_payment_type.card_expiry_mli_formatted)[:data]
+            guest_payment_type.save!
+          end
+
+          Action.record!(self, :CHECKEDIN, application, hotel_id)
+
+          success = true
+        end
+      rescue ActiveRecord::RecordInvalid => e
+        logger.warn 'Could not set room for reservation: ' + e.message
+      end
+    end
+
+    # if reservation is upsold then post upsell charge after check in
+    apply_upsell_charge_code(hotel.active_business_date) if success
+
+    result[:success] = success
+    result
+  end
+
+  # Checkin with the external PMS using the external id. Returns the status and room object.
+  def checkin_with_external_pms(card_info)
+    result = { success: false, room: nil, message: nil }
+
+    if external_id
+      reservation_api = ReservationApi.new(hotel_id)
+      checkin_attributes = reservation_api.check_in(self, card_info)
+
+      if checkin_attributes[:status] == 'SUCCESS'
+        result[:success] = true
+
+        # Get room number
+        room_no = checkin_attributes[:data][:room_number]
+        result[:room] = Room.find_by_room_no_and_hotel_id(room_no, hotel_id)
+
+        logger.warn "Room not found for: #{room_no} in hotel: #{hotel_id}" unless result[:room]
+      else
+        result[:message] = checkin_attributes[:message]
+      end
+    else
+      result[:success] = true
+    end
+
+    result
+  end
+
+  # For non-credit-card bookings only, submit a modify booking request to enable remote checkout
+  def enable_remote_checkout
+    payment_type = primary_payment_type
+
+    if payment_type && !(payment_type.payment_type === :CC)
+      reservation_api = ReservationApi.new(hotel_id)
+      result = reservation_api.modify_booking(confirm_no, { room_type_id: current_daily_instance.room_type_id }, true, true)
+
+      update_attributes(is_remote_co_allowed: true) if result[:status] == 'SUCCESS'
+    end
+  end
+
+  # Get the current daily instance based on the business date in relation to the arrival and departure dates
+  def current_daily_instance
+    business_date = hotel.active_business_date
+
+    if business_date <= arrival_date
+      daily_instances.where('reservation_date = ?', arrival_date).first
+    elsif dep_date <= business_date
+      daily_instances.where('reservation_date = ?', dep_date).first
+    else
+      daily_instances.where('reservation_date = ?', business_date).first
+    end
+  end
+
+  # Received the co-ordinates of sign as json, convert into png image and save as BLOB data.
+  def create_image(json_data)
+    # Step -01 Create Image
+    img = Magick::ImageList.new
+
+    # Getting Width and height from application_config file.
+    img.new_image(Setting.signature_canvas_width, Setting.signature_canvas_height)
+    signature = Magick::Draw.new
+
+    # Step-02 Parse JSON stringcreate_image
+    json_data = json_data
+    parsed_json_hash =  JSON.parse(json_data)
+    for i in parsed_json_hash
+      x_value_array = i['x']
+      y_value_array = i['y']
+
+      for j in 0 ..x_value_array.size - 2
+        signature.line(x_value_array[j], y_value_array[j], x_value_array[j + 1], y_value_array[j + 1])
+      end
+
+      if x_value_array.size == 1
+        signature.line(x_value_array[-1] - 1, y_value_array[-1] - 1, x_value_array[-1] + 1, y_value_array[-1] + 1)
+      end
+
+    end
+    # Draw image into canvas
+    signature.draw(img)
+    img = img.trim!
+    # img.write("sign.png")
+
+    # Convert image into blob data, using Rmagick.
+    blob_data = img.to_blob { self.format = 'png' }
+    blob_data
+  end
+
+  def sync_bills_with_external_pms
+    billing_api = BillingApi.new(hotel_id)
+    invoice = billing_api.get_invoice(external_id)
+    if invoice[:status] ==  'SUCCESS'
+      Bill.create_or_update_bills(invoice[:data], self)
+    else
+      invoice
+    end
+  end
+
+  def update_checkout_details
+    status = false
+    begin
+      Reservation.transaction do
+        self.status = :CHECKEDOUT
+        self.dep_date = hotel.active_business_date
+        room = current_daily_instance.room
+        room.hk_status = :DIRTY
+        room.is_occupied = false
+        status = save && room.save
+        daily_instances.each do |daily_instance|
+          daily_instance.status = :CHECKEDOUT
+          status = status && daily_instance.save!
+        end
+      end
+    rescue ActiveRecord::RecordInvalid => e
+      logger.warn 'Could not set room for reservation: ' + e.message
+    end
+    status
+  end
+
+  def make_reservation_payment(card_data, bill_number, amount)
+    # Get card details
+    result = { status: false, message: '' }
+    if card_data
+      payment_info = {
+        card_type: card_data.credit_card_type.value,
+        card_name: card_data.card_name,
+        mli_token: card_data.mli_token,
+        expiry_date: card_data.card_expiry
+      }
+
+      # Ows call for make payment
+      payment_api = PaymentApi.new(hotel_id)
+      payment_details = payment_api.make_payment(external_id, payment_info, bill_number, amount)
+
+      if payment_details[:status] == 'SUCCESS'
+        result[:status] = true
+      else
+        result[:message] = payment_details[:message]
+      end
+    end
+
+    result
+  end
+
+  # get current balance on reservation
+  def current_balance
+    # if rate is suppressed then don't include window which has room charges in the total debit amount
+    if is_rate_suppressed
+      total_debit_amount = 0
+      total_credit_amount = 0
+
+      bills.each do |bill|
+        unless bill.financial_transactions.include_room.exists?
+          total_debit_amount += bill.financial_transactions.exclude_payment.sum(:amount)
+          total_credit_amount += bill.financial_transactions.credit.sum(:amount)
+        end
+      end
+    else
+      total_debit_amount = financial_transactions.exclude_payment.sum(:amount)
+      total_credit_amount = financial_transactions.credit.sum(:amount)
+    end
+
+    NumberUtility.default_amount_format(total_debit_amount.to_f - total_credit_amount.to_f)
+  end
+
+  def currency_code
+    if bills.count > 0 && bills.first.financial_transactions.count > 0
+      bills.first.financial_transactions.first.currency_code.andand.value
+    else
+      current_daily_instance ? current_daily_instance.currency_code.andand.value : hotel.default_currency.to_s
+    end
+  end
+
+  def timeline(business_date)
+    time_line = 'history'
+    if arrival_date <= business_date && dep_date >= business_date
+      time_line = 'current'
+    elsif status === :RESERVED && arrival_date > business_date
+      time_line = 'upcoming'
+    end
+    time_line
+  end
+
+  def has_valid_primary_card?
+    primary_payment_type.present?
+  end
+
+  # Checkout with the external PMS using the external id. Returns the status.
+  def checkout_with_external_pms(application)
+    result = { status: false, message: '' }
+    if external_id
+
+      guest_api = GuestApi.new(hotel_id)
+      guest_api.insert_update_privacy_option(primary_guest.external_id, 'Email' , 'YES')
+
+      reservation_api = ReservationApi.new(hotel_id)
+
+      # Checkout
+      checkout_attributes = reservation_api.check_out(self)
+
+      if checkout_attributes && checkout_attributes[:status] == 'SUCCESS'
+        Action.record!(self, :CHECKEDOUT, application, hotel_id)
+        result[:status] = true
+      else
+        result[:message] = checkout_attributes[:message]
+      end
+    else
+      result[:status] = false
+      logger.warn "Invalid external ID for reservation #{id}"
+    end
+
+    result
+  end
+
+  # Returns bill #1
+  def bill_one
+    bills.one.first
+  end
+
+  def average_rate_amount
+    if is_rate_suppressed
+      '0.00'
+    elsif self.is_zero_nights?
+      daily_instances.average(:rate_amount).round(2).to_s
+    else
+      daily_instances.where('reservation_date != ?', dep_date).average(:rate_amount).round(2).to_s
+    end
+  end
+
+  def guest_room_rates
+    result = {}
+    rate_type = current_daily_instance.andand.rate.andand.rate_desc
+    daily_rates = []
+
+    daily_instances.each do |daily_instance|
+      daily_rates << {
+        'is_checkout' => (dep_date == daily_instance.reservation_date).to_s,
+        'day' => daily_instance.reservation_date.strftime('%A').upcase.to_s,
+        'date' => daily_instance.reservation_date.strftime('%B %d').to_s,
+        'rate_amount' => dep_date == daily_instance.reservation_date ? '' : daily_instance.formatted_rate_amount
+      }
+    end
+
+    result['total'] = average_rate_amount
+    result['rate_type'] = rate_type && !is_rate_suppressed ? rate_type.to_s : ''
+    result['currency'] = get_currency_symbol(current_daily_instance.currency_code.value)
+    result['daily_rates'] = daily_rates ? daily_rates : ''
+    result
+  end
+
+  def guest_payment_details
+    result = {}
+    balance = 0
+    transactions = bill_one.andand.financial_transactions
+
+    if transactions.present?
+      credits = transactions.credit.sum(:amount)
+      debits = transactions.exclude_payment.sum(:amount)
+      balance = debits - credits
+    end
+
+    guest_payment_type = primary_payment_type
+
+    if guest_payment_type
+      card_time_image_file = (((guest_payment_type.andand.credit_card_type.andand.value).to_s))
+      card_type_image = card_time_image_file.present? ? "#{card_time_image_file.downcase}.png" : ''
+      request = Thread.current[:current_request]
+      card_image_url =  request.protocol + request.host_with_port + "/assets/#{card_type_image}"
+      mli_token_display = guest_payment_type.mli_token ? guest_payment_type.mli_token_display.to_s : ''
+      card_image_url = card_image_url
+    end
+    result['currency'] = get_currency_symbol(current_daily_instance.andand.currency_code.value)
+    result['card_number'] = mli_token_display.to_s
+    result['image_url'] = card_image_url ? card_image_url : ''
+    result['balance'] = balance ? ('%.2f' % balance).to_s : ''
+    result
+  end
+
+  def guest_bill_details
+    result = {}
+    credits = 0
+    debits = 0
+    make_all_charges_suppressed = false
+    fee_details_array = []
+    self.sync_bills_with_external_pms
+    transactions = bill_one.andand.financial_transactions.present? ? bill_one.andand.financial_transactions.order('date ASC') : nil
+
+    if transactions.present?
+      # Check if any rate is SR. If yes then make all the charges as SR
+      if is_rate_suppressed && transactions.include_room.exists?
+        make_all_charges_suppressed = true
+      end
+
+      credits = transactions.credit.sum(:amount)
+      debits = transactions.exclude_payment.sum(:amount)
+
+      fee_dates = transactions.pluck(:date).uniq
+
+      fee_dates.each do |fee_date|
+        fee_details_per_day = {
+          'date' => fee_date.strftime('%m-%d-%Y')
+        }
+
+        show_guest_room_params = fee_date < dep_date || self.is_zero_nights?
+
+        daily_instance_for_date = daily_instances.where(reservation_date: fee_date).first
+        fee_details_per_day['guest_room_description'] = show_guest_room_params && !is_rate_suppressed ? daily_instance_for_date.andand.rate.andand.rate_desc.to_s : ''
+
+        fee_details_per_day['guest_room_fees'] = show_guest_room_params ? NumberUtility.default_amount_format(daily_instance_for_date.formatted_rate_amount) : ''
+        fee_details_per_day['guest_room_text'] = show_guest_room_params ? 'Guest Room' : ''
+
+        transactions_for_date = transactions.exclude_payment.where('date = ?', fee_date)
+
+        fee_details_per_day['charge_details'] = transactions_for_date.map do |transaction|
+          charge_code = transaction.charge_code
+
+          {
+            'description' => charge_code.description.to_s,
+            'amount' => make_all_charges_suppressed ? NumberUtility.default_amount_format('0') : NumberUtility.default_amount_format(transaction.amount)
+          }
+        end
+
+        fee_details_array << fee_details_per_day
+      end
+    end
+    result['fee_details'] = fee_details_array
+    #
+    if make_all_charges_suppressed
+
+      result['credits'] = NumberUtility.default_amount_format('0')
+      result['total_fees'] = NumberUtility.default_amount_format('0')
+      result['balance'] = NumberUtility.default_amount_format('0')
+    else
+      result['credits'] = NumberUtility.default_amount_format(credits)
+      result['total_fees'] = NumberUtility.default_amount_format(debits)
+      result['balance'] = NumberUtility.default_amount_format(debits - credits)
+
+    end
+
+    result['currency'] = get_currency_symbol(current_daily_instance.andand.currency_code.value)
+
+    result
+  end
+
+  # Assign room number to the reservation
+  def assign_room_with_external_pms(room_no)
+    result = { :status => false, :room_no => nil }
+    if self.external_id
+      reservation_api = ReservationApi.new(self.hotel_id)
+      assign_room_attributes = reservation_api.assign_room(self.external_id, room_no)
+      if assign_room_attributes && assign_room_attributes[:status] == 'SUCCESS'
+        result[:status] = true
+        result[:room_no] = assign_room_attributes[:data][:room_assigned]
+      end
+    else
+      result[:status] = false
+      logger.warn "Invalid external ID for reservation #{id}"
+    end
+
+    result
+  end
+
+  # Upgrade / Upsell room
+  def upgrade_room(upsell_amount, new_room_no, application)
+    result = {}
+    update_local_tables = true
+
+    # assign existing values
+    old_room_id = current_daily_instance.room_id
+    old_room_type_id = current_daily_instance.room_type_id
+    old_room_type_name = current_daily_instance.room_type.room_type_name
+    old_level = current_daily_instance.room_type.upsell_room_level.andand.level
+    old_rate_amount = current_daily_instance.rate_amount.to_f
+    old_rate_id = current_daily_instance.rate_id
+
+    # assign new values
+    new_room = hotel.rooms.find_by_room_no(new_room_no)
+    new_room_id = new_room.id
+    new_room_type_id = new_room.room_type_id
+    new_room_type_name = new_room.room_type.room_type_name
+    new_level = new_room.room_type.upsell_room_level.andand.level
+<<<<<<< HEAD
+    new_upsell_amount = hotel.upsell_amounts.find(upsell_amount_id).amount.to_f
+=======
+>>>>>>> ee247797ad7ad2cacdf3b417d7280b554f10212b
+    new_rate_id = old_rate_id
+
+    # Check if third party pms configured
+    if hotel.is_third_party_pms_configured?
+      update_local_tables = false
+      # if the reservation has room no then unassign room
+      if old_room_id
+        result = release_room_with_external_pms
+      else
+        result[:status] = true
+      end
+      # if release of room in external pms is sucessful then update room id to null in SNT
+      if result[:status]
+        # Calling modify external pms for change of upgraded room type
+        changed_attributes = { room_type_id: new_room_type_id, rate_id: new_rate_id }
+        result = modify_booking_of_external_pms(changed_attributes)
+
+        if result[:status]
+          # After updating room type update rate amount
+          changed_attributes = { rate_amount: old_rate_amount }
+          result = modify_booking_of_external_pms(changed_attributes)
+
+          if result[:status]
+            # Assign new room number
+            if new_room_id
+              result = assign_room_with_external_pms(new_room_no)
+              if result[:status]
+                new_room = hotel.rooms.find_by_room_no(result[:room_no]) if result[:room_no]
+                new_room_id = new_room.id
+                update_local_tables = true
+              else # Assign new room failed
+                logger.debug "Could not assign new room for reservation: #{id} in External PMS"
+                errors = [I18n.t('reservation.external_pms.cannot_assign_new_room')]
+                # Call to revert back to old rate amount
+                changed_attributes = { rate_amount: old_rate_amount }
+                result = modify_booking_of_external_pms(changed_attributes)
+
+                if result[:status] # If old rate change is sucessful then change old room type and then Assign old room no
+                  # Calling modify external pms for change of upgraded room type to old room type
+                  changed_attributes = { room_type_id: old_room_type_id }
+                  result = modify_booking_of_external_pms(changed_attributes)
+
+                  if result[:status] # If old room type change sucessful then Assign old room no
+                    if old_room_id
+                      result = assign_room_with_external_pms(Room.find(old_room_id).room_no)
+
+                      unless result[:status] # Assign old room failed
+                        logger.debug "Could not assign old room for reservation: #{id} in External PMS"
+                        errors = [I18n.t('reservation.external_pms.cannot_assign_old_room')]
+                      end
+                    end
+                  else
+                    logger.debug "Could not update old room type for reservation: #{id} in External PMS"
+                    errors = [I18n.t('reservation.external_pms.cannot_assign_old_room_type')]
+                  end
+                else
+                  logger.debug "Could not update old rate amount for reservation: #{id} in External PMS"
+                  errors = [I18n.t('reservation.external_pms.cannot_assign_old_rate')]
+                end
+              end
+            else # if new room is not assigned then update SNT tables
+              update_local_tables = true
+            end
+          else # Rate Amount change failed
+            logger.debug "Could not update rate amount for reservation: #{id} in External PMS"
+            errors = [I18n.t('reservation.external_pms.cannot_assign_new_rate')]
+
+            # Calling modify external pms for change of upgraded room type to old room type
+            changed_attributes = { room_type_id: old_room_type_id }
+            result = modify_booking_of_external_pms(changed_attributes)
+
+            if result[:status] # If old room type change sucessful then Assign old room no
+              if old_room_id
+                result = assign_room_with_external_pms(Room.find(old_room_id).room_no)
+
+                unless result[:status] # Assign old room failed
+                  logger.debug "Could not assign old room for reservation: #{id} in External PMS"
+                  errors = [I18n.t('reservation.external_pms.cannot_assign_old_room')]
+                end
+              end
+
+            else
+              logger.debug "Could not update old room type for reservation: #{id} in External PMS"
+              errors = [I18n.t('reservation.external_pms.cannot_assign_old_room_type')]
+            end
+          end
+        else # Room Type change failed  -- Assign the original room no if it was existing
+
+          logger.debug "Could not update room type for reservation: #{id} in External PMS"
+          errors = [I18n.t('reservation.external_pms.cannot_assign_new_room_type')]
+
+          # If old room no exists then assign it back
+          if old_room_id
+            result = assign_room_with_external_pms(Room.find(old_room_id).room_no)
+
+            unless result[:status] # Assign old room failed
+              logger.debug "Could not assign old room for reservation: #{id} in External PMS"
+              errors = [I18n.t('reservation.external_pms.cannot_assign_old_room')]
+            end
+          end
+
+        end
+      else # release of room failed
+        logger.debug "Could not release room for reservation: #{id} in External PMS"
+        errors = [I18n.t('reservation.external_pms.cannot_release_room')]
+      end
+    end
+
+    # update local tables
+    if update_local_tables
+      # modify booking to update new rate_amount, room type id and room id
+      changed_attributes = { room_type_id: new_room_type_id, rate_amount: old_rate_amount, room_id: new_room_id }
+      modify_booking(changed_attributes)
+      update_attributes(is_upsell_applied: true, upsell_amount: upsell_amount)
+
+      action_details = [
+        { key: 'room_type', old_value: old_room_type_name, new_value: new_room_type_name },
+        { key: 'level', old_value: old_level, new_value: new_level },
+        { key: 'amount', old_value: old_rate_amount, new_value: old_rate_amount },
+<<<<<<< HEAD
+        { key: 'upsell', old_value: nil, new_value: new_upsell_amount }
+=======
+        { key: 'upsell', old_value: nil, new_value: upsell_amount }
+>>>>>>> ee247797ad7ad2cacdf3b417d7280b554f10212b
+      ]
+
+      Action.record!(self, :UPSELL, application, hotel_id, action_details)
+    end
+    # return the result and errors if there is an error
+    result[:errors] = errors
+    result
+  end # end of upgrade room
+
+  # Release room assigned to the reservation
+  def release_room_with_external_pms
+    result = { status: false }
+    if external_id
+      reservation_api = ReservationApi.new(hotel_id)
+      release_room_attributes = reservation_api.release_room(external_id)
+      if release_room_attributes && release_room_attributes[:status] == 'SUCCESS'
+        result[:status] = true
+      end
+    else
+      result[:status] = false
+      logger.warn "Invalid external ID for reservation #{id}"
+    end
+
+    result
+  end
+
+  # get total stay rate by adding all daily elements rate amount.
+  def get_total_stay_amount
+    if dep_date == arrival_date
+      total_amount = current_daily_instance.rate_amount
+    else
+      total_amount = daily_instances.where('reservation_date != ?', dep_date).sum(:rate_amount)
+    end
+    ('%.2f' % total_amount).to_s
+  end
+
+  def is_zero_nights?
+    dep_date == arrival_date
+  end
+
+  # Modify booking method to call external pms
+  def modify_booking_of_external_pms(changed_attributes)
+    result = { status: false }
+    reservation_api = ReservationApi.new(hotel_id)
+    modify_attributes = reservation_api.modify_booking(confirm_no, changed_attributes)
+
+    if modify_attributes[:status] == 'SUCCESS'
+      result[:status] = true
+    end
+
+    result
+  end
+
+  # Modify Booking in SNT
+  def modify_booking(changed_attributes)
+    # get daily instances for updating
+    res_daily_instances = daily_instances.upcoming_daily_instances(hotel.active_business_date)
+
+    res_daily_instances.each do |daily_instance|
+
+      daily_instance.room_type_id = changed_attributes[:room_type_id] if changed_attributes[:room_type_id]
+      daily_instance.rate_amount = changed_attributes[:rate_amount] if changed_attributes[:rate_amount]
+      daily_instance.room_id = changed_attributes[:room_id] if changed_attributes[:room_id]
+
+      daily_instance.save!
+    end
+  end
+
+  # Modify payment method of reservation
+  def modify_payment_method_of_external_pms(card_info)
+    result = { status: false }
+    reservation_api = ReservationApi.new(hotel_id)
+    update_payment_attributes = reservation_api.update_payment_method(external_id, card_info)
+
+    if update_payment_attributes[:status] == 'SUCCESS'
+      result[:status] = true
+    end
+
+    result
+  end
+
+  def create_reservation_key(is_additional, number_of_keys)
+    room_no = current_daily_instance.andand.room.andand.room_no
+    if is_additional == 'false'
+      reservation_keys.destroy_all
+    end
+
+    reservation_keys.create(room_number: room_no, number_of_keys: number_of_keys, qr_data: qr_code)
+  end
+
+  # Get the QR code for this reservation, which is the language code and reservation id
+  def qr_code
+    Qrcode.get_qr_code_blob("en-US$#{id.to_s}")
+  end
+
+  # Modify comments/notes on reservation
+  def modify_notes_of_external_pms(action_type, comments)
+    result = { status: false }
+    reservation_api = ReservationApi.new(hotel_id)
+
+    update_comment_attributes = reservation_api.guest_comment_requests(confirm_no, action_type, comments)
+
+    if update_comment_attributes[:status] == 'SUCCESS'
+      result[:status] = true
+      result[:data] = update_comment_attributes[:data]
+    end
+
+    result
+  end
+
+  #
+  def total_nights
+    (dep_date - arrival_date).to_i
+  end
+
+  # Return the statue(true/false) for enable/disable  night status button in staycard screen
+  def get_enabled_night_status(active_business_date)
+    enabled_status = 'true'
+    if (status === :NOSHOW && dep_date < active_business_date) || status === :CANCELED || status === :CHECKEDIN || status === :CHECKEDOUT
+      enabled_status = 'false'
+    end
+    enabled_status
+  end
+
+  # Get the date where to start looking for availability
+  def availability_lower_limit
+    business_date = hotel.active_business_date
+    limit = arrival_date - Setting.stay_date_lower_limit.to_i
+    limit <= business_date ? business_date : limit
+  end
+
+  # Get the date where to stop looking for availability
+  def availability_upper_limit
+    dep_date + Setting.stay_date_upper_limit.to_i
+  end
+
+  # Gets the primary (bill #1) payment type on this reservation
+  def primary_payment_type
+    primary_payment_types.valid.first
+  end
+
+  # Gets the payment type for a bill on this reservation
+  def bill_payment_type(bill_number)
+    reservations_guest_payment_types.where(bill_number: bill_number).first.andand.guest_payment_type
+  end
+
+  # Updates the payment type for a bill on this reservation
+  def update_bill_payment_type!(bill_number, guest_payment_type)
+    if guest_payment_type.persisted?
+      reservation_guest_payment_type = reservations_guest_payment_types.where(bill_number: bill_number).first
+
+      if reservation_guest_payment_type
+        reservation_guest_payment_type.update_attributes!(guest_payment_type_id: guest_payment_type.id)
+      else
+        reservations_guest_payment_types.create!(bill_number: bill_number, guest_payment_type_id: guest_payment_type.id)
+      end
+    end
+  end
+
+  def apply_late_checkout(late_checkout_data, application)
+    bill_no = late_checkout_data[:bill_no] ? late_checkout_data[:bill_no] : '1'
+    post_ows = PostChargesApi.new(hotel.id)
+
+    late_checkout_offer = LateCheckoutCharge.find(late_checkout_data[:late_checkout_offer_id])
+
+    posting_attr_hash = { posting_date: dep_date, posting_time: Time.now, long_info: late_checkout_data[:long_text], charge: late_checkout_offer.extended_checkout_charge, bill_no: bill_no }
+
+    result = post_ows.update_post_charges(hotel.late_checkout_charge_code.andand.charge_code, external_id, posting_attr_hash)
+
+    applied_late_checkout = result[:status] == 'SUCCESS'
+
+    if applied_late_checkout
+      update_attributes(is_opted_late_checkout: true, late_checkout_time: late_checkout_offer.extended_checkout_time)
+      sync_bills_with_external_pms
+
+      action_details = [
+        { key: 'time', new_value: late_checkout_offer.extended_checkout_time.andand.strftime('%-I').to_s },
+        { key: 'charge', new_value: late_checkout_offer.extended_checkout_charge.to_i.to_s }
+      ]
+
+      Action.record!(self, :LATECHECKOUT, application, hotel_id, action_details)
+    end
+
+    result[:status] = applied_late_checkout
+    result
+  end
+
+  # apply upsell charge code if exists
+  def apply_upsell_charge_code(new_business_date)
+    hotel = self.hotel
+    # if upsell is on and upsell is applied on reservation then go ahead and post upsell charges
+    if hotel.settings.upsell_is_on && is_upsell_applied
+      charge_code = hotel.upsell_charge_code
+      upsell_charge_code = charge_code.present? ? charge_code.charge_code : ''
+      charge_code_desc = charge_code.present? ? charge_code.description : ''
+
+      charge_code_id = hotel.upsell_charge_code_id
+      charge_code = ChargeCode.find_by_id(charge_code_id)
+      upsell_charge_code = charge_code.charge_code
+      charge_code_desc = charge_code.description
+
+      upsell_posted_date = last_upsell_posted_date.present? ? last_upsell_posted_date : (new_business_date - 1)
+      upsell_charge = upsell_amount
+      # if upsell charge code and upsell amount is there then post charges
+      if upsell_charge_code.present? && upsell_charge.present?
+        # if not posted for current business date and not departure date then send upsell amount posting
+        if (upsell_posted_date < new_business_date) && (new_business_date != dep_date)
+          # post the charges to window 1
+          bill_no = '1'
+          post_ows = PostChargesApi.new(hotel.id)
+
+          posting_attr_hash = { posting_date: new_business_date, posting_time: Time.now, long_info: charge_code_desc, charge: upsell_charge, bill_no: bill_no }
+
+          result = post_ows.update_post_charges(upsell_charge_code, external_id, posting_attr_hash)
+          # IF success then update reservation table
+          if result[:status] == 'SUCCESS'
+            update_attributes(last_upsell_posted_date: new_business_date)
+          else
+            logger.debug "Could not post upsell charges for reservation: #{id} in External PMS"
+          end
+        else
+          logger.debug "Could not post upsell charges for reservation: #{id} as charges are already posted or reservation is due today"
+        end
+      else
+        logger.debug "Could not post upsell charges for reservation: #{id} as charge code or charge amount is not defined"
+      end
+    end # if upsell is on and upsell applied
+  end
+
+  def send_checkin_email
+    checkin_email_template  = EmailTemplate.find_by_title_and_hotel_id('CHECKIN_EMAIL_TEMPLATE', self.hotel.id)
+    guest_web_token = GuestWebToken.find_by_guest_detail_id_and_is_active_and_reservation_id_and_email_type(self.primary_guest.id, true, self.id, Setting.guest_web_email_types[:checkin])
+    guest_web_token = GuestWebToken.create(access_token: SecureRandom.hex, guest_detail_id: self.primary_guest.id, reservation_id: self.id, email_type: Setting.guest_web_email_types[:checkin]) unless guest_web_token
+    ReservationMailer.send_guestweb_email_notification(self,checkin_email_template).deliver!
+  end
+
+  def is_stay_over_than?(business_date)
+    status === :CHECKEDIN &&
+      dep_date > business_date &&
+      arrival_date < business_date
+  end
+
+  def is_arrival_on?(business_date)
+    status === :RESERVED &&
+      arrival_date == business_date
+  end
+
+  def is_arrived_on?(business_date)
+    status === :CHECKEDIN &&
+      arrival_date == business_date
+  end
+
+  def is_departed_on?(business_date)
+    status === :CHECKEDOUT &&
+      dep_date == business_date
+  end
+
+  def is_day_use_on?(business_date)
+    dep_date == business_date && arrival_date == business_date
+  end
+
+  def is_early_checkout_than?(business_date)
+    dep_date > business_date && status === :CHECKEDOUT
+  end
+
+  def is_due_out_on?(business_date)
+    status === :CHECKEDIN && dep_date == business_date
+  end
+
+  def is_no_show?
+    status === :NOSHOW
+  end
+  # Checks if bill #1 exists and has a credit card attached
+  def is_cc_attached
+    primary_payment_type.andand.credit_card?
+  end
+
+  def transfer_transaction(options)
+    billing_api = BillingApi.new(self.hotel_id)
+    transfer_transaction = billing_api.folio_transaction_transfer(self.external_id, options)
+    transfer_transaction
+  end
+
+  private
+
+  def get_currency_symbol(currency_code)
+    currency_code = '' if currency_code.nil?
+    currency_symbol_hash = { 'USD' => '$' }
+    currency_symbol = currency_symbol_hash.key?(currency_code) ? currency_symbol_hash.fetch(currency_code) : currency_code
+    currency_symbol
+  end
+end
+
