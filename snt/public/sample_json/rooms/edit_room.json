@@ -1,9 +1,0 @@
-{
-	"room_type_id":"101",
-    "room_type_code": "SD",
-    "room_type_name": "Superior Double King Deluxe",
-    "snt_description": "sample description",
-    "max_occupancy": "100",
-    "image_of_room_type": "/assets/default_room_type.jpg",
-    "is_pseudo_room_type": "false"
-}

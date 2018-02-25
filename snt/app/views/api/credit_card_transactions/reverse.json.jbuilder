@@ -1,3 +1,0 @@
-json.credit_card_transaction_id @credit_card_transaction.id
-json.external_message @credit_card_transaction.external_message
-json.auth_code @credit_card_transaction.authorization_code

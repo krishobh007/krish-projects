@@ -1,2 +1,0 @@
-json.ios7_alert_length Setting.ios7_alert_length.to_s
-json.ios8_alert_length Setting.ios8_alert_length.to_s

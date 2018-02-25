@@ -1,5 +1,0 @@
-development: 127.0.0.1:6379
-test: 127.0.0.1:6379
-staging: pms-dev.stayntouch.com:6379
-production_test: pms-prod-test.stayntouch.com:6379
-production: pms.stayntouch.com:6379

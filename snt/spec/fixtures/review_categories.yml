@@ -1,9 +1,0 @@
-one:
-  name: Cleanliness
-  created_at: <%= 5.days.ago.iso8601 %>
-  updated_at: <%= 5.days.ago.iso8601 %>
-  
-two:
-  name: Rooms
-  created_at: <%= 5.days.ago.iso8601 %>
-  updated_at: <%= 5.days.ago.iso8601 %>

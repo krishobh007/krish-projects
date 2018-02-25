@@ -1,2 +1,0 @@
-json.id @task.id
-

@@ -1,1 +1,0 @@
-json.inactive_rooms @inactive_rooms_hash

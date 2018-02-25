@@ -1,1 +1,0 @@
-json.bill_details @printer_data

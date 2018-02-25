@@ -1,1 +1,0 @@
-json.hk_applicable_statuses @hk_status_list

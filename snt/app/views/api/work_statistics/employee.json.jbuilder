@@ -1,1 +1,0 @@
-json.results @result_array

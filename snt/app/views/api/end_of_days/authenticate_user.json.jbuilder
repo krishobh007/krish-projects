@@ -1,1 +1,0 @@
-json.is_show_warning  (current_hotel.active_business_date + 1.days ) >= Time.now.in_time_zone(current_hotel.tz_info).to_date

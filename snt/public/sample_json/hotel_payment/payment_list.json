@@ -1,9 +1,0 @@
-{
-    "payments": [
-        {
-            "id" : "id",
-            "description" : "Master Card",
-            "is_active" : "true"
-        }
-    ]
-}

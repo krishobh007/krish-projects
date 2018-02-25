@@ -1,1 +1,0 @@
-json.min_hours @min_hours

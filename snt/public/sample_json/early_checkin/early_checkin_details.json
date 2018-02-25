@@ -1,9 +1,0 @@
-{
-    "is_eligible_for_early_checkin": true,
-    "normal_checkin_time": "3:00 PM",
-    "is_room_upgrade_available": true,
-    "is_early_checkin_bundled": false,
-    "early_checkin_time": "2:00 PM",
-    "is_allow_free_early_checkin": false,
-    "is_early_checkin_available_for_hotel": true
-}
